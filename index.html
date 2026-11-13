@@ -91,8 +91,12 @@ dialog h2{margin:0 0 6px;font-size:1.15rem}dialog h3{margin:16px 0 4px;font-size
     <button id="swap" class="icon" type="button" aria-label="Swap languages" title="Swap">⇄</button>
     <select id="to" aria-label="Translate to"></select>
   </div>
-  <div class="chips" id="ctxChips" role="group" aria-label="Context"></div>
-  <input type="text" id="ctxText" placeholder="Extra context (optional): e.g. talking to my landlord, at the market…" aria-label="Extra context" maxlength="160">
+  <details id="ctxBox" style="margin-top:10px">
+    <summary id="ctxSum" style="cursor:pointer;min-height:32px">＋ Add context (optional)</summary>
+    <label for="ctxSel">Situation</label>
+    <select id="ctxSel" aria-label="Situation" style="width:100%;margin:4px 0"></select>
+    <input type="text" id="ctxText" placeholder="Or type your own: e.g. talking to my landlord, at the market…" aria-label="Extra context" maxlength="160">
+  </details>
 </section>
 
 <section class="card">
@@ -183,6 +187,7 @@ dialog h2{margin:0 0 6px;font-size:1.15rem}dialog h3{margin:16px 0 4px;font-size
   <div id="sbIn">
     <label for="sbEmail">Email</label><input type="email" id="sbEmail" autocomplete="username">
     <label for="sbUser">Username (only when creating an account)</label><input type="text" id="sbUser" autocomplete="nickname">
+    <label for="sbOrg">Organization (type “Personal” if you have none; only when creating an account)</label><input type="text" id="sbOrg" value="Personal" autocomplete="organization">
     <label for="sbPass">Password</label><input type="password" id="sbPass" autocomplete="current-password">
     <div class="row"><button id="sbLogin" class="primary" type="button">Log in</button><button id="sbReg" type="button">Create account</button></div>
   </div>
@@ -438,7 +443,7 @@ async function sb(path,{json,form,body,method='POST',timeout=25000,retry=true}={
   if(!r.ok)throw new Error(await errText(r));
   const ct=r.headers.get('content-type')||''; return ct.includes('json')?r.json():r;
 }
-async function errText(r){try{const j=await r.json();const d=j.detail;return typeof d==='string'?d:(Array.isArray(d)?d.map(x=>x.msg).join('; '):('HTTP '+r.status))}catch{return'HTTP '+r.status}}
+async function errText(r){try{const j=await r.json();const d=j.detail;if(typeof d==='string')return d;if(Array.isArray(d))return d.map(x=>((x.loc||[]).filter(y=>y!=='body').join('.')+' '+(x.msg||'')).trim()).join('; ');return 'HTTP '+r.status+' '+JSON.stringify(j).slice(0,200)}catch{return'HTTP '+r.status}}
 const sbReady=()=>!!token()&&navigator.onLine;
 
 function parseJsonLoose(s){
@@ -535,7 +540,8 @@ async function translateCore(text,from,to,ctx=''){
    ========================================================= */
 let last=null,ctxChip='';
 const CTX=['Everyday','Market / shopping','Formal / official','Respectful (to an elder)','School / study','Health / clinic','Travel / transport','Church / mosque','Farming','Business'];
-const ctxString=()=>[ctxChip,$('ctxText').value.trim()].filter(Boolean).join('. ');
+const ctxString=()=>[$('ctxSel').value,$('ctxText').value.trim()].filter(Boolean).join('. ');
+function ctxSummary(){const c=ctxString();$('ctxSum').textContent=c?'Context: '+(c.length>46?c.slice(0,44)+'…':c)+' (tap to change)':'＋ Add context (optional)'}
 async function translate(){
   const txt=$('src').value.trim(),from=$('from').value,to=$('to').value;
   if(!txt){toast('Type or speak something first');return}
@@ -768,7 +774,9 @@ function net(){const on=navigator.onLine;const n=$('net');n.textContent=on?'Onli
 function showTab(t){for(const k of['tr','chat','book','hist']){$('t-'+k).setAttribute('aria-selected',k===t);$('p-'+k).classList.toggle('hidden',k!==t)}}
 
 fillSelects();net();renderHist();renderBook();renderConvo();setAi();setPackUi();
-$('ctxChips').replaceChildren(...CTX.map(c=>el('button',{type:'button',class:'chip','aria-pressed':'false',onclick:e=>{const b=e.currentTarget,on=b.getAttribute('aria-pressed')!=='true';document.querySelectorAll('#ctxChips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on);ctxChip=on?c:''}},c)));
+$('ctxSel').replaceChildren(el('option',{value:''},'None (everyday default)'),...CTX.map(c=>el('option',{value:c},c)));
+$('ctxSel').onchange=ctxSummary;$('ctxText').oninput=ctxSummary;
+if(window.matchMedia&&matchMedia('(min-width:720px)').matches)$('ctxBox').open=true;
 addEventListener('online',()=>{net();setAi()});addEventListener('offline',net);
 $('from').onchange=$('to').onchange=saveLangs;
 $('ca').onchange=$('cb').onchange=()=>store.set('waltrans.clangs',{a:$('ca').value,b:$('cb').value});
@@ -801,9 +809,9 @@ $('chatClear').onclick=()=>{convo=[];store.set('waltrans.convo',[]);renderConvo(
 $('settingsBtn').onclick=()=>{const c=cfg();$('sbBase').value=c.base;$('voiceMode').value=c.voice;$('explainLang').value=c.explain;setAi();setPackUi();$('dlg').showModal()};
 $('dlgClose').onclick=()=>{setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai',voice:$('voiceMode').value,explain:$('explainLang').value});$('dlg').close()};
 $('sbLogin').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value;if(!e||!p){toast('Enter email and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
-  try{await sbLogin(e,p);$('sbPass').value='';toast('Connected to Sunbird AI')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Login failed: '+x.message,7000)}};
-$('sbReg').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value,u=$('sbUser').value.trim();if(!e||!p||!u){toast('Enter email, username and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
-  try{await sb('/auth/register',{json:{email:e,password:p,username:u}});await sbLogin(e,p);$('sbPass').value='';toast('Account created and connected')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Sign-up failed: '+x.message,7000)}};
+  try{await sbLogin(e,p);$('sbPass').value='';toast('Connected to Sunbird AI')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Login failed: '+x.message+(/401|incorrect|invalid|credential/i.test(x.message)?'. Wrong email or password, or the account was made with Google and has no password yet (create one with “Create account” using a different email).':''),12000)}};
+$('sbReg').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value,u=$('sbUser').value.trim(),o=$('sbOrg').value.trim()||'Personal';if(!e||!p||!u){toast('Enter email, username and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
+  try{await sb('/auth/register',{json:{email:e,password:p,username:u,organization:o}});await sbLogin(e,p);$('sbPass').value='';toast('Account created and connected')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Sign-up failed: '+x.message,7000)}};
 $('sbLogout').onclick=()=>{store.del('waltrans.token');setAi()};
 $('packGet').onclick=packInstall;$('packDel').onclick=packRemove;
 $('tmClear').onclick=()=>{store.del('waltrans.tm');toast('Saved translations cleared')};
