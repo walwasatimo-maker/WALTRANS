@@ -185,11 +185,24 @@ dialog h2{margin:0 0 6px;font-size:1.15rem}dialog h3{margin:16px 0 4px;font-size
   <p class="note" style="margin-top:0">Sunbird AI is a Ugandan AI lab. Its models handle Luganda, <b>Lusoga</b>, Kiswahili and 60+ African languages far better than generic translators, and power context translation, “Explain”, and voice in these languages. Your password is sent only to Sunbird and is never stored here; only the access token is kept on this device.</p>
   <div id="sbOut" class="hidden"><p>Connected. <button id="sbLogout" type="button">Log out</button></p></div>
   <div id="sbIn">
+    <div style="border:1px solid var(--line);border-radius:12px;padding:10px;margin:6px 0">
+      <b>Signed up with Google? Use this (easiest)</b>
+      <ol class="note" style="margin:6px 0 6px 18px;padding:0">
+        <li>Tap the button, sign in with Google on Sunbird’s page.</li>
+        <li>Copy your <b>access token</b> shown there.</li>
+        <li>Come back here, paste it below and tap Connect.</li>
+      </ol>
+      <div class="row"><a id="sbKeys" href="https://api.sunbird.ai/keys" target="_blank" rel="noopener noreferrer" style="text-decoration:none"><button type="button" class="primary">1 · Open Sunbird token page</button></a></div>
+      <label for="sbTok">Paste access token</label><input type="password" id="sbTok" autocomplete="off" spellcheck="false">
+      <button id="sbTokGo" type="button" class="primary">2 · Connect with token</button>
+    </div>
+    <details style="margin:8px 0"><summary>Or use email &amp; password</summary>
     <label for="sbEmail">Email</label><input type="email" id="sbEmail" autocomplete="username">
     <label for="sbUser">Username (only when creating an account)</label><input type="text" id="sbUser" autocomplete="nickname">
     <label for="sbOrg">Organization (type “Personal” if you have none; only when creating an account)</label><input type="text" id="sbOrg" value="Personal" autocomplete="organization">
     <label for="sbPass">Password</label><input type="password" id="sbPass" autocomplete="current-password">
     <div class="row"><button id="sbLogin" class="primary" type="button">Log in</button><button id="sbReg" type="button">Create account</button></div>
+    </details>
   </div>
   <details style="margin-top:8px"><summary>Advanced: API address</summary>
     <input type="text" id="sbBase" placeholder="https://api.sunbird.ai">
@@ -812,6 +825,15 @@ $('sbLogin').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').v
   try{await sbLogin(e,p);$('sbPass').value='';toast('Connected to Sunbird AI')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Login failed: '+x.message+(/401|incorrect|invalid|credential/i.test(x.message)?'. Wrong email or password, or the account was made with Google and has no password yet (create one with “Create account” using a different email).':''),12000)}};
 $('sbReg').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value,u=$('sbUser').value.trim(),o=$('sbOrg').value.trim()||'Personal';if(!e||!p||!u){toast('Enter email, username and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
   try{await sb('/auth/register',{json:{email:e,password:p,username:u,organization:o}});await sbLogin(e,p);$('sbPass').value='';toast('Account created and connected')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Sign-up failed: '+x.message,7000)}};
+$('sbTokGo').onclick=async()=>{
+  const t=$('sbTok').value.trim().replace(/^Bearer\s+/i,'').replace(/^["']|["']$/g,'');
+  if(t.length<20){toast('Paste the full access token from Sunbird’s token page');return}
+  setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
+  store.set('waltrans.token',t);
+  const btn=$('sbTokGo');btn.disabled=true;btn.textContent='Checking…';
+  try{await sbTranslate('Hello','en','lg');$('sbTok').value='';setAi();toast('Connected to Sunbird AI')}
+  catch(x){store.del('waltrans.token');setAi();toast(x instanceof AuthErr||/401|403/.test(x.message)?'Sunbird didn’t accept that token. Copy it again from the token page.':x.name==='TypeError'?'Couldn’t reach Sunbird. Check your internet.':'Couldn’t verify the token: '+x.message,9000)}
+  finally{btn.disabled=false;btn.textContent='2 · Connect with token'}};
 $('sbLogout').onclick=()=>{store.del('waltrans.token');setAi()};
 $('packGet').onclick=packInstall;$('packDel').onclick=packRemove;
 $('tmClear').onclick=()=>{store.del('waltrans.tm');toast('Saved translations cleared')};
