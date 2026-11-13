@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>WalTrans</title>
+<meta name="theme-color" content="#0f766e">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="preconnect" href="https://api.sunbird.ai">
+<style>
+:root{--bg:#f4f7f6;--card:#fff;--ink:#14231f;--mute:#5d6f6a;--line:#d9e3e0;--brand:#0f766e;--brand-ink:#fff;--warn-bg:#fef3c7;--ok-bg:#d1fae5;--info-bg:#dbeafe;--bad-bg:#fee2e2;--chip:#e7f1ee}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1715;--card:#16231f;--ink:#e6f0ed;--mute:#93a8a2;--line:#2a3d38;--brand:#2dd4bf;--brand-ink:#04211d;--warn-bg:#3b2f0b;--ok-bg:#0b3a2c;--info-bg:#10304f;--bad-bg:#4a1a1a;--chip:#1d302b}}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 16px calc(28px + env(safe-area-inset-bottom))}
+.wrap{max-width:760px;margin:0 auto}
+header{display:flex;align-items:center;gap:8px;padding:14px 0 6px;flex-wrap:wrap}
+header img{width:34px;height:34px;border-radius:9px}
+h1{font-size:1.3rem;margin:0;flex:1}
+.pill{font-size:.76rem;padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+.pill.on{background:var(--ok-bg);color:var(--ink);border-color:transparent}.pill.off{background:var(--warn-bg);color:var(--ink);border-color:transparent}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
+.langs{display:flex;gap:8px;align-items:center}
+select,button,textarea,input{font:inherit;color:inherit}
+select{flex:1;min-width:0;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg)}
+button{cursor:pointer;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;min-height:44px}
+button:hover{border-color:var(--brand)}
+button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--brand);outline-offset:1px}
+button.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
+button.icon{width:44px;padding:0;font-size:1.1rem;flex:none}
+button.rec{background:var(--bad-bg);border-color:#dc2626}
+button:disabled{opacity:.6;cursor:wait}
+textarea{width:100%;min-height:100px;resize:vertical;border:0;background:transparent;font-size:1.15rem;padding:4px}
+textarea:focus{outline:none}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row.end{justify-content:flex-end}.grow{flex:1}
+.out{font-size:1.25rem;min-height:2.4em;white-space:pre-wrap;word-break:break-word}
+.out.empty{color:var(--mute);font-size:1rem}
+.badge{display:inline-block;font-size:.76rem;padding:2px 9px;border-radius:99px;background:var(--info-bg);margin:6px 6px 6px 0}
+.badge.off{background:var(--ok-bg)}.badge.rough{background:var(--warn-bg)}.badge.err{background:var(--bad-bg)}
+.note{font-size:.88rem;color:var(--mute);margin:6px 0 0}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
+.chip{border-radius:99px;padding:4px 12px;min-height:34px;font-size:.88rem;background:var(--chip)}
+.chip[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+nav.tabs{display:flex;gap:4px;margin:12px 0 0}
+nav.tabs button{flex:1;padding:9px 4px;font-size:.92rem}
+nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
+.item{border-top:1px solid var(--line);padding:10px 0}.item:first-child{border-top:0}
+.lg{display:grid;grid-template-columns:5.5rem 1fr;gap:2px 8px;font-size:.95rem}.lg span:nth-child(odd){color:var(--mute)}
+.unv{font-size:.72rem;background:var(--warn-bg);padding:1px 6px;border-radius:6px;margin-left:6px}
+.src{font-size:.72rem;background:var(--info-bg);padding:1px 6px;border-radius:6px;margin-left:6px}
+input[type=text],input[type=search],input[type=email],input[type=password]{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);margin:4px 0}
+label{font-size:.85rem;color:var(--mute)}
+.hidden{display:none!important}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;max-width:90vw;z-index:99;font-size:.92rem}
+.expl{white-space:pre-wrap;background:var(--bg);border-radius:12px;padding:12px;margin-top:10px;font-size:.98rem;border:1px solid var(--line)}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);max-width:560px;width:calc(100% - 24px);padding:16px;max-height:90vh}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+dialog h2{margin:0 0 6px;font-size:1.15rem}dialog h3{margin:16px 0 4px;font-size:1rem}
+.bubbles{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow:auto;padding:4px}
+.bub{max-width:86%;padding:8px 12px;border-radius:14px;background:var(--chip)}
+.bub.b{align-self:flex-end;background:var(--info-bg)}
+.bub small{display:block;color:var(--mute)}
+.bub b{font-weight:600;font-size:1.05rem}
+.bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0}.bar>i{display:block;height:100%;width:0;background:var(--brand)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <img src="icon.svg" alt="" width="34" height="34">
+  <h1>WalTrans</h1>
+  <button id="install" class="hidden" type="button">Install</button>
+  <span id="ai" class="pill" role="status">AI: off</span>
+  <span id="net" class="pill" role="status">…</span>
+  <button id="settingsBtn" class="icon" type="button" aria-label="Settings" title="Settings">⚙️</button>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" id="t-tr" aria-selected="true" type="button">Translate</button>
+  <button role="tab" id="t-chat" aria-selected="false" type="button">Conversation</button>
+  <button role="tab" id="t-book" aria-selected="false" type="button">Phrasebook</button>
+  <button role="tab" id="t-hist" aria-selected="false" type="button">History</button>
+</nav>
+
+<!-- TRANSLATE -->
+<main id="p-tr">
+<section class="card">
+  <div class="langs">
+    <select id="from" aria-label="Translate from"></select>
+    <button id="swap" class="icon" type="button" aria-label="Swap languages" title="Swap">⇄</button>
+    <select id="to" aria-label="Translate to"></select>
+  </div>
+  <div class="chips" id="ctxChips" role="group" aria-label="Context"></div>
+  <input type="text" id="ctxText" placeholder="Extra context (optional): e.g. talking to my landlord, at the market…" aria-label="Extra context" maxlength="160">
+</section>
+
+<section class="card">
+  <textarea id="src" placeholder="Type or speak. You can mix languages in one sentence." aria-label="Text to translate" maxlength="2000"></textarea>
+  <div id="det" class="note"></div>
+  <div class="row">
+    <button id="mic" class="icon" type="button" aria-label="Speak your message" title="Speak">🎤</button>
+    <button id="speakSrc" class="icon" type="button" aria-label="Listen to input" title="Listen">🔊</button>
+    <button id="explainSrc" type="button">Explain</button>
+    <button id="clear" type="button">Clear</button>
+    <span class="grow"></span>
+    <button id="go" class="primary" type="button">Translate</button>
+  </div>
+</section>
+
+<section class="card" aria-live="polite">
+  <div id="out" class="out empty">Translation appears here.</div>
+  <textarea id="fixBox" class="hidden" style="border:1px solid var(--line);border-radius:10px;min-height:70px" aria-label="Correct the translation"></textarea>
+  <div id="meta"></div>
+  <div class="row">
+    <button id="speakOut" class="icon" type="button" aria-label="Listen to translation" title="Listen">🔊</button>
+    <button id="copy" type="button">Copy</button>
+    <button id="share" type="button" class="hidden">Share</button>
+    <button id="explainOut" type="button">Explain</button>
+    <button id="fix" type="button">✎ Correct</button>
+    <button id="fixSave" type="button" class="primary hidden">Save correction</button>
+  </div>
+  <div id="expl" class="expl hidden" role="region" aria-label="Explanation"></div>
+</section>
+</main>
+
+<!-- CONVERSATION -->
+<section id="p-chat" class="hidden">
+<div class="card">
+  <div class="langs">
+    <select id="ca" aria-label="Person A language"></select>
+    <span aria-hidden="true">↔</span>
+    <select id="cb" aria-label="Person B language"></select>
+  </div>
+  <p class="note">Two people, two languages. Each person taps their own microphone (or types). WalTrans translates and can read the reply out loud.</p>
+  <label><input type="checkbox" id="autoSpeak"> Read translations aloud automatically</label>
+</div>
+<div class="card"><div id="bubbles" class="bubbles" aria-live="polite"><p class="note">No messages yet.</p></div></div>
+<div class="card">
+  <div class="row">
+    <button id="micA" class="primary grow" type="button">🎤 A speaks</button>
+    <button id="micB" class="primary grow" type="button">🎤 B speaks</button>
+  </div>
+  <div class="row" style="margin-top:8px">
+    <input type="text" id="chatText" class="grow" placeholder="Or type here…" aria-label="Type a message" style="margin:0;flex:1">
+    <button id="sendA" type="button">As A</button><button id="sendB" type="button">As B</button>
+  </div>
+  <div class="row end" style="margin-top:8px"><button id="chatClear" type="button">Clear conversation</button></div>
+</div>
+</section>
+
+<!-- PHRASEBOOK -->
+<section id="p-book" class="card hidden">
+  <p class="note" style="margin-top:0">Works with no internet. Entries marked <span class="unv">unverified</span> were written by the app's author and need a native speaker's check. Add or fix your own (they always win).</p>
+  <input type="search" id="q" placeholder="Search phrasebook…" aria-label="Search phrasebook">
+  <details style="margin:8px 0"><summary>Add or teach a phrase</summary>
+    <label for="n-en">English</label><input type="text" id="n-en">
+    <label for="n-lg">Luganda</label><input type="text" id="n-lg">
+    <label for="n-xog">Lusoga</label><input type="text" id="n-xog">
+    <label for="n-sw">Kiswahili</label><input type="text" id="n-sw">
+    <p class="note">Fill at least two. Alternatives: separate with “ / ”.</p>
+    <button id="addPhrase" class="primary" type="button">Add phrase</button>
+  </details>
+  <div id="bookList"></div>
+</section>
+
+<!-- HISTORY -->
+<section id="p-hist" class="card hidden">
+  <div id="histList"></div>
+  <div class="row end"><button id="histClear" type="button">Clear history</button></div>
+</section>
+
+<p class="note">Good translations are remembered on this device and reused offline, so the app gets better the more you use and correct it.</p>
+</div>
+
+<!-- SETTINGS -->
+<dialog id="dlg" aria-labelledby="dlgT">
+  <h2 id="dlgT">Settings</h2>
+
+  <h3>1 · Connect Sunbird AI (free account)</h3>
+  <p class="note" style="margin-top:0">Sunbird AI is a Ugandan AI lab. Its models handle Luganda, <b>Lusoga</b>, Kiswahili and 60+ African languages far better than generic translators, and power context translation, “Explain”, and voice in these languages. Your password is sent only to Sunbird and is never stored here; only the access token is kept on this device.</p>
+  <div id="sbOut" class="hidden"><p>Connected. <button id="sbLogout" type="button">Log out</button></p></div>
+  <div id="sbIn">
+    <label for="sbEmail">Email</label><input type="email" id="sbEmail" autocomplete="username">
+    <label for="sbUser">Username (only when creating an account)</label><input type="text" id="sbUser" autocomplete="nickname">
+    <label for="sbPass">Password</label><input type="password" id="sbPass" autocomplete="current-password">
+    <div class="row"><button id="sbLogin" class="primary" type="button">Log in</button><button id="sbReg" type="button">Create account</button></div>
+  </div>
+  <details style="margin-top:8px"><summary>Advanced: API address</summary>
+    <input type="text" id="sbBase" placeholder="https://api.sunbird.ai">
+    <p class="note">Only change this if your browser blocks direct calls (a “CORS” error). See README for the optional proxy.</p>
+  </details>
+
+  <h3>2 · Voice input</h3>
+  <select id="voiceMode" aria-label="Voice engine">
+    <option value="auto">Automatic (recommended)</option>
+    <option value="sunbird">Sunbird AI only (Luganda, Lusoga, Kiswahili, Kinyarwanda…)</option>
+    <option value="browser">Browser only</option>
+  </select>
+
+  <h3>3 · Explain in</h3>
+  <select id="explainLang" aria-label="Explanation language"><option value="English">English</option><option value="Luganda">Luganda</option><option value="Kiswahili">Kiswahili</option></select>
+
+  <h3>4 · Offline pack (all languages)</h3>
+  <p class="note" style="margin-top:0">Downloads one on-device translation model (NLLB-200, covering the 30+ languages below except Lusoga). Large (several hundred MB). Use Wi-Fi. After it finishes, it works with no internet, though slower than online.</p>
+  <div id="packState" class="note"></div><div class="bar hidden" id="packBar"><i></i></div>
+  <div class="row"><button id="packGet" class="primary" type="button">Download offline pack</button><button id="packDel" type="button" class="hidden">Remove pack</button></div>
+  <p class="note">Lusoga has no offline model anywhere yet. Offline, it uses your phrasebook and every Lusoga translation you've already made or corrected.</p>
+
+  <h3>5 · Your data</h3>
+  <div class="row"><button id="exp" type="button">Export my data</button><button id="imp" type="button">Import</button><button id="tmClear" type="button">Forget saved translations</button></div>
+  <input type="file" id="impFile" accept="application/json" class="hidden">
+
+  <div class="row end" style="margin-top:16px"><button id="dlgClose" class="primary" type="button">Done</button></div>
+</dialog>
+
+<script>
+'use strict';
+/* =========================================================
+   LANGUAGES
+   c=app code, sb=Sunbird code (translation/chat), stt/tts=Sunbird speech,
+   sp=browser speech code, mm=MyMemory code, nl=NLLB code (offline pack)
+   ========================================================= */
+const G={y:'Your languages',u:'Uganda & East Africa',a:'Other African',w:'World'};
+const LANGS=[
+ {c:'en',n:'English',g:'y',sb:'eng',stt:1,tts:1,sp:'en-GB',mm:'en',nl:'eng_Latn'},
+ {c:'lg',n:'Luganda',g:'y',sb:'lug',stt:1,tts:1,mm:'lg',nl:'lug_Latn',af:1},
+ {c:'xog',n:'Lusoga',g:'y',sb:'xog',stt:1,af:1},
+ {c:'sw',n:'Kiswahili',g:'y',sb:'swa',stt:1,tts:1,sp:'sw-KE',mm:'sw',nl:'swh_Latn',af:1},
+ {c:'rw',n:'Kinyarwanda',g:'u',sb:'kin',stt:1,tts:1,mm:'rw',nl:'kin_Latn',af:1},
+ {c:'ach',n:'Acholi',g:'u',sb:'ach',stt:1,tts:1,nl:'ach_Latn',af:1},
+ {c:'teo',n:'Ateso',g:'u',sb:'teo',stt:1,tts:1,af:1},
+ {c:'nyn',n:'Runyankole',g:'u',sb:'nyn',stt:1,tts:1,af:1},
+ {c:'cgg',n:'Rukiga',g:'u',sb:'cgg',stt:1,af:1},
+ {c:'ttj',n:'Rutooro',g:'u',sb:'ttj',stt:1,af:1},
+ {c:'nyo',n:'Runyoro',g:'u',sb:'nyo',af:1},
+ {c:'lgg',n:'Lugbara',g:'u',sb:'lgg',stt:1,af:1},
+ {c:'myx',n:'Lumasaba',g:'u',sb:'myx',stt:1,af:1},
+ {c:'gwr',n:'Lugwere',g:'u',sb:'gwr',af:1},
+ {c:'laj',n:'Lango',g:'u',sb:'laj',af:1},
+ {c:'alz',n:'Alur',g:'u',sb:'alz',af:1},
+ {c:'luo',n:'Dholuo',g:'u',sb:'luo',stt:1,tts:1,nl:'luo_Latn',af:1},
+ {c:'lin',n:'Lingala',g:'u',sb:'lin',stt:1,tts:1,nl:'lin_Latn',af:1},
+ {c:'so',n:'Somali',g:'u',sb:'som',stt:1,mm:'so',nl:'som_Latn',af:1},
+ {c:'am',n:'Amharic',g:'u',sb:'amh',stt:1,sp:'am-ET',mm:'am',nl:'amh_Ethi',af:1},
+ {c:'yo',n:'Yoruba',g:'a',sb:'yor',stt:1,tts:1,mm:'yo',nl:'yor_Latn',af:1},
+ {c:'ig',n:'Igbo',g:'a',sb:'ibo',stt:1,tts:1,mm:'ig',nl:'ibo_Latn',af:1},
+ {c:'ha',n:'Hausa',g:'a',sb:'hau',stt:1,tts:1,mm:'ha',nl:'hau_Latn',af:1},
+ {c:'zu',n:'Zulu',g:'a',sb:'zul',stt:1,sp:'zu-ZA',mm:'zu',nl:'zul_Latn',af:1},
+ {c:'xh',n:'Xhosa',g:'a',sb:'xho',stt:1,tts:1,mm:'xh',nl:'xho_Latn',af:1},
+ {c:'sn',n:'Shona',g:'a',sb:'sna',stt:1,mm:'sn',nl:'sna_Latn',af:1},
+ {c:'ny',n:'Chichewa',g:'a',sb:'nya',stt:1,mm:'ny',nl:'nya_Latn',af:1},
+ {c:'af',n:'Afrikaans',g:'a',sb:'afr',stt:1,tts:1,sp:'af-ZA',mm:'af',nl:'afr_Latn'},
+ {c:'fr',n:'French',g:'w',stt:1,sp:'fr-FR',mm:'fr',nl:'fra_Latn'},
+ {c:'ar',n:'Arabic',g:'w',sp:'ar-SA',mm:'ar',nl:'arb_Arab'},
+ {c:'es',n:'Spanish',g:'w',sp:'es-ES',mm:'es',nl:'spa_Latn'},
+ {c:'pt',n:'Portuguese',g:'w',sp:'pt-PT',mm:'pt',nl:'por_Latn'},
+ {c:'de',n:'German',g:'w',sp:'de-DE',mm:'de',nl:'deu_Latn'},
+ {c:'it',n:'Italian',g:'w',sp:'it-IT',mm:'it',nl:'ita_Latn'},
+ {c:'nl',n:'Dutch',g:'w',sp:'nl-NL',mm:'nl',nl:'nld_Latn'},
+ {c:'zh',n:'Chinese (Simplified)',g:'w',sp:'zh-CN',mm:'zh-CN',nl:'zho_Hans'},
+ {c:'ja',n:'Japanese',g:'w',sp:'ja-JP',mm:'ja',nl:'jpn_Jpan'},
+ {c:'ko',n:'Korean',g:'w',sp:'ko-KR',mm:'ko',nl:'kor_Hang'},
+ {c:'hi',n:'Hindi',g:'w',sp:'hi-IN',mm:'hi',nl:'hin_Deva'},
+ {c:'ur',n:'Urdu',g:'w',sp:'ur-PK',mm:'ur',nl:'urd_Arab'},
+ {c:'bn',n:'Bengali',g:'w',sp:'bn-BD',mm:'bn',nl:'ben_Beng'},
+ {c:'ru',n:'Russian',g:'w',sp:'ru-RU',mm:'ru',nl:'rus_Cyrl'},
+ {c:'tr',n:'Turkish',g:'w',sp:'tr-TR',mm:'tr',nl:'tur_Latn'},
+ {c:'id',n:'Indonesian',g:'w',sp:'id-ID',mm:'id',nl:'ind_Latn'}
+];
+const L=Object.fromEntries(LANGS.map(l=>[l.c,l]));
+const CORE=['en','lg','xog','sw'];
+
+/* =========================================================
+   PHRASEBOOK  [en, lg, xog, sw, xogSource]  (xs 'w' = Wikipedia "Soga language")
+   ========================================================= */
+const RAW=[
+["How are you?","Oli otya?","Oli mutya?","Hujambo? / Habari yako?"],
+["How did you sleep?","Wasuze otya?","Wasuzotya?","Umeamkaje?","w"],
+["I am fine","Gyendi / Ndi bulungi","Bulungi","Sijambo / Nzuri","w"],
+["Hello","Nkulamusizza / Gyebale ko","","Hujambo / Jambo"],
+["Good morning","Wasuze otya?","","Habari za asubuhi"],
+["Good afternoon","Osiibye otya?","","Habari za mchana"],
+["Good night","Sula bulungi","","Lala salama"],
+["Thank you","Webale","Webale","Asante"],
+["Thank you very much","Webale nnyo","Webale nnyo","Asante sana"],
+["Welcome","Tukwanirizza","","Karibu"],
+["Please","Nsaba","","Tafadhali"],
+["Sorry / Excuse me","Nsonyiwa","","Samahani"],
+["Yes","Yee","","Ndiyo"],["No","Nedda","","Hapana"],["Okay","Kale","","Sawa"],
+["Goodbye","Weeraba","","Kwaheri"],
+["See you later","Tunaalabagana","","Tutaonana"],
+["God bless you","Katonda akuwe omukisa","","Mungu akubariki"],
+["What is your name?","Erinnya lyo ani?","","Jina lako nani?"],
+["Where are you from?","Ova wa?","","Unatoka wapi?"],
+["I am from Uganda","Nva mu Uganda","","Ninatoka Uganda"],
+["Do you speak English?","Oyogera Olungereza?","","Unaongea Kiingereza?"],
+["I don't understand","Sitegeera","","Sielewi"],
+["Please help me","Nnyamba","","Nisaidie"],
+["Wait a moment","Linda katono","","Subiri kidogo"],
+["How much is this?","Kino kigula ssente mmeka?","","Hii ni bei gani?"],
+["Where is the toilet?","Kabuyonjo eri wa?","","Choo kiko wapi?"],
+["What time is it?","Essaawa ziri mmeka?","","Saa ngapi?"],
+["I am hungry","Njala ennuma","","Nina njaa"],
+["I am thirsty","Ennyonta ennuma","","Nina kiu"],
+["I am sick","Ndi mulwadde","","Mimi ni mgonjwa"],
+["I am going home","Ŋŋenda eka","","Ninaenda nyumbani"],
+["I love you","Nkwagala","","Nakupenda"],
+["Water","Amazzi","","Maji"],
+["Food","Emmere","Emmere","Chakula","w"],
+["Milk","Amata","Amata","Maziwa","w"],
+["Person","Omuntu","Omuntu","Mtu","w"],
+["Child","Omwaana","Omwaana","Mtoto","w"],
+["My friend","Mukwano gwange","Mukwano gwange","Rafiki yangu","w"],
+["To eat","Okulya","Okulya","Kula","w"],
+["To read / to study","Okusoma","Okusoma","Kusoma","w"],
+["Money","Ssente","","Pesa"],["Friend","Mukwano","","Rafiki"],
+["Today","Leero","","Leo"],["Tomorrow","Enkya","","Kesho"],["Yesterday","Jjo","","Jana"],
+["One","Emu","","Moja"],["Two","Bbiri","","Mbili"],["Three","Ssatu","","Tatu"],["Four","Nnya","","Nne"],["Five","Ttaano","","Tano"],
+["Six","Mukaaga","","Sita"],["Seven","Musanvu","","Saba"],["Eight","Munaana","","Nane"],["Nine","Mwenda","","Tisa"],["Ten","Kkumi","","Kumi"]
+];
+const BASE=RAW.map(r=>({en:r[0],lg:r[1],xog:r[2],sw:r[3],xs:r[4]||'',base:1}));
+
+/* =========================================================
+   HELPERS
+   ========================================================= */
+const $=id=>document.getElementById(id);
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch{return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch{}},del(k){try{localStorage.removeItem(k)}catch{}}};
+const norm=s=>String(s).toLowerCase().replace(/['’`]/g,'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ŋ/g,'n').replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
+const alts=s=>String(s||'').split('/').map(x=>x.trim()).filter(Boolean);
+const first=s=>alts(s)[0]||'';
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}for(const k of kids.flat())e.append(k);return e}
+let toastT;function toast(m,ms=3600){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=el('div',{class:'toast',role:'status'},m);document.body.append(t);clearTimeout(toastT);toastT=setTimeout(()=>t.remove(),ms)}
+const cfg=()=>({base:'https://api.sunbird.ai',voice:'auto',explain:'English',...store.get('waltrans.cfg',{})});
+const setCfg=o=>store.set('waltrans.cfg',{...cfg(),...o});
+const token=()=>store.get('waltrans.token',null);
+const customs=()=>store.get('waltrans.custom',[]);
+const allEntries=()=>[...customs(),...BASE];
+
+/* =========================================================
+   TRANSLATION MEMORY (learns; used offline; verified corrections win)
+   ========================================================= */
+const tmAll=()=>store.get('waltrans.tm',{});
+const tmKey=(f,t,txt,ctx)=>f+'>'+t+'|'+norm(txt)+(ctx?'|'+norm(ctx):'');
+function tmGet(f,t,txt,ctx){const m=tmAll();return m[tmKey(f,t,txt,ctx)]||m[tmKey(f,t,txt,'')]||null}
+function tmPut(f,t,txt,out,ctx,verified){
+  const m=tmAll(),now=Date.now();
+  const e={t:out,v:verified?1:0,ts:now};
+  const k0=tmKey(f,t,txt,'');
+  if(verified||!m[k0]||!m[k0].v) m[k0]=e;
+  if(ctx) m[tmKey(f,t,txt,ctx)]=e;
+  const keys=Object.keys(m); if(keys.length>1500){keys.sort((a,b)=>(m[a].v-m[b].v)||(m[a].ts-m[b].ts)).slice(0,keys.length-1500).forEach(k=>delete m[k])}
+  store.set('waltrans.tm',m);
+}
+
+/* =========================================================
+   LANGUAGE DETECTION (local, for mixed sentences)
+   ========================================================= */
+const W={
+ en:'the is are am was were to and of in on it you he she we they my your this that with for not have has do does what where when who how why please thank thanks good morning evening night market price water tomorrow today now want need go going come buy sell money friend home school see know like love hello yes but because will can could would should very much more some any from at by or if so just also here there help me him her them our their its be been get give take tell say said make time day week'.split(' '),
+ lg:'nze ggwe ye ffe mmwe bo nga era naye ne mu ku ki ani kiki wa otya oli ndi bulungi webale nnyo kati leero enkya jjo nja nina nnina ssente mukwano kye bwe ate nti oba kubanga ddala wano eno ebyo ekyo ssebo nnyabo kale yee nedda bwoba osobola njagala ŋŋenda genda jja njja tuli mwe bali ali ofuna nnyamba tewali waliwo olwaleero ssaawa emmere amazzi eka ennyumba omwaana omukyala omusajja nsaba nsonyiwa sitegeera'.split(' '),
+ sw:'na kwa ni sana sasa leo kesho jana nina nataka naomba habari asante hapana ndiyo pole rafiki kuna hakuna lakini huko hapa pia tu bado kila nyumba maji chakula pesa mimi wewe yeye sisi nyinyi wao sijambo hujambo karibu tafadhali samahani sawa kwaheri tutaonana ninaenda nimechoka nina bei gani wapi nani nini kwanini lini vipi ndio sijui nimeelewa unaweza unataka tunaweza ninakupenda mzuri nzuri kubwa ndogo'.split(' ')
+};
+const LEX=Object.fromEntries(Object.entries(W).map(([k,v])=>[k,new Set(v.map(norm))]));
+function detect(text){
+  const toks=norm(text).split(' ').filter(Boolean), c={en:0,lg:0,sw:0};
+  for(const t of toks) for(const k of Object.keys(c)) if(LEX[k].has(t)) c[k]++;
+  const found=Object.keys(c).filter(k=>c[k]>0).sort((a,b)=>c[b]-c[a]);
+  const mixed=found.length>=2 && toks.length>=3 && c[found[1]]>=1;
+  return {counts:c,langs:found,main:found[0]||null,mixed};
+}
+
+/* =========================================================
+   OFFLINE ENGINE 1: phrasebook (exact → closest → word-by-word)
+   ========================================================= */
+function exact(txt,src,tgt){const n=norm(txt);for(const e of allEntries()){if(e[src]&&e[tgt]&&alts(e[src]).some(a=>norm(a)===n))return{text:first(e[tgt])}}}
+const NEG=new Set(['not','no','dont','never','cant','cannot','isnt','arent','wont','didnt','without','nothing','nobody','nedda','si','te','tewali','sio','hapana','hakuna','siwezi','sija','siku','sitegeera','sielewi','nta']);
+function fuzzy(txt,src,tgt){
+  const a=new Set(norm(txt).split(' ').filter(Boolean)); if(!a.size)return;
+  let best=null,score=0;
+  for(const e of allEntries()){if(!e[src]||!e[tgt])continue;
+    for(const v of alts(e[src])){const b=new Set(norm(v).split(' ').filter(Boolean));let i=0;a.forEach(x=>{if(b.has(x))i++});const j=i/(a.size+b.size-i);
+      const diff=[...a].filter(x=>!b.has(x)).concat([...b].filter(x=>!a.has(x)));if(diff.some(x=>NEG.has(x)))continue;
+      if(j>score){score=j;best={text:first(e[tgt]),from:v}}}}
+  if(best&&score>=0.6)return best;
+}
+function rough(txt,src,tgt){
+  const map=new Map();
+  for(const e of allEntries()){if(!e[src]||!e[tgt])continue;for(const v of alts(e[src])){const n=norm(v);if(n&&!n.includes(' ')&&!map.has(n))map.set(n,first(e[tgt]))}}
+  const toks=norm(txt).split(' ').filter(Boolean);if(!toks.length)return;
+  let hit=0;const out=toks.map(t=>{const m=map.get(t);if(m){hit++;return m}return'['+t+']'});
+  if(hit/toks.length>=0.5)return{text:out.join(' ')};
+}
+
+/* =========================================================
+   OFFLINE ENGINE 2: on-device NLLB pack (Web Worker)
+   ========================================================= */
+let worker=null,wid=0;const wwait=new Map();let packProg=null;
+const packOn=()=>store.get('waltrans.pack',false);
+function getWorker(){
+  if(worker)return worker;
+  worker=new Worker('nllb-worker.js',{type:'module'});
+  worker.onmessage=e=>{const m=e.data;
+    if(m.type==='progress'&&packProg)packProg(m.loaded,m.total);
+    else if(m.type==='ready'){const w=wwait.get('load');if(w){wwait.delete('load');w.res()}}
+    else if(m.type==='result'){const w=wwait.get(m.id);if(w){wwait.delete(m.id);w.res(m.text)}}
+    else if(m.type==='error'){const w=wwait.get(m.id||'load');if(w){wwait.delete(m.id||'load');w.rej(new Error(m.message))}}};
+  worker.onerror=e=>{for(const[k,w]of wwait){w.rej(new Error(e.message||'Worker failed'));wwait.delete(k)}worker=null};
+  return worker;
+}
+function packLoad(){return new Promise((res,rej)=>{wwait.set('load',{res,rej});getWorker().postMessage({type:'load'})})}
+function packTranslate(text,src,tgt){return new Promise((res,rej)=>{const id=++wid;wwait.set(id,{res,rej});getWorker().postMessage({type:'translate',id,text,src,tgt})})}
+async function packRun(text,src,tgt){
+  const t=Promise.race([packTranslate(text,L[src].nl,L[tgt].nl),sleep(90000).then(()=>{throw new Error('timeout')})]);
+  return {text:await t};
+}
+
+/* Chrome's built-in translator (only some languages; never blocks) */
+const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,j)=>setTimeout(()=>j(new Error('timeout')),ms))]);
+async function deviceTranslate(txt,src,tgt){
+  if(!('Translator' in self))return;
+  try{const o={sourceLanguage:src,targetLanguage:tgt};const a=await withTimeout(Translator.availability(o),1500);
+    if(a!=='available')return;const t=await withTimeout(Translator.create(o),4000);return{text:await withTimeout(t.translate(txt),8000)}}catch{}
+}
+
+/* =========================================================
+   ONLINE ENGINE 1: Sunbird AI (translate, chat/context, explain, STT, TTS)
+   ========================================================= */
+class AuthErr extends Error{}
+async function sb(path,{json,form,body,method='POST',timeout=25000,retry=true}={}){
+  const h={},t=token(); if(t)h.Authorization='Bearer '+t;
+  let b; if(json){h['Content-Type']='application/json';b=JSON.stringify(json)}else if(form){h['Content-Type']='application/x-www-form-urlencoded';b=new URLSearchParams(form).toString()}else if(body){b=body}
+  const ac=new AbortController(),to=setTimeout(()=>ac.abort(),timeout);
+  let r; try{r=await fetch(cfg().base.replace(/\/+$/,'')+path,{method,headers:h,body:b,signal:ac.signal})}finally{clearTimeout(to)}
+  if(r.status===401||r.status===403){if(path.startsWith('/auth/'))throw new Error(await errText(r));store.del('waltrans.token');setAi();throw new AuthErr('Please log in again (Settings).')}
+  if((r.status===503||r.status===502)&&retry){await sleep(2500);return sb(path,{json,form,body,method,timeout,retry:false})}
+  if(!r.ok)throw new Error(await errText(r));
+  const ct=r.headers.get('content-type')||''; return ct.includes('json')?r.json():r;
+}
+async function errText(r){try{const j=await r.json();const d=j.detail;return typeof d==='string'?d:(Array.isArray(d)?d.map(x=>x.msg).join('; '):('HTTP '+r.status))}catch{return'HTTP '+r.status}}
+const sbReady=()=>!!token()&&navigator.onLine;
+
+function parseJsonLoose(s){
+  const m=String(s).match(/\{[\s\S]*\}/); if(m){try{return JSON.parse(m[0])}catch{}}
+  return null;
+}
+function cleanText(s){return String(s).replace(/^```[a-z]*\n?|```$/gim,'').replace(/^["“]|["”]$/g,'').trim()}
+
+async function sbTranslate(text,src,tgt){
+  const body={text,target_language:L[tgt].sb}; if(src&&src!=='auto'&&L[src].sb)body.source_language=L[src].sb;
+  const j=await sb('/tasks/translate',{json:body,timeout:20000});
+  const o=j.output||{}; const out=o.translated_text||o.text; if(!out)throw new Error('empty');
+  return{text:out.trim()};
+}
+async function sbChat(text,src,tgt,ctx,det){
+  const srcName=src&&src!=='auto'?L[src].n:'unknown (detect it)';
+  const sys='You are WalTrans, an expert human-quality translator for Ugandan and East African languages (Luganda, Lusoga, Kiswahili, Runyankole, Acholi, etc.) and English. '+
+   'Translate the WHOLE message by its meaning and context, as a fluent native speaker would say it. Never translate word by word. Choose word senses that fit the context. '+
+   'The input may MIX languages inside one sentence (for example English words inside a Luganda sentence). Understand every part, and translate everything into the target language only. '+
+   'Keep names, numbers and places. Use natural everyday speech unless the context asks for formal or respectful speech. '+
+   'Reply with ONLY one JSON object, no other text: {"detected":["languages found in the input"],"translation":"the translation"}';
+  const user='Target language: '+L[tgt].n+'\nSource language: '+srcName+(det&&det.mixed?'\nNote: this sentence mixes languages.':'')+(ctx?'\nContext/situation: '+ctx:'')+'\nText:\n'+text;
+  const j=await sb('/tasks/chat/completions',{json:{model:'sunflower-9b',messages:[{role:'system',content:sys},{role:'user',content:user}],temperature:0.1,max_tokens:Math.min(1200,Math.max(120,text.length*4))},timeout:40000});
+  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content; if(!raw)throw new Error('empty');
+  const p=parseJsonLoose(raw);
+  if(p&&p.translation)return{text:String(p.translation).trim(),detected:Array.isArray(p.detected)?p.detected.map(String).slice(0,4):[]};
+  return{text:cleanText(raw),detected:[]};
+}
+async function sbExplain(text,lang,inLang,ctx){
+  const sys='You are WalTrans, a patient language tutor for Ugandan and East African languages and English. Explain clearly and honestly. If you are unsure about something, say so instead of guessing. Use plain text, no markdown symbols.';
+  const user='Explain this '+L[lang].n+' text for a learner. Write the explanation in '+inLang+'.\nText: '+text+(ctx?'\nSituation: '+ctx:'')+
+   '\n\nGive:\n1. Meaning in simple words\n2. Word-by-word breakdown (roots, prefixes, noun classes or tenses where useful)\n3. How and when it is used (casual, formal, respectful) and any cultural note\n4. Two short example sentences with translations\nKeep it concise.';
+  const j=await sb('/tasks/chat/completions',{json:{model:'sunflower-9b',messages:[{role:'system',content:sys},{role:'user',content:user}],temperature:0.3,max_tokens:700},timeout:45000});
+  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content; if(!raw)throw new Error('empty');
+  return String(raw).replace(/\*\*/g,'').replace(/^#+\s*/gm,'').trim();
+}
+
+/* =========================================================
+   ONLINE ENGINE 2: MyMemory (fallback, other languages)
+   ========================================================= */
+function chunks(s,max=450){const out=[];let cur='';for(const p of s.split(/(?<=[.!?\n])\s+/)){if((cur+' '+p).length>max&&cur){out.push(cur);cur=p}else cur=cur?cur+' '+p:p}if(cur)out.push(cur);return out.flatMap(c=>c.length>max?c.match(new RegExp('.{1,'+max+'}','g')):[c])}
+async function myMemory(txt,src,tgt){
+  const a=L[src].mm,b=L[tgt].mm;
+  const one=async c=>{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),7000);let r;try{r=await fetch('https://api.mymemory.translated.net/get?q='+encodeURIComponent(c)+'&langpair='+a+'|'+b,{signal:ac.signal})}finally{clearTimeout(to)}
+    if(!r.ok)throw new Error('HTTP '+r.status);const j=await r.json();const t=j&&j.responseData&&j.responseData.translatedText;
+    if(j.responseStatus!=200||!t||/MYMEMORY WARNING|INVALID/i.test(t))throw new Error(t||'No result');return t};
+  const parts=await Promise.all(chunks(txt).map(one));
+  const d=document.createElement('textarea');d.innerHTML=parts.join(' ');return{text:d.value};
+}
+
+/* =========================================================
+   TRANSLATION ROUTER
+   ========================================================= */
+async function translateCore(text,from,to,ctx=''){
+  const det=detect(text);
+  let src=from==='auto'?(det.main||null):from;
+  const S=src?L[src]:null,T=L[to];
+  const tkey=src||'auto';
+  const tm=tmGet(tkey,to,text,ctx);
+  if(tm)return{text:tm.t,label:tm.v?'Your saved correction':'Remembered · instant',cls:'off',det,src};
+  if(src){const r=exact(text,src,to);if(r)return{...r,label:'Phrasebook · works offline',cls:'off',det,src}}
+  const online=navigator.onLine;
+  let authMsg='';
+  if(sbReady()&&T.sb&&(!S||S.sb)){
+    const chat=!!ctx||det.mixed||text.length>140||/[.!?]\s+\S/.test(text);
+    try{
+      const r=chat?await sbChat(text,from==='auto'?'auto':src,to,ctx,det):await sbTranslate(text,from==='auto'?'auto':src,to);
+      tmPut(tkey,to,text,r.text,ctx,false); if(src&&src!==tkey)tmPut(src,to,text,r.text,ctx,false);
+      return{...r,label:chat?(det.mixed?'Sunbird AI · mixed-language, in context':'Sunbird AI · in context'):'Sunbird AI',cls:'',det,src};
+    }catch(e){if(e instanceof AuthErr)authMsg=e.message}
+  }
+  if(!src)src='en';
+  const S2=L[src];
+  if(online&&S2.mm&&T.mm&&src!==to){
+    try{const r=await myMemory(text,src,to);tmPut(src,to,text,r.text,ctx,false);return{...r,label:'Online translation (basic, no context)',cls:'',det,src}}catch{}
+  }
+  if(packOn()&&S2.nl&&T.nl){
+    try{const r=await packRun(text,src,to);tmPut(src,to,text,r.text,ctx,false);return{...r,label:'Offline pack (on-device)',cls:'off',det,src}}catch{}
+  }
+  const d=await deviceTranslate(text,src,to); if(d)return{...d,label:'On-device translator · offline',cls:'off',det,src};
+  const f=fuzzy(text,src,to); if(f)return{...f,label:'Closest phrasebook match: “'+f.from+'”',cls:'rough',det,src,warn:1};
+  const r=rough(text,src,to); if(r)return{...r,label:'Rough word-by-word guess (offline)',cls:'rough',det,src,warn:1};
+  let why;
+  if(authMsg)why=authMsg;
+  else if(L[to].c==='xog'||src==='xog')why=online?'Lusoga needs the free Sunbird AI connection: open ⚙️ Settings → Connect.':'Lusoga offline only knows the phrasebook and translations you saved. Connect once while online to build it up.';
+  else if(!online&&packOn()&&S2.nl&&T.nl)why='The offline pack couldn’t start on this device (it may need more memory). Try closing other apps, or reinstall it in ⚙️ Settings.';
+  else if(!online)why=(S2.nl&&T.nl)?'You are offline. Install the offline pack in ⚙️ Settings to translate any sentence without internet.':'You are offline and this isn’t in the phrasebook.';
+  else why='The translation service didn’t respond. Connect Sunbird AI in ⚙️ Settings for better results.';
+  const e=new Error(why);e.det=det;throw e;
+}
+
+/* =========================================================
+   MAIN TRANSLATE UI
+   ========================================================= */
+let last=null,ctxChip='';
+const CTX=['Everyday','Market / shopping','Formal / official','Respectful (to an elder)','School / study','Health / clinic','Travel / transport','Church / mosque','Farming','Business'];
+const ctxString=()=>[ctxChip,$('ctxText').value.trim()].filter(Boolean).join('. ');
+async function translate(){
+  const txt=$('src').value.trim(),from=$('from').value,to=$('to').value;
+  if(!txt){toast('Type or speak something first');return}
+  if(from===to){showOut({text:txt},'Same language','');return}
+  $('go').disabled=true;$('go').textContent='Translating…';
+  const t0=performance.now();
+  try{
+    const r=await translateCore(txt,from,to,ctxString());
+    renderDet(r.det,r.detected);
+    last={text:r.text,src:txt,from:r.src||from,to,ctx:ctxString()};
+    showOut(r,r.label+(r.label.startsWith('Remembered')?'':' · '+((performance.now()-t0)/1000).toFixed(1)+'s'),r.cls,r.warn);
+    pushHist({src:txt,text:r.text,from:last.from,to});
+  }catch(e){renderDet(e.det);showOut(null,e.message,'err')}
+  finally{$('go').disabled=false;$('go').textContent='Translate'}
+}
+function renderDet(det,ai){
+  const names={en:'English',lg:'Luganda',sw:'Kiswahili'};
+  let s='';
+  if(ai&&ai.length)s='Detected: '+ai.join(' + ');
+  else if(det&&det.langs.length)s='Detected: '+det.langs.map(k=>names[k]).join(' + ')+(det.mixed?' (mixed sentence)':'');
+  $('det').textContent=s;
+}
+function showOut(r,label,cls,warn){
+  const o=$('out');o.textContent=r?r.text:'—';o.classList.toggle('empty',!r);
+  const m=$('meta');m.replaceChildren(el('span',{class:'badge '+(cls||'')},label));
+  if(warn)m.append(el('p',{class:'note'},'Treat this as a hint, not a correct translation.'));
+  $('expl').classList.add('hidden');closeFix();
+}
+function closeFix(){$('fixBox').classList.add('hidden');$('fixSave').classList.add('hidden');$('out').classList.remove('hidden')}
+
+/* Explain */
+async function doExplain(text,lang,anchor){
+  if(!text){toast('Nothing to explain yet');return}
+  const box=$('expl');box.classList.remove('hidden');
+  if(lang==='auto')lang=(detect(text).main)||'en';
+  if(!sbReady()){
+    const hits=allEntries().filter(e=>e[lang]&&alts(e[lang]).some(a=>norm(a)===norm(text)));
+    box.textContent=hits.length?('From the phrasebook:\n'+CORE.filter(c=>hits[0][c]).map(c=>L[c].n+': '+hits[0][c]).join('\n')+'\n\nFor a full explanation (meaning, breakdown, usage), connect Sunbird AI in ⚙️ Settings and go online.'):'Explanations need the AI connection and internet. Connect Sunbird AI in ⚙️ Settings.';
+    return;
+  }
+  box.textContent='Thinking…';
+  try{box.textContent=await sbExplain(text,lang,cfg().explain,ctxString())}catch(e){box.textContent=(e instanceof AuthErr?e.message:'Couldn’t get an explanation right now. Try again in a moment.')}
+}
+
+/* History */
+function pushHist(x){const h=store.get('waltrans.history',[]).filter(y=>!(y.src===x.src&&y.from===x.from&&y.to===x.to));h.unshift({...x,t:Date.now()});store.set('waltrans.history',h.slice(0,50));renderHist()}
+function renderHist(){
+  const h=store.get('waltrans.history',[]),box=$('histList');
+  if(!h.length){box.replaceChildren(el('p',{class:'note'},'No translations yet.'));return}
+  box.replaceChildren(...h.map(x=>el('div',{class:'item'},el('button',{type:'button',style:'width:100%;text-align:left;border:0;background:none;padding:0;min-height:0',onclick:()=>{$('from').value=x.from;$('to').value=x.to;$('src').value=x.src;saveLangs();last={text:x.text,src:x.src,from:x.from,to:x.to,ctx:''};showOut({text:x.text},'From history','');showTab('tr');scrollTo({top:0,behavior:'smooth'})}},el('b',{},x.text),el('br'),el('small',{style:'color:var(--mute)'},L[x.from].n+' → '+L[x.to].n+': '+x.src)))));
+}
+
+/* =========================================================
+   SPEECH OUT
+   ========================================================= */
+let player=null;
+async function speakText(text,lang){
+  if(!text)return;
+  const Lg=L[lang];
+  if(Lg.tts&&sbReady()){
+    try{const j=await sb('/tasks/audio/speech',{json:{text,language:Lg.sb,response_mode:'url'},timeout:40000});
+      if(j.audio_url){if(player)player.pause();player=new Audio(j.audio_url);await player.play();return}}catch(e){if(e instanceof AuthErr){toast(e.message);return}}
+  }
+  if(Lg.sp&&'speechSynthesis' in window){
+    const u=new SpeechSynthesisUtterance(text);u.lang=Lg.sp;const vs=speechSynthesis.getVoices();
+    const v=vs.find(v=>v.lang.toLowerCase().startsWith(Lg.sp.slice(0,2)));
+    if(!v&&vs.length){toast('No '+Lg.n+' voice on this device')}else{if(v)u.voice=v;speechSynthesis.cancel();speechSynthesis.speak(u);return}
+  }
+  toast(Lg.tts?'Read-aloud for '+Lg.n+' needs the Sunbird AI connection and internet':Lg.n+' has no read-aloud voice yet');
+}
+
+/* =========================================================
+   SPEECH IN (browser recognition + Sunbird recording → WAV → transcription)
+   ========================================================= */
+let activeStop=null;
+function browserListen(lang,onInterim){
+  return new Promise((res,rej)=>{
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR)return rej(new Error('nosr'));
+    const r=new SR();r.lang=L[lang].sp;r.interimResults=true;r.continuous=false;let txt='';
+    r.onresult=e=>{txt=[...e.results].map(x=>x[0].transcript).join(' ');onInterim&&onInterim(txt)};
+    r.onerror=e=>rej(new Error(e.error||'error'));
+    r.onend=()=>res(txt);
+    activeStop=()=>r.stop();
+    try{r.start()}catch(e){rej(e)}
+  });
+}
+async function toWav(blob){
+  const AC=window.AudioContext||window.webkitAudioContext;const ac=new AC();
+  const audio=await ac.decodeAudioData(await blob.arrayBuffer());ac.close&&ac.close();
+  const rate=16000,off=new OfflineAudioContext(1,Math.max(1,Math.ceil(audio.duration*rate)),rate);
+  const s=off.createBufferSource();s.buffer=audio;s.connect(off.destination);s.start();
+  const pcm=(await off.startRendering()).getChannelData(0);
+  const buf=new ArrayBuffer(44+pcm.length*2),v=new DataView(buf);const w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};
+  w(0,'RIFF');v.setUint32(4,36+pcm.length*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,pcm.length*2,true);
+  for(let i=0;i<pcm.length;i++){const x=Math.max(-1,Math.min(1,pcm[i]));v.setInt16(44+i*2,x<0?x*0x8000:x*0x7fff,true)}
+  return new Blob([buf],{type:'audio/wav'});
+}
+async function sunbirdListen(lang,onState){
+  if(!navigator.mediaDevices||!window.MediaRecorder)throw new Error('This browser can’t record audio.');
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  const mr=new MediaRecorder(stream),parts=[];mr.ondataavailable=e=>e.data.size&&parts.push(e.data);
+  const AC=window.AudioContext||window.webkitAudioContext,ac=new AC(),an=ac.createAnalyser();an.fftSize=1024;ac.createMediaStreamSource(stream).connect(an);
+  const data=new Uint8Array(an.fftSize);let spoke=false,lastVoice=Date.now(),started=Date.now(),stopped=false;
+  const done=new Promise(r=>{mr.onstop=r});
+  const stop=()=>{if(!stopped){stopped=true;try{mr.stop()}catch{}}};
+  activeStop=stop;
+  const iv=setInterval(()=>{an.getByteTimeDomainData(data);let m=0;for(const d of data)m=Math.max(m,Math.abs(d-128));
+    if(m>10){spoke=true;lastVoice=Date.now()}
+    if((spoke&&Date.now()-lastVoice>1600)||Date.now()-started>28000)stop()},120);
+  mr.start();onState&&onState('Listening… tap the mic again to stop');
+  await done;clearInterval(iv);stream.getTracks().forEach(t=>t.stop());ac.close&&ac.close();
+  if(!spoke&&Date.now()-started<2500)return'';
+  onState&&onState('Transcribing…');
+  const wav=await toWav(new Blob(parts,{type:mr.mimeType||'audio/webm'}));
+  const fd=new FormData();fd.append('audio',wav,'speech.wav');fd.append('language',L[lang].sb);
+  const j=await sb('/tasks/audio/transcriptions',{body:fd,timeout:60000});
+  return (j.audio_transcription||'').trim();
+}
+/* choose engine; returns transcript */
+async function listen(lang,{onInterim,onState}={}){
+  const pref=cfg().voice,Lg=L[lang];
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  const canSB=!!Lg.stt&&sbReady(),canBr=!!(SR&&Lg.sp);
+  let useSB=pref==='sunbird'?canSB:pref==='browser'?false:(canSB&&(Lg.af||!canBr));
+  if(!useSB&&!canBr&&!canSB){
+    if(Lg.stt&&!token())throw new Error('Voice for '+Lg.n+' needs the free Sunbird AI connection: open ⚙️ Settings → Connect.');
+    if(Lg.stt&&!navigator.onLine)throw new Error('Voice for '+Lg.n+' needs internet.');
+    throw new Error('Voice input isn’t available for '+Lg.n+' on this device. You can still type.');
+  }
+  if(!useSB&&canBr){
+    try{onState&&onState('Listening… tap the mic again to stop');return await browserListen(lang,onInterim)}
+    catch(e){if(canSB&&['language-not-supported','not-allowed','service-not-allowed','network','nosr','error'].includes(e.message)&&e.message!=='not-allowed')useSB=true;else if(e.message==='not-allowed')throw new Error('Microphone permission was denied.');else if(e.message==='no-speech')return'';else throw new Error('Couldn’t use browser voice for '+Lg.n+(canSB?'':'. Connect Sunbird AI in Settings for better coverage.'))}
+  }
+  if(useSB){
+    try{return await sunbirdListen(lang,onState)}
+    catch(e){if(e.name==='NotAllowedError')throw new Error('Microphone permission was denied.');throw e}
+  }
+  throw new Error('Voice input isn’t available for '+Lg.n+'.');
+}
+async function micFlow(btn,lang,onText){
+  if(activeStop){activeStop();return}
+  btn.classList.add('rec');
+  try{const t=await listen(lang,{onInterim:x=>onText(x,false),onState:s=>toast(s,30000)});document.querySelectorAll('.toast').forEach(x=>x.remove());if(t)onText(t,true);else toast('Didn’t catch anything. Try again.')}
+  catch(e){document.querySelectorAll('.toast').forEach(x=>x.remove());toast(e.message,6000)}
+  finally{activeStop=null;btn.classList.remove('rec')}
+}
+
+/* =========================================================
+   CONVERSATION MODE
+   ========================================================= */
+let convo=store.get('waltrans.convo',[]);
+function renderConvo(){
+  const b=$('bubbles');
+  if(!convo.length){b.replaceChildren(el('p',{class:'note'},'No messages yet.'));return}
+  b.replaceChildren(...convo.map(m=>el('div',{class:'bub '+m.side},el('small',{},(m.side==='a'?'A':'B')+' · '+L[m.from].n+': '+m.src),el('b',{},m.out),el('small',{},'→ '+L[m.to].n))));
+  b.scrollTop=b.scrollHeight;
+}
+async function convoSend(side,text){
+  text=text.trim();if(!text)return;
+  const a=$('ca').value,bb=$('cb').value,from=side==='a'?a:bb,to=side==='a'?bb:a;
+  try{
+    const r=from===to?{text}:await translateCore(text,from,to,'Face-to-face conversation');
+    convo.push({side,from,to,src:text,out:r.text});convo=convo.slice(-40);store.set('waltrans.convo',convo);renderConvo();
+    if($('autoSpeak').checked)speakText(r.text,to);
+  }catch(e){toast(e.message,6000)}
+}
+
+/* =========================================================
+   PHRASEBOOK UI
+   ========================================================= */
+function renderBook(){
+  const q=norm($('q').value),box=$('bookList');
+  const cs=customs().map((e,i)=>({...e,ci:i}));
+  const list=[...cs,...BASE].filter(e=>!q||CORE.some(c=>e[c]&&norm(e[c]).includes(q)));
+  box.replaceChildren(...list.map(e=>{
+    const g=el('div',{class:'lg'});
+    for(const c of CORE){if(!e[c])continue;const v=el('span',{},e[c]);
+      if(c==='xog'&&e.base){v.append(e.xs==='w'?el('span',{class:'src'},'Wikipedia'):el('span',{class:'unv'},'unverified'))}
+      g.append(el('span',{},L[c].n),v)}
+    const it=el('div',{class:'item'},g);
+    if(e.ci!==undefined)it.append(el('button',{type:'button',style:'margin-top:6px',onclick:()=>{const c=customs();c.splice(e.ci,1);store.set('waltrans.custom',c);renderBook()}},'Delete'));
+    return it}));
+  if(!list.length)box.replaceChildren(el('p',{class:'note'},'Nothing found.'));
+}
+function addPhrase(vals){
+  const e={};let n=0;for(const c of CORE){e[c]=(vals[c]||'').trim();if(e[c])n++}
+  if(n<2){toast('Fill in at least two languages');return false}
+  const c=customs();c.unshift(e);store.set('waltrans.custom',c);renderBook();return true;
+}
+
+/* =========================================================
+   SETTINGS: Sunbird account, pack manager, data
+   ========================================================= */
+function setAi(){const on=!!token();const p=$('ai');p.textContent=on?'AI: on':'AI: off';p.className='pill '+(on?'on':'off');$('sbIn').classList.toggle('hidden',on);$('sbOut').classList.toggle('hidden',!on)}
+async function sbLogin(email,pass){
+  const j=await sb('/auth/token',{form:{username:email,email:email,password:pass}});
+  if(!j.access_token)throw new Error('Login failed');store.set('waltrans.token',j.access_token);setAi();
+}
+function fmtMB(n){return (n/1048576).toFixed(0)+' MB'}
+function setPackUi(){
+  const on=packOn();$('packState').textContent=on?'Installed. Offline translation is ready for the languages with an on-device model.':'Not installed.';
+  $('packGet').classList.toggle('hidden',on);$('packDel').classList.toggle('hidden',!on);
+}
+async function packInstall(){
+  if(!navigator.onLine){toast('Connect to Wi-Fi first');return}
+  $('packGet').disabled=true;$('packBar').classList.remove('hidden');
+  try{await navigator.storage?.persist?.()}catch{}
+  packProg=(l,t)=>{$('packBar').firstElementChild.style.width=Math.min(100,l/t*100)+'%';$('packState').textContent='Downloading… '+fmtMB(l)+' of '+fmtMB(t)};
+  try{await packLoad();store.set('waltrans.pack',true);toast('Offline pack ready')}
+  catch(e){$('packState').textContent='Download failed: '+e.message+'. Try again on a stable connection.'}
+  finally{packProg=null;$('packGet').disabled=false;$('packBar').classList.add('hidden');if(packOn())setPackUi()}
+}
+async function packRemove(){
+  try{if(worker){worker.terminate();worker=null}await caches.delete('transformers-cache')}catch{}
+  store.set('waltrans.pack',false);setPackUi();toast('Offline pack removed');
+}
+
+/* =========================================================
+   WIRING
+   ========================================================= */
+function fillSelects(){
+  const mk=(auto)=>{const gs=[];if(auto)gs.push(el('option',{value:'auto'},'Detect language'));
+    for(const[k,n]of Object.entries(G))gs.push(el('optgroup',{label:n},...LANGS.filter(l=>l.g===k).map(l=>el('option',{value:l.c},l.n))));return gs};
+  $('from').replaceChildren(...mk(true));$('to').replaceChildren(...mk(false));$('ca').replaceChildren(...mk(false));$('cb').replaceChildren(...mk(false));
+  const sv=store.get('waltrans.langs',{from:'en',to:'lg'});$('from').value=sv.from==='auto'||L[sv.from]?sv.from:'en';$('to').value=L[sv.to]?sv.to:'lg';
+  const cv=store.get('waltrans.clangs',{a:'en',b:'lg'});$('ca').value=L[cv.a]?cv.a:'en';$('cb').value=L[cv.b]?cv.b:'lg';
+}
+const saveLangs=()=>store.set('waltrans.langs',{from:$('from').value,to:$('to').value});
+function net(){const on=navigator.onLine;const n=$('net');n.textContent=on?'Online':'Offline';n.className='pill '+(on?'on':'off')}
+function showTab(t){for(const k of['tr','chat','book','hist']){$('t-'+k).setAttribute('aria-selected',k===t);$('p-'+k).classList.toggle('hidden',k!==t)}}
+
+fillSelects();net();renderHist();renderBook();renderConvo();setAi();setPackUi();
+$('ctxChips').replaceChildren(...CTX.map(c=>el('button',{type:'button',class:'chip','aria-pressed':'false',onclick:e=>{const b=e.currentTarget,on=b.getAttribute('aria-pressed')!=='true';document.querySelectorAll('#ctxChips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed',on);ctxChip=on?c:''}},c)));
+addEventListener('online',()=>{net();setAi()});addEventListener('offline',net);
+$('from').onchange=$('to').onchange=saveLangs;
+$('ca').onchange=$('cb').onchange=()=>store.set('waltrans.clangs',{a:$('ca').value,b:$('cb').value});
+$('swap').onclick=()=>{let f=$('from').value;if(f==='auto')f=(last&&last.from)||'en';$('from').value=$('to').value;$('to').value=f;if(last&&last.text)$('src').value=last.text;saveLangs();if($('src').value.trim())translate()};
+$('go').onclick=translate;
+$('src').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();translate()}});
+$('clear').onclick=()=>{$('src').value='';$('out').textContent='Translation appears here.';$('out').classList.add('empty');$('meta').replaceChildren();$('det').textContent='';$('expl').classList.add('hidden');closeFix();$('src').focus()};
+$('mic').onclick=()=>micFlow($('mic'),$('from').value==='auto'?'en':$('from').value,(t,fin)=>{$('src').value=t;if(fin)translate()});
+$('speakSrc').onclick=()=>speakText($('src').value.trim(),$('from').value==='auto'?'en':$('from').value);
+$('speakOut').onclick=()=>last&&speakText(last.text,last.to);
+$('copy').onclick=async()=>{if(!last)return;try{await navigator.clipboard.writeText(last.text);toast('Copied')}catch{toast('Copy not allowed here')}};
+if(navigator.share){$('share').classList.remove('hidden');$('share').onclick=()=>last&&navigator.share({text:last.text}).catch(()=>{})}
+$('explainSrc').onclick=()=>doExplain($('src').value.trim(),$('from').value);
+$('explainOut').onclick=()=>last&&doExplain(last.text,last.to);
+$('fix').onclick=()=>{if(!last){toast('Translate something first');return}$('fixBox').value=last.text;$('fixBox').classList.remove('hidden');$('fixSave').classList.remove('hidden');$('out').classList.add('hidden');$('fixBox').focus()};
+$('fixSave').onclick=()=>{const v=$('fixBox').value.trim();if(!v||!last)return;tmPut(last.from,last.to,last.src,v,last.ctx,true);last.text=v;
+  if(CORE.includes(last.from)&&CORE.includes(last.to)){const e={};e[last.from]=last.src;e[last.to]=v;const c=customs();if(!c.some(x=>x[last.from]===e[last.from]&&x[last.to]===e[last.to])){c.unshift(e);store.set('waltrans.custom',c);renderBook()}}
+  showOut({text:v},'Your saved correction','off');toast('Saved. WalTrans will use this from now on, even offline.')};
+for(const k of['tr','chat','book','hist'])$('t-'+k).onclick=()=>showTab(k);
+$('histClear').onclick=()=>{store.set('waltrans.history',[]);renderHist()};
+$('q').oninput=renderBook;
+$('addPhrase').onclick=()=>{const v={};for(const c of CORE)v[c]=$('n-'+c).value;if(addPhrase(v)){for(const c of CORE)$('n-'+c).value='';toast('Phrase added')}};
+/* conversation */
+$('micA').onclick=()=>micFlow($('micA'),$('ca').value,(t,fin)=>{if(fin)convoSend('a',t)});
+$('micB').onclick=()=>micFlow($('micB'),$('cb').value,(t,fin)=>{if(fin)convoSend('b',t)});
+$('sendA').onclick=()=>{convoSend('a',$('chatText').value);$('chatText').value=''};
+$('sendB').onclick=()=>{convoSend('b',$('chatText').value);$('chatText').value=''};
+$('chatClear').onclick=()=>{convo=[];store.set('waltrans.convo',[]);renderConvo()};
+/* settings */
+$('settingsBtn').onclick=()=>{const c=cfg();$('sbBase').value=c.base;$('voiceMode').value=c.voice;$('explainLang').value=c.explain;setAi();setPackUi();$('dlg').showModal()};
+$('dlgClose').onclick=()=>{setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai',voice:$('voiceMode').value,explain:$('explainLang').value});$('dlg').close()};
+$('sbLogin').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value;if(!e||!p){toast('Enter email and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
+  try{await sbLogin(e,p);$('sbPass').value='';toast('Connected to Sunbird AI')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Login failed: '+x.message,7000)}};
+$('sbReg').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value,u=$('sbUser').value.trim();if(!e||!p||!u){toast('Enter email, username and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
+  try{await sb('/auth/register',{json:{email:e,password:p,username:u}});await sbLogin(e,p);$('sbPass').value='';toast('Account created and connected')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Sign-up failed: '+x.message,7000)}};
+$('sbLogout').onclick=()=>{store.del('waltrans.token');setAi()};
+$('packGet').onclick=packInstall;$('packDel').onclick=packRemove;
+$('tmClear').onclick=()=>{store.del('waltrans.tm');toast('Saved translations cleared')};
+$('exp').onclick=()=>{const b=new Blob([JSON.stringify({custom:customs(),tm:tmAll()},null,1)],{type:'application/json'});const a=el('a',{href:URL.createObjectURL(b),download:'waltrans-data.json'});a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+$('imp').onclick=()=>$('impFile').click();
+$('impFile').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());
+  const cs=(Array.isArray(j)?j:j.custom||[]).filter(x=>x&&typeof x==='object').map(x=>Object.fromEntries(CORE.map(c=>[c,String(x[c]||'').slice(0,300)])));
+  store.set('waltrans.custom',[...cs,...customs()]);
+  if(j.tm&&typeof j.tm==='object'){const m=tmAll();for(const[k,v]of Object.entries(j.tm))if(v&&typeof v.t==='string'&&!m[k])m[k]={t:v.t.slice(0,2000),v:v.v?1:0,ts:+v.ts||Date.now()};store.set('waltrans.tm',m)}
+  renderBook();toast('Imported')}catch{toast('That file isn’t valid')}e.target.value=''};
+let dip;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('install').classList.remove('hidden')});
+$('install').onclick=async()=>{if(!dip)return;dip.prompt();await dip.userChoice;dip=null;$('install').classList.add('hidden')};
+if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js').catch(()=>{});
+window.__wt={translateCore,detect,toWav,listen,L,sb};
+</script>
+</body>
+</html>
