@@ -4,47 +4,54 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>WalTrans</title>
-<meta name="theme-color" content="#0f766e">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="WalTrans translates Luganda, Lusoga, Kiswahili, English and 200+ more languages. Type, speak or scan.">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" type="image/png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://api.sunbird.ai">
+<link rel="preconnect" href="https://api.mymemory.translated.net">
+<script>try{var c=JSON.parse(localStorage.getItem('waltrans.cfg'))||{},d=document.documentElement,F={serif:'Georgia,"Times New Roman",Cambria,serif',easy:'Verdana,Tahoma,"Trebuchet MS",sans-serif',friendly:'"Comic Sans MS","Chalkboard SE","Comic Neue",cursive,sans-serif',mono:'ui-monospace,Menlo,Consolas,"Courier New",monospace'};if(c.theme==='light'||c.theme==='dark')d.dataset.theme=c.theme;if(F[c.font])d.style.setProperty('--ff',F[c.font]);if(c.fs>=.8&&c.fs<=1.6)d.style.setProperty('--fs',c.fs)}catch(e){}</script>
 <style>
-:root{--bg:#f4f7f6;--card:#fff;--ink:#14231f;--mute:#5d6f6a;--line:#d9e3e0;--brand:#0f766e;--brand-ink:#fff;--warn-bg:#fef3c7;--ok-bg:#d1fae5;--info-bg:#dbeafe;--bad-bg:#fee2e2;--chip:#e7f1ee}
-@media (prefers-color-scheme:dark){:root{--bg:#0d1715;--card:#16231f;--ink:#e6f0ed;--mute:#93a8a2;--line:#2a3d38;--brand:#2dd4bf;--brand-ink:#04211d;--warn-bg:#3b2f0b;--ok-bg:#0b3a2c;--info-bg:#10304f;--bad-bg:#4a1a1a;--chip:#1d302b}}
+:root{--bg:#f2f6fc;--card:#fff;--ink:#0f1f3d;--mute:#586a88;--line:#d6e0f0;--brand:#1565d8;--brand-ink:#fff;--chip:#e5edfb;--warn-bg:#fff1bd;--ok-bg:#d3f5e2;--info-bg:#dbe8ff;--bad-bg:#ffdcdc;--hh:104px;--ff:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;--fs:1;color-scheme:light}
+:root[data-theme=dark]{--bg:#0a1428;--card:#121f3a;--ink:#e8eefb;--mute:#97a9ca;--line:#25365a;--brand:#5aa2ff;--brand-ink:#04122b;--chip:#1a2b4d;--warn-bg:#3b2f0b;--ok-bg:#0d3a2a;--info-bg:#10305a;--bad-bg:#4a1a1a;color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]):not([data-theme=dark]){--bg:#0a1428;--card:#121f3a;--ink:#e8eefb;--mute:#97a9ca;--line:#25365a;--brand:#5aa2ff;--brand-ink:#04122b;--chip:#1a2b4d;--warn-bg:#3b2f0b;--ok-bg:#0d3a2a;--info-bg:#10305a;--bad-bg:#4a1a1a;color-scheme:dark}}
 *{box-sizing:border-box}html,body{margin:0}
-body{background:var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:0 16px calc(28px + env(safe-area-inset-bottom))}
-.wrap{max-width:760px;margin:0 auto}
-header{display:flex;align-items:center;gap:8px;padding:14px 0 6px;flex-wrap:wrap}
-header img{width:34px;height:34px;border-radius:9px}
-h1{font-size:1.3rem;margin:0;flex:1}
-.pill{font-size:.76rem;padding:3px 10px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
+html{-webkit-text-size-adjust:100%;font-size:calc(100% * var(--fs))}
+body{background:var(--bg);color:var(--ink);font:1rem/1.45 var(--ff);min-height:100dvh;display:flex;flex-direction:column;padding-top:var(--hh)}
+.wrap{max-width:760px;width:100%;margin:0 auto;padding:0 16px;flex:1}
+/* fixed header */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
+.hdr-in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:6px 12px;min-height:50px}
+.logo{width:34px;height:34px;border-radius:9px;flex:none}
+.ttl{font-size:1.18rem;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tabs{max-width:760px;margin:0 auto;display:flex;gap:4px;padding:0 12px 8px}
+.tabs button{flex:1;padding:7px 2px;font-size:.9rem;min-height:38px}
+.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
+.pill{font-size:.72rem;padding:3px 8px;border-radius:99px;border:1px solid var(--line);color:var(--mute);white-space:nowrap}
 .pill.on{background:var(--ok-bg);color:var(--ink);border-color:transparent}.pill.off{background:var(--warn-bg);color:var(--ink);border-color:transparent}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin:12px 0}
-.langs{display:flex;gap:8px;align-items:center}
 select,button,textarea,input{font:inherit;color:inherit}
-select{flex:1;min-width:0;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg)}
+select{width:100%;padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--bg)}
 button{cursor:pointer;border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:9px 12px;min-height:44px}
 button:hover{border-color:var(--brand)}
-button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--brand);outline-offset:1px}
+button:focus-visible,select:focus-visible,textarea:focus-visible,input:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--brand);outline-offset:1px}
 button.primary{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
-button.icon{width:44px;padding:0;font-size:1.1rem;flex:none}
+button.ib{width:40px;min-height:40px;padding:0;display:inline-flex;align-items:center;justify-content:center;flex:none}
 button.rec{background:var(--bad-bg);border-color:#dc2626}
 button:disabled{opacity:.6;cursor:wait}
-textarea{width:100%;min-height:100px;resize:vertical;border:0;background:transparent;font-size:1.15rem;padding:4px}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+textarea{width:100%;min-height:96px;resize:vertical;border:0;background:transparent;font-size:1.12rem;padding:4px}
 textarea:focus{outline:none}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row.end{justify-content:flex-end}.grow{flex:1}
-.out{font-size:1.25rem;min-height:2.4em;white-space:pre-wrap;word-break:break-word}
+.langbar{display:flex;gap:8px;align-items:stretch}
+.lbtn{flex:1;min-width:0;text-align:left;display:flex;flex-direction:column;gap:0;padding:6px 12px;line-height:1.25}
+.lbtn small{color:var(--mute);font-size:.72rem}.lbtn b{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.out{font-size:1.22rem;min-height:2.3em;white-space:pre-wrap;word-break:break-word}
 .out.empty{color:var(--mute);font-size:1rem}
-.badge{display:inline-block;font-size:.76rem;padding:2px 9px;border-radius:99px;background:var(--info-bg);margin:6px 6px 6px 0}
+.badge{display:inline-block;font-size:.74rem;padding:2px 9px;border-radius:99px;background:var(--info-bg);margin:6px 6px 6px 0}
 .badge.off{background:var(--ok-bg)}.badge.rough{background:var(--warn-bg)}.badge.err{background:var(--bad-bg)}
 .note{font-size:.88rem;color:var(--mute);margin:6px 0 0}
-.chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
-.chip{border-radius:99px;padding:4px 12px;min-height:34px;font-size:.88rem;background:var(--chip)}
-.chip[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
-nav.tabs{display:flex;gap:4px;margin:12px 0 0}
-nav.tabs button{flex:1;padding:9px 4px;font-size:.92rem}
-nav.tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
 .item{border-top:1px solid var(--line);padding:10px 0}.item:first-child{border-top:0}
 .lg{display:grid;grid-template-columns:5.5rem 1fr;gap:2px 8px;font-size:.95rem}.lg span:nth-child(odd){color:var(--mute)}
 .unv{font-size:.72rem;background:var(--warn-bg);padding:1px 6px;border-radius:6px;margin-left:6px}
@@ -54,108 +61,157 @@ label{font-size:.85rem;color:var(--mute)}
 .hidden{display:none!important}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;max-width:90vw;z-index:99;font-size:.92rem}
 .expl{white-space:pre-wrap;background:var(--bg);border-radius:12px;padding:12px;margin-top:10px;font-size:.98rem;border:1px solid var(--line)}
-dialog{border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);max-width:560px;width:calc(100% - 24px);padding:16px;max-height:90vh}
-dialog::backdrop{background:rgba(0,0,0,.45)}
-dialog h2{margin:0 0 6px;font-size:1.15rem}dialog h3{margin:16px 0 4px;font-size:1rem}
 .bubbles{display:flex;flex-direction:column;gap:8px;max-height:46vh;overflow:auto;padding:4px}
 .bub{max-width:86%;padding:8px 12px;border-radius:14px;background:var(--chip)}
-.bub.b{align-self:flex-end;background:var(--info-bg)}
-.bub small{display:block;color:var(--mute)}
-.bub b{font-weight:600;font-size:1.05rem}
+.bub.b{align-self:flex-end;background:var(--info-bg)}.bub small{display:block;color:var(--mute)}.bub b{font-weight:600;font-size:1.05rem}
 .bar{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0}.bar>i{display:block;height:100%;width:0;background:var(--brand)}
+.pill.dot{padding:0;border:0;background:none;font-size:.72rem}
+button.pill{min-height:0;border-radius:99px;padding:3px 8px;cursor:pointer}
+#net .dt{display:inline-block;width:9px;height:9px;border-radius:50%;background:#16a34a;margin-right:5px;vertical-align:baseline}
+#net.off .dt{background:#d97706}
+@media (max-width:430px){#net .lbl{display:none}#net .dt{margin:0}}
+.ptitle{font-size:1.2rem;font-weight:700;margin:14px 0 0}
+.splash{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--card);color:var(--ink);text-align:center;padding:24px;transition:opacity .35s ease}
+.splash.out{opacity:0;pointer-events:none}
+.splash img{width:96px;height:96px;border-radius:24px;box-shadow:0 8px 28px rgba(0,0,0,.18);animation:pop .6s ease both}
+.splash h1{margin:6px 0 0;font-size:1.7rem}.splash p{margin:0;max-width:22em;font-size:1.02rem;color:var(--mute)}
+@keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:reduce){.splash img{animation:none}.splash{transition:none}}
+.mscrim{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.28)}
+.mpop{position:fixed;z-index:60;top:calc(var(--hh) - 4px);right:8px;width:min(340px,calc(100vw - 16px));max-height:calc(100dvh - var(--hh) - 12px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 34px rgba(0,0,0,.28)}
+.mpop .mrow{border-radius:0}
+.fontopt{display:block;width:100%;text-align:left;margin:6px 0;font-size:1.05rem}
+.fontopt[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand)}
+.sample{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;margin-top:10px}
+input[type=range]{width:100%}
+footer{text-align:center;padding:6px 16px calc(14px + env(safe-area-inset-bottom))}
+footer .credit{font-size:.74rem;color:var(--mute);margin-top:10px}
+.scantxt{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;font-size:.92rem;white-space:pre;overflow:auto;border:1px solid var(--line);border-radius:10px;min-height:220px;max-height:60vh;tab-size:4;line-height:1.4}
+.out.layout{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;font-size:.92rem;white-space:pre-wrap;line-height:1.4}
+.thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.thumbs img{height:64px;border-radius:8px;border:1px solid var(--line)}
+.chk{display:flex;gap:8px;align-items:flex-start;font-size:.92rem;color:var(--ink);margin:8px 0}.chk input{margin-top:4px}
+.menu{padding:0;overflow:hidden}
+.mrow{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;border-top:1px solid var(--line);border-radius:0;background:var(--card);padding:12px 14px;min-height:54px}
+.mrow:first-child{border-top:0}.mrow span.t{flex:1}.mrow small{display:block;color:var(--mute);font-size:.8rem}
+.seg{display:flex;gap:6px}.seg button{flex:1}.seg button[aria-pressed=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
+.page h2{font-size:1.05rem;margin:18px 0 6px}.page h2:first-child{margin-top:4px}
+.page p,.page li{font-size:.95rem}.page ul,.page ol{padding-left:20px;margin:6px 0}
+/* language picker */
+dialog#picker{border:0;padding:0;background:var(--bg);color:var(--ink);width:100%;max-width:560px;height:100dvh;max-height:100dvh;margin:0 auto}
+dialog#picker::backdrop{background:rgba(0,0,0,.5)}
+.ph{display:flex;gap:8px;align-items:center;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--card);position:sticky;top:0}
+.ph input{margin:0;flex:1}
+.plist{padding:0 12px 24px}
+.plist h3{font-size:.8rem;color:var(--mute);margin:16px 0 4px;text-transform:uppercase;letter-spacing:.04em}
+.pick{display:flex;width:100%;justify-content:space-between;align-items:center;gap:8px;text-align:left;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;min-height:48px}
+.pick[aria-current=true]{font-weight:700;color:var(--brand)}
+.pick small{display:block;color:var(--mute);font-weight:400}
+.pb{font-size:.68rem;padding:1px 7px;border-radius:99px;background:var(--info-bg);margin-left:4px;white-space:nowrap}.pb.o{background:var(--ok-bg)}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
-  <img src="icon.svg" alt="" width="34" height="34">
+<div id="splash" class="splash" role="status" aria-live="polite">
+  <img src="icon-192.png" alt="" width="96" height="96">
   <h1>WalTrans</h1>
-  <button id="install" class="hidden" type="button">Install</button>
-  <span id="ai" class="pill" role="status">AI: off</span>
-  <span id="net" class="pill" role="status">…</span>
-  <button id="settingsBtn" class="icon" type="button" aria-label="Settings" title="Settings">⚙️</button>
+  <p>Welcome! Translate Luganda, Lusoga, Kiswahili, English and 200+ more languages.</p>
+</div>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <button id="back" class="ib hidden" type="button" aria-label="Go back"><svg class="ic" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
+    <img id="logo" class="logo" src="icon-192.png" alt="" width="34" height="34">
+    <div class="ttl" id="ttl">WalTrans</div>
+    <button id="ai" class="pill off" type="button" aria-label="Sunbird AI status. Tap to manage">AI: off</button>
+    <span id="net" class="pill" role="status"><i class="dt"></i><span class="lbl">…</span></span>
+    <button id="install" class="hidden" type="button" style="min-height:34px;padding:4px 10px">Install</button>
+    <button id="themeBtn" class="ib" type="button" aria-label="Switch to dark mode"><svg class="ic" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+    <button id="settingsBtn" class="ib" type="button" aria-label="Settings menu" aria-haspopup="true" aria-expanded="false"><svg class="ic" viewBox="0 0 24 24"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg></button>
+  </div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" data-v="translate" type="button">Translate</button>
+    <button role="tab" data-v="chat" type="button">Chat</button>
+    <button role="tab" data-v="book" type="button">Phrasebook</button>
+    <button role="tab" data-v="hist" type="button">History</button>
+  </nav>
 </header>
+<div id="mscrim" class="mscrim hidden"></div>
+<div id="menuPop" class="mpop hidden" role="menu" aria-label="Settings"><div id="menuList" class="menu"></div></div>
 
-<nav class="tabs" role="tablist" aria-label="Sections">
-  <button role="tab" id="t-tr" aria-selected="true" type="button">Translate</button>
-  <button role="tab" id="t-chat" aria-selected="false" type="button">Conversation</button>
-  <button role="tab" id="t-book" aria-selected="false" type="button">Phrasebook</button>
-  <button role="tab" id="t-hist" aria-selected="false" type="button">History</button>
-</nav>
+<div class="wrap">
+<div id="ptitle" class="ptitle hidden"></div>
+<!-- ===== TRANSLATE ===== -->
+<main id="v-translate">
+  <section class="card">
+    <div class="langbar">
+      <button id="fromBtn" class="lbtn" type="button" aria-label="Choose the language to translate from"></button>
+      <button id="swap" class="ib" type="button" aria-label="Swap languages" style="align-self:center"><svg class="ic" viewBox="0 0 24 24"><path d="M8 3 4 7l4 4"/><path d="M4 7h16"/><path d="m16 21 4-4-4-4"/><path d="M20 17H4"/></svg></button>
+      <button id="toBtn" class="lbtn" type="button" aria-label="Choose the language to translate into"></button>
+    </div>
+    <details id="ctxBox" style="margin-top:10px">
+      <summary id="ctxSum" style="cursor:pointer;min-height:32px">＋ Add context (optional)</summary>
+      <label for="ctxSel">Situation</label>
+      <select id="ctxSel" aria-label="Situation" style="margin:4px 0"></select>
+      <input type="text" id="ctxText" placeholder="Or type your own: e.g. talking to my landlord, at the market…" aria-label="Extra context" maxlength="160">
+    </details>
+  </section>
 
-<!-- TRANSLATE -->
-<main id="p-tr">
-<section class="card">
-  <div class="langs">
-    <select id="from" aria-label="Translate from"></select>
-    <button id="swap" class="icon" type="button" aria-label="Swap languages" title="Swap">⇄</button>
-    <select id="to" aria-label="Translate to"></select>
-  </div>
-  <details id="ctxBox" style="margin-top:10px">
-    <summary id="ctxSum" style="cursor:pointer;min-height:32px">＋ Add context (optional)</summary>
-    <label for="ctxSel">Situation</label>
-    <select id="ctxSel" aria-label="Situation" style="width:100%;margin:4px 0"></select>
-    <input type="text" id="ctxText" placeholder="Or type your own: e.g. talking to my landlord, at the market…" aria-label="Extra context" maxlength="160">
-  </details>
-</section>
+  <section class="card">
+    <textarea id="src" placeholder="Type or speak. You can mix languages in one sentence." aria-label="Text to translate" maxlength="2000"></textarea>
+    <div id="det" class="note"></div>
+    <div class="row">
+      <button id="mic" class="ib" type="button" aria-label="Speak your message" title="Speak"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
+      <button id="scanBtn" class="ib" type="button" aria-label="Scan text from a photo or file" title="Scan a photo or file"><svg class="ic" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+      <button id="speakSrc" class="ib" type="button" aria-label="Listen to the input" title="Listen"><svg class="ic" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button>
+      <button id="explainSrc" class="ib" type="button" aria-label="Explain the input" title="Explain"><svg class="ic" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></button>
+      <button id="clear" class="ib" type="button" aria-label="Clear" title="Clear"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+      <span class="grow"></span>
+      <button id="go" class="primary" type="button">Translate</button>
+    </div>
+  </section>
 
-<section class="card">
-  <textarea id="src" placeholder="Type or speak. You can mix languages in one sentence." aria-label="Text to translate" maxlength="2000"></textarea>
-  <div id="det" class="note"></div>
-  <div class="row">
-    <button id="mic" class="icon" type="button" aria-label="Speak your message" title="Speak">🎤</button>
-    <button id="speakSrc" class="icon" type="button" aria-label="Listen to input" title="Listen">🔊</button>
-    <button id="explainSrc" type="button">Explain</button>
-    <button id="clear" type="button">Clear</button>
-    <span class="grow"></span>
-    <button id="go" class="primary" type="button">Translate</button>
-  </div>
-</section>
-
-<section class="card" aria-live="polite">
-  <div id="out" class="out empty">Translation appears here.</div>
-  <textarea id="fixBox" class="hidden" style="border:1px solid var(--line);border-radius:10px;min-height:70px" aria-label="Correct the translation"></textarea>
-  <div id="meta"></div>
-  <div class="row">
-    <button id="speakOut" class="icon" type="button" aria-label="Listen to translation" title="Listen">🔊</button>
-    <button id="copy" type="button">Copy</button>
-    <button id="share" type="button" class="hidden">Share</button>
-    <button id="explainOut" type="button">Explain</button>
-    <button id="fix" type="button">✎ Correct</button>
-    <button id="fixSave" type="button" class="primary hidden">Save correction</button>
-  </div>
-  <div id="expl" class="expl hidden" role="region" aria-label="Explanation"></div>
-</section>
+  <section class="card" aria-live="polite">
+    <div id="out" class="out empty">Translation appears here.</div>
+    <textarea id="fixBox" class="hidden" style="border:1px solid var(--line);border-radius:10px;min-height:70px" aria-label="Correct the translation"></textarea>
+    <div id="meta"></div>
+    <div class="row">
+      <button id="speakOut" class="ib" type="button" aria-label="Listen to the translation" title="Listen"><svg class="ic" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button>
+      <button id="copy" type="button">Copy</button>
+      <button id="share" type="button" class="hidden">Share</button>
+      <button id="explainOut" type="button">Explain</button>
+      <button id="fix" type="button">✎ Correct</button>
+      <button id="fixSave" type="button" class="primary hidden">Save correction</button>
+    </div>
+    <div id="expl" class="expl hidden" role="region" aria-label="Explanation"></div>
+  </section>
 </main>
 
-<!-- CONVERSATION -->
-<section id="p-chat" class="hidden">
-<div class="card">
-  <div class="langs">
-    <select id="ca" aria-label="Person A language"></select>
-    <span aria-hidden="true">↔</span>
-    <select id="cb" aria-label="Person B language"></select>
+<!-- ===== CHAT ===== -->
+<section id="v-chat" class="hidden">
+  <div class="card">
+    <div class="langbar">
+      <button id="caBtn" class="lbtn" type="button" aria-label="Person A language"></button>
+      <span aria-hidden="true" style="align-self:center">↔</span>
+      <button id="cbBtn" class="lbtn" type="button" aria-label="Person B language"></button>
+    </div>
+    <p class="note">Two people, two languages. Each person taps their own microphone (or types). WalTrans translates and can read the reply aloud.</p>
+    <label><input type="checkbox" id="autoSpeak"> Read translations aloud automatically</label>
   </div>
-  <p class="note">Two people, two languages. Each person taps their own microphone (or types). WalTrans translates and can read the reply out loud.</p>
-  <label><input type="checkbox" id="autoSpeak"> Read translations aloud automatically</label>
-</div>
-<div class="card"><div id="bubbles" class="bubbles" aria-live="polite"><p class="note">No messages yet.</p></div></div>
-<div class="card">
-  <div class="row">
-    <button id="micA" class="primary grow" type="button">🎤 A speaks</button>
-    <button id="micB" class="primary grow" type="button">🎤 B speaks</button>
+  <div class="card"><div id="bubbles" class="bubbles" aria-live="polite"><p class="note">No messages yet.</p></div></div>
+  <div class="card">
+    <div class="row">
+      <button id="micA" class="primary grow" type="button">🎤 A speaks</button>
+      <button id="micB" class="primary grow" type="button">🎤 B speaks</button>
+    </div>
+    <div class="row" style="margin-top:8px">
+      <input type="text" id="chatText" placeholder="Or type here…" aria-label="Type a message" style="margin:0;flex:1">
+      <button id="sendA" type="button">As A</button><button id="sendB" type="button">As B</button>
+    </div>
+    <div class="row end" style="margin-top:8px"><button id="chatClear" type="button">Clear conversation</button></div>
   </div>
-  <div class="row" style="margin-top:8px">
-    <input type="text" id="chatText" class="grow" placeholder="Or type here…" aria-label="Type a message" style="margin:0;flex:1">
-    <button id="sendA" type="button">As A</button><button id="sendB" type="button">As B</button>
-  </div>
-  <div class="row end" style="margin-top:8px"><button id="chatClear" type="button">Clear conversation</button></div>
-</div>
 </section>
 
-<!-- PHRASEBOOK -->
-<section id="p-book" class="card hidden">
-  <p class="note" style="margin-top:0">Works with no internet. Entries marked <span class="unv">unverified</span> were written by the app's author and need a native speaker's check. Add or fix your own (they always win).</p>
+<!-- ===== PHRASEBOOK ===== -->
+<section id="v-book" class="card hidden">
+  <p class="note" style="margin-top:0">Works with no internet. <span class="unv">unverified</span> entries were written by the app's author and need a native speaker's check. Add or fix your own (they always win).</p>
   <input type="search" id="q" placeholder="Search phrasebook…" aria-label="Search phrasebook">
   <details style="margin:8px 0"><summary>Add or teach a phrase</summary>
     <label for="n-en">English</label><input type="text" id="n-en">
@@ -168,126 +224,248 @@ dialog h2{margin:0 0 6px;font-size:1.15rem}dialog h3{margin:16px 0 4px;font-size
   <div id="bookList"></div>
 </section>
 
-<!-- HISTORY -->
-<section id="p-hist" class="card hidden">
+<!-- ===== HISTORY ===== -->
+<section id="v-hist" class="card hidden">
   <div id="histList"></div>
   <div class="row end"><button id="histClear" type="button">Clear history</button></div>
 </section>
 
-<p class="note">Good translations are remembered on this device and reused offline, so the app gets better the more you use and correct it.</p>
-</div>
+<!-- ===== APPEARANCE ===== -->
+<section id="v-appearance" class="page hidden">
+  <div class="card">
+    <b>Font style</b>
+    <div id="fontList" role="group" aria-label="Font style" style="margin-top:6px"></div>
+    <b style="display:block;margin-top:14px">Text size <span id="fsVal" class="note"></span></b>
+    <div class="row" style="margin-top:6px"><button id="fsDown" class="ib" type="button" aria-label="Smaller text">A−</button><input type="range" id="fsRange" min="80" max="160" step="5" aria-label="Text size" class="grow"><button id="fsUp" class="ib" type="button" aria-label="Larger text">A+</button></div>
+    <div class="sample" id="fsSample">Webale nnyo! Thank you very much. Asante sana. The quick brown fox jumps over the lazy dog.</div>
+    <div class="row end" style="margin-top:10px"><button id="fsReset" type="button">Reset to default</button></div>
+  </div>
+</section>
 
-<!-- SETTINGS -->
-<dialog id="dlg" aria-labelledby="dlgT">
-  <h2 id="dlgT">Settings</h2>
-
-  <h3>1 · Connect Sunbird AI (free account)</h3>
-  <p class="note" style="margin-top:0">Sunbird AI is a Ugandan AI lab. Its models handle Luganda, <b>Lusoga</b>, Kiswahili and 60+ African languages far better than generic translators, and power context translation, “Explain”, and voice in these languages. Your password is sent only to Sunbird and is never stored here; only the access token is kept on this device.</p>
-  <div id="sbOut" class="hidden"><p>Connected. <button id="sbLogout" type="button">Log out</button></p></div>
-  <div id="sbIn">
-    <div style="border:1px solid var(--line);border-radius:12px;padding:10px;margin:6px 0">
-      <b>Signed up with Google? Use this (easiest)</b>
-      <ol class="note" style="margin:6px 0 6px 18px;padding:0">
-        <li>Tap the button, sign in with Google on Sunbird’s page.</li>
-        <li>Copy your <b>access token</b> shown there.</li>
-        <li>Come back here, paste it below and tap Connect.</li>
-      </ol>
-      <div class="row"><a id="sbKeys" href="https://api.sunbird.ai/keys" target="_blank" rel="noopener noreferrer" style="text-decoration:none"><button type="button" class="primary">1 · Open Sunbird token page</button></a></div>
-      <label for="sbTok">Paste access token</label><input type="password" id="sbTok" autocomplete="off" spellcheck="false">
-      <button id="sbTokGo" type="button" class="primary">2 · Connect with token</button>
+<!-- ===== ACCOUNT ===== -->
+<section id="v-account" class="page hidden">
+  <div class="card">
+    <p class="note" style="margin-top:0">Sunbird AI is a Ugandan AI lab. Its models handle Luganda, <b>Lusoga</b>, Kiswahili and 60+ African languages far better than generic translators, and power context translation, “Explain”, and voice in these languages. Your password goes only to Sunbird and is never stored here; only the access token stays on this device.</p>
+    <div id="sbOut" class="hidden"><p>✅ Connected. <button id="sbLogout" type="button">Log out</button></p></div>
+    <div id="sbIn">
+      <div style="border:1px solid var(--line);border-radius:12px;padding:10px;margin:6px 0">
+        <b>Signed up with Google? Use this (easiest)</b>
+        <ol class="note" style="margin:6px 0 6px 18px;padding:0">
+          <li>Tap the button, sign in with Google on Sunbird’s page.</li>
+          <li>Copy your <b>access token</b> shown there.</li>
+          <li>Come back here, paste it below and tap Connect.</li>
+        </ol>
+        <div class="row"><a href="https://api.sunbird.ai/keys" target="_blank" rel="noopener noreferrer" style="text-decoration:none"><button type="button" class="primary">1 · Open Sunbird token page</button></a></div>
+        <label for="sbTok">Paste access token</label><input type="password" id="sbTok" autocomplete="off" spellcheck="false">
+        <button id="sbTokGo" type="button" class="primary">2 · Connect with token</button>
+      </div>
+      <details style="margin:8px 0"><summary>Or use email &amp; password</summary>
+        <label for="sbEmail">Email</label><input type="email" id="sbEmail" autocomplete="username">
+        <label for="sbUser">Username (only when creating an account)</label><input type="text" id="sbUser" autocomplete="nickname">
+        <label for="sbOrg">Organization (type “Personal” if you have none; only when creating an account)</label><input type="text" id="sbOrg" value="Personal" autocomplete="organization">
+        <label for="sbPass">Password</label><input type="password" id="sbPass" autocomplete="current-password">
+        <div class="row"><button id="sbLogin" class="primary" type="button">Log in</button><button id="sbReg" type="button">Create account</button></div>
+      </details>
     </div>
-    <details style="margin:8px 0"><summary>Or use email &amp; password</summary>
-    <label for="sbEmail">Email</label><input type="email" id="sbEmail" autocomplete="username">
-    <label for="sbUser">Username (only when creating an account)</label><input type="text" id="sbUser" autocomplete="nickname">
-    <label for="sbOrg">Organization (type “Personal” if you have none; only when creating an account)</label><input type="text" id="sbOrg" value="Personal" autocomplete="organization">
-    <label for="sbPass">Password</label><input type="password" id="sbPass" autocomplete="current-password">
-    <div class="row"><button id="sbLogin" class="primary" type="button">Log in</button><button id="sbReg" type="button">Create account</button></div>
+    <details style="margin-top:8px"><summary>Advanced: API address</summary>
+      <input type="text" id="sbBase" placeholder="https://api.sunbird.ai">
+      <p class="note">Only change this if your browser blocks direct calls (a “CORS” error). See the README for the optional proxy.</p>
     </details>
   </div>
-  <details style="margin-top:8px"><summary>Advanced: API address</summary>
-    <input type="text" id="sbBase" placeholder="https://api.sunbird.ai">
-    <p class="note">Only change this if your browser blocks direct calls (a “CORS” error). See README for the optional proxy.</p>
-  </details>
+</section>
 
-  <h3>2 · Voice input</h3>
-  <select id="voiceMode" aria-label="Voice engine">
-    <option value="auto">Automatic (recommended)</option>
-    <option value="sunbird">Sunbird AI only (Luganda, Lusoga, Kiswahili, Kinyarwanda…)</option>
-    <option value="browser">Browser only</option>
-  </select>
+<!-- ===== PREFERENCES ===== -->
+<section id="v-prefs" class="page hidden">
+  <div class="card">
+    <label>My language (scans and detected text are translated into this)</label>
+    <button id="myBtn" class="lbtn" type="button" style="width:100%;margin:4px 0 12px"></button>
+    <label for="voiceMode">Voice input</label>
+    <select id="voiceMode" style="margin:4px 0 12px">
+      <option value="auto">Automatic (recommended)</option>
+      <option value="sunbird">Sunbird AI only (Luganda, Lusoga, Kiswahili, Kinyarwanda…)</option>
+      <option value="browser">Browser only</option>
+    </select>
+    <label for="explainLang">Explain in</label>
+    <select id="explainLang" style="margin:4px 0 12px"><option>English</option><option>Luganda</option><option>Kiswahili</option></select>
+  </div>
+</section>
 
-  <h3>3 · Explain in</h3>
-  <select id="explainLang" aria-label="Explanation language"><option value="English">English</option><option value="Luganda">Luganda</option><option value="Kiswahili">Kiswahili</option></select>
+<!-- ===== OFFLINE PACK ===== -->
+<section id="v-offline" class="page hidden">
+  <div class="card">
+    <p class="note" style="margin-top:0">One download lets WalTrans translate between 200+ languages (including Luganda, Kiswahili and Kinyarwanda) with no internet. It is about <b>900 MB</b> and uses a lot of memory (about 2.6 GB in testing), so it suits phones with 4 GB of RAM or more. Use Wi-Fi.</p>
+    <div id="memWarn" class="badge rough hidden"></div>
+    <div id="packState" class="note"></div><div class="bar hidden" id="packBar"><i></i></div>
+    <div class="row"><button id="packGet" class="primary" type="button">Download offline pack</button><button id="packDel" type="button" class="hidden">Remove pack</button></div>
+    <p class="note">Lusoga and most other Ugandan languages have no offline model yet. Offline, they use your phrasebook and every translation you've made or corrected before.</p>
+  </div>
+</section>
 
-  <h3>4 · Offline pack (all languages)</h3>
-  <p class="note" style="margin-top:0">Downloads one on-device translation model (NLLB-200, covering the 30+ languages below except Lusoga). Large (several hundred MB). Use Wi-Fi. After it finishes, it works with no internet, though slower than online.</p>
-  <div id="packState" class="note"></div><div class="bar hidden" id="packBar"><i></i></div>
-  <div class="row"><button id="packGet" class="primary" type="button">Download offline pack</button><button id="packDel" type="button" class="hidden">Remove pack</button></div>
-  <p class="note">Lusoga has no offline model anywhere yet. Offline, it uses your phrasebook and every Lusoga translation you've already made or corrected.</p>
+<!-- ===== DATA ===== -->
+<section id="v-data" class="page hidden">
+  <div class="card">
+    <p class="note" style="margin-top:0">Everything below lives only on this device.</p>
+    <div class="row"><button id="exp" type="button">Export my data</button><button id="imp" type="button">Import</button></div>
+    <input type="file" id="impFile" accept="application/json" class="hidden">
+    <div class="row" style="margin-top:10px"><button id="tmClear" type="button">Forget saved translations</button><button id="histClear2" type="button">Clear history</button></div>
+    <div class="row" style="margin-top:10px"><button id="resetAll" type="button" style="border-color:#dc2626">Reset the whole app</button></div>
+  </div>
+</section>
 
-  <h3>5 · Your data</h3>
-  <div class="row"><button id="exp" type="button">Export my data</button><button id="imp" type="button">Import</button><button id="tmClear" type="button">Forget saved translations</button></div>
-  <input type="file" id="impFile" accept="application/json" class="hidden">
+<!-- ===== FEEDBACK ===== -->
+<section id="v-feedback" class="page hidden">
+  <div class="card">
+    <p class="note" style="margin-top:0">Tell us what to improve or what went wrong. Every message is read.</p>
+    <label for="fbType">Type</label>
+    <select id="fbType" style="margin:4px 0 10px" required><option>Suggestion</option><option>Appreciation</option><option>Complaint</option><option>Bug / something broke</option><option>Wrong translation</option><option>Compliment</option></select>
+    <label for="fbMsg">Your message</label>
+    <textarea id="fbMsg" style="border:1px solid var(--line);border-radius:10px;min-height:120px" maxlength="2000" placeholder="Write here…"></textarea>
+    <label for="fbContact">How can we reply? (optional)</label>
+    <input type="text" id="fbContact" placeholder="Email or phone (optional)" maxlength="120">
+    <label style="display:block;margin:6px 0"><input type="checkbox" id="fbInfo" checked> Include basic app info (version, languages, online/offline)</label>
+    <div class="row"><button id="fbSend" class="primary" type="button">Send feedback</button><button id="fbShare" type="button">Share via another app</button></div>
+    <p class="note" id="fbNote"></p>
+  </div>
+</section>
 
-  <div class="row end" style="margin-top:16px"><button id="dlgClose" class="primary" type="button">Done</button></div>
+<!-- ===== HOW TO USE ===== -->
+<section id="v-howto" class="page hidden">
+  <div class="card">
+    <h2>1 · Choose languages</h2>
+    <p>Tap the <b>From</b> and <b>To</b> boxes and search for any language. Choose <b>Detect language</b> and WalTrans works out what you typed, even in mixed sentences.</p>
+    <h2>2 · Type, speak or scan</h2>
+    <p>Type your text, tap the 🎤 to speak, or tap the camera to take a photo or pick a file. WalTrans reads the text, finds its language and translates it into <b>your language</b>.</p>
+    <h2>3 · Translate</h2>
+    <p>Tap <b>Translate</b>. Open <b>＋ Add context</b> (market, formal, respectful…) to get wording that fits the situation.</p>
+    <h2>4 · Understand and improve</h2>
+    <ul><li><b>💡 Explain</b> tells you what a word or sentence means and how it is used.</li><li><b>✎ Correct</b> teaches WalTrans the right translation. It remembers it, even offline.</li><li>The <b>Chat</b> tab lets two people talk in two languages.</li></ul>
+    <h2>5 · Get the best results</h2>
+    <ul><li>Connect your free <b>Sunbird AI</b> account in Settings for most of the Ugandan languges e.g Lusoga, Luganda, e.t.c, context and voice in these languages.</li><li>Download the <b>Offline pack</b> on Wi-Fi to translate without internet.</li></ul>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="v-about" class="page hidden">
+  <div class="card">
+    <div class="row" style="gap:12px"><img src="icon-192.png" alt="" width="64" height="64" style="border-radius:16px"><div><b style="font-size:1.2rem">WalTrans</b><br><span class="note">Version 4.0 · Developed by Walwasa Timothy</span></div></div>
+    <p>WalTrans is a language translator built by a Ugandan University student for Uganda, Africa and the world at large. It understands Luganda, Lusoga, Kiswahili and majority of the major languages in the world, handles sentences that mix languages, explains words, reads text from photos and works offline.</p>
+    <h2>Built with</h2>
+    <ul>
+      <li><a href="https://sunbird.ai" target="_blank" rel="noopener noreferrer">Sunbird AI</a> (Sunflower) for Ugandan and African languages, voice and explanations.</li>
+      <li>Meta NLLB-200 for the offline pack (non-commercial licence).</li>
+      <li>MyMemory as a basic online fallback.</li>
+      <li>Tesseract.js and PDF.js for reading photos and files.</li>
+      <li>Some Lusoga words from Wikipedia’s “Soga language” page.</li>
+    </ul>
+    <h2>Please remember</h2>
+    <p>Machine translation can be wrong, especially for smaller languages. Don't rely on it for medical, legal or other critical decisions. Use ✎ Correct to help improve the app's accuracy.</p>
+  </div>
+</section>
+
+<!-- ===== PRIVACY ===== -->
+<section id="v-privacy" class="page hidden">
+  <div class="card">
+    <p class="note" style="margin-top:0">Last updated: 15 November 2026</p>
+    <h2>In short</h2>
+    <p>WalTrans has no accounts of its own, no ads and no tracking or analytics. What you type, say or scan stays on your device, except when it has to be sent to a translation service to get your result (explained below).</p>
+    <h2>Stored on your device only</h2>
+    <p>Your history, saved corrections and translation memory, your own phrasebook entries, your settings, and (if you connect Sunbird AI) your Sunbird access token. Your Sunbird password is never stored. Delete everything any time in Settings → Your data, or by clearing this site’s data in your browser.</p>
+    <h2>What is sent over the internet (only when you use it while online)</h2>
+    <ul>
+      <li><b>Text you translate or ask to explain</b> goes to Sunbird AI (api.sunbird.ai) when you are connected, otherwise to MyMemory (api.mymemory.translated.net). These services receive your text and the language names, and have their own privacy policies. Please don't enter passwords, ID numbers or other sensitive details.</li>
+      <li><b>Speech:</b> for Luganda, Lusoga and other languages your recording is sent to Sunbird AI to be turned into text. If you use your browser’s own voice recognition (for example for English), your browser company processes the audio under its own policy.</li>
+      <li><b>Photos and files</b> are read on your device by open-source software (Tesseract.js, PDF.js); the picture itself is not uploaded. If you switch on “Use AI to fix reading mistakes”, the text that was read (not the picture) is sent to Sunbird AI. The first time you scan a language, the app downloads that language’s reading data from a public CDN. The text found is then translated like any other text (see above).</li>
+      <li><b>Offline pack:</b> the model downloads from Hugging Face and runs on your device. Text translated with it never leaves your phone.</li>
+      <li><b>Code libraries</b> load from public CDNs (cdn.jsdelivr.net, cdnjs.cloudflare.com). Like any website, they can see your IP address.</li>
+      <li><b>Feedback</b> is sent only when you press Send. It contains your message, the optional contact you type, and, if ticked, basic app info.</li>
+    </ul>
+    <h2>Your choices</h2>
+    <p>You can use WalTrans fully offline (phrasebook and offline pack) so nothing leaves your device, disconnect Sunbird AI at any time, and delete your data in Settings.</p>
+    <h2>Changes and contact</h2>
+    <p>If this policy changes, the date above will change. For questions or requests, use Settings → Send feedback.</p>
+  </div>
+</section>
+
+<!-- ===== SCAN ===== -->
+<section id="v-scan" class="page hidden">
+  <div class="card">
+    <p class="note" style="margin-top:0">Take a photo or choose photos, a PDF, a Word (.docx) or a text file. WalTrans writes down what it reads <b>exactly as it appears</b> (same lines and layout), shows the language it found in the “From” box, then translates into the language you choose.</p>
+    <div class="row">
+      <button id="camBtn" class="primary" type="button">📷 Take a photo</button>
+      <button id="fileBtn" type="button">🖼 Photos or file</button>
+    </div>
+    <input type="file" id="camIn" accept="image/*" capture="environment" class="hidden">
+    <input type="file" id="fileIn" accept="image/*,.pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple class="hidden">
+    <details style="margin-top:10px" id="scanOpts">
+      <summary style="cursor:pointer;min-height:32px">Reading options</summary>
+      <label for="ocrScript">Alphabet used in the document</label>
+      <select id="ocrScript" style="margin:4px 0"></select>
+      <label class="chk"><input type="checkbox" id="scanEnh" checked><span>Clean up the photo first (better lighting and contrast). Recommended.</span></label>
+      <label class="chk"><input type="checkbox" id="aiFix" checked><span>Use AI to fix reading mistakes (needs Sunbird AI connected)</span></label>
+      <label class="chk"><input type="checkbox" id="scanKeep" checked><span>Keep every line as in the document when translating (best for exam papers and forms)</span></label>
+    </details>
+    <div id="scanThumbs" class="thumbs"></div>
+    <div id="scanStat" class="note" role="status"></div>
+    <div class="bar hidden" id="scanBar"><i></i></div>
+    <button id="scanStop" class="hidden" type="button">Stop</button>
+  </div>
+  <div class="card hidden" id="scanRes">
+    <div class="langbar">
+      <button id="sFrom" class="lbtn" type="button" aria-label="Language of the document"></button>
+      <span class="ib" aria-hidden="true" style="align-self:center;display:inline-flex"><svg class="ic" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+      <button id="sTo" class="lbtn" type="button" aria-label="Language to translate into"></button>
+    </div>
+    <label for="scanText" style="display:block;margin-top:12px">Text as written in the document (you can correct it)</label>
+    <textarea id="scanText" class="scantxt" wrap="off" spellcheck="false" aria-label="Text read from the document"></textarea>
+    <div id="scanFix" class="note"></div>
+    <div class="row" style="margin-top:6px"><button id="aiFixBtn" type="button">✨ Fix with AI</button><button id="scanUndo" class="hidden" type="button">Undo AI fixes</button><button id="scanCopySrc" type="button">Copy</button><span class="grow"></span><button id="scanGo" class="primary" type="button">Translate</button></div>
+    <div id="scanOut" class="out layout empty" style="margin-top:12px" aria-live="polite">Translation appears here.</div>
+    <div id="scanMeta"></div>
+    <div class="row"><button id="scanCopy" type="button">Copy translation</button><button id="scanSpeak" class="ib" type="button" aria-label="Listen"><svg class="ic" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button><button id="scanExplain" type="button">Explain</button><button id="scanOpen" type="button">Open in translator</button></div>
+    <div id="scanExpl" class="expl hidden"></div>
+  </div>
+</section>
+</div>
+
+<footer>
+  <p class="note" style="margin-top:0">Good translations are remembered on this device and reused offline, so the app gets better the more you use and correct it.</p>
+  <div class="credit">Developed by Walwasa Timothy</div>
+</footer>
+
+<!-- language picker -->
+<dialog id="picker" aria-label="Choose a language">
+  <div class="ph">
+    <button id="pickBack" class="ib" type="button" aria-label="Close and go back"><svg class="ic" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg></button>
+    <input id="pickQ" type="search" placeholder="Search languages" aria-label="Search languages" autocomplete="off">
+  </div>
+  <div class="note" style="padding:6px 12px 0"><span class="pb o">Offline</span> works with the offline pack &nbsp; <span class="pb">Online</span> needs internet</div>
+  <div id="pickList" class="plist"></div>
 </dialog>
 
+<script src="config.js"></script>
 <script>
 'use strict';
 /* =========================================================
-   LANGUAGES
-   c=app code, sb=Sunbird code (translation/chat), stt/tts=Sunbird speech,
-   sp=browser speech code, mm=MyMemory code, nl=NLLB code (offline pack)
+   DEVELOPER SETTINGS live in config.js (feedback email / WhatsApp / form address, app link).
+   If none is set and the app is hosted on GitHub Pages, feedback opens a new GitHub issue.
    ========================================================= */
-const G={y:'Your languages',u:'Uganda & East Africa',a:'Other African',w:'World'};
-const LANGS=[
- {c:'en',n:'English',g:'y',sb:'eng',stt:1,tts:1,sp:'en-GB',mm:'en',nl:'eng_Latn'},
- {c:'lg',n:'Luganda',g:'y',sb:'lug',stt:1,tts:1,mm:'lg',nl:'lug_Latn',af:1},
- {c:'xog',n:'Lusoga',g:'y',sb:'xog',stt:1,af:1},
- {c:'sw',n:'Kiswahili',g:'y',sb:'swa',stt:1,tts:1,sp:'sw-KE',mm:'sw',nl:'swh_Latn',af:1},
- {c:'rw',n:'Kinyarwanda',g:'u',sb:'kin',stt:1,tts:1,mm:'rw',nl:'kin_Latn',af:1},
- {c:'ach',n:'Acholi',g:'u',sb:'ach',stt:1,tts:1,nl:'ach_Latn',af:1},
- {c:'teo',n:'Ateso',g:'u',sb:'teo',stt:1,tts:1,af:1},
- {c:'nyn',n:'Runyankole',g:'u',sb:'nyn',stt:1,tts:1,af:1},
- {c:'cgg',n:'Rukiga',g:'u',sb:'cgg',stt:1,af:1},
- {c:'ttj',n:'Rutooro',g:'u',sb:'ttj',stt:1,af:1},
- {c:'nyo',n:'Runyoro',g:'u',sb:'nyo',af:1},
- {c:'lgg',n:'Lugbara',g:'u',sb:'lgg',stt:1,af:1},
- {c:'myx',n:'Lumasaba',g:'u',sb:'myx',stt:1,af:1},
- {c:'gwr',n:'Lugwere',g:'u',sb:'gwr',af:1},
- {c:'laj',n:'Lango',g:'u',sb:'laj',af:1},
- {c:'alz',n:'Alur',g:'u',sb:'alz',af:1},
- {c:'luo',n:'Dholuo',g:'u',sb:'luo',stt:1,tts:1,nl:'luo_Latn',af:1},
- {c:'lin',n:'Lingala',g:'u',sb:'lin',stt:1,tts:1,nl:'lin_Latn',af:1},
- {c:'so',n:'Somali',g:'u',sb:'som',stt:1,mm:'so',nl:'som_Latn',af:1},
- {c:'am',n:'Amharic',g:'u',sb:'amh',stt:1,sp:'am-ET',mm:'am',nl:'amh_Ethi',af:1},
- {c:'yo',n:'Yoruba',g:'a',sb:'yor',stt:1,tts:1,mm:'yo',nl:'yor_Latn',af:1},
- {c:'ig',n:'Igbo',g:'a',sb:'ibo',stt:1,tts:1,mm:'ig',nl:'ibo_Latn',af:1},
- {c:'ha',n:'Hausa',g:'a',sb:'hau',stt:1,tts:1,mm:'ha',nl:'hau_Latn',af:1},
- {c:'zu',n:'Zulu',g:'a',sb:'zul',stt:1,sp:'zu-ZA',mm:'zu',nl:'zul_Latn',af:1},
- {c:'xh',n:'Xhosa',g:'a',sb:'xho',stt:1,tts:1,mm:'xh',nl:'xho_Latn',af:1},
- {c:'sn',n:'Shona',g:'a',sb:'sna',stt:1,mm:'sn',nl:'sna_Latn',af:1},
- {c:'ny',n:'Chichewa',g:'a',sb:'nya',stt:1,mm:'ny',nl:'nya_Latn',af:1},
- {c:'af',n:'Afrikaans',g:'a',sb:'afr',stt:1,tts:1,sp:'af-ZA',mm:'af',nl:'afr_Latn'},
- {c:'fr',n:'French',g:'w',stt:1,sp:'fr-FR',mm:'fr',nl:'fra_Latn'},
- {c:'ar',n:'Arabic',g:'w',sp:'ar-SA',mm:'ar',nl:'arb_Arab'},
- {c:'es',n:'Spanish',g:'w',sp:'es-ES',mm:'es',nl:'spa_Latn'},
- {c:'pt',n:'Portuguese',g:'w',sp:'pt-PT',mm:'pt',nl:'por_Latn'},
- {c:'de',n:'German',g:'w',sp:'de-DE',mm:'de',nl:'deu_Latn'},
- {c:'it',n:'Italian',g:'w',sp:'it-IT',mm:'it',nl:'ita_Latn'},
- {c:'nl',n:'Dutch',g:'w',sp:'nl-NL',mm:'nl',nl:'nld_Latn'},
- {c:'zh',n:'Chinese (Simplified)',g:'w',sp:'zh-CN',mm:'zh-CN',nl:'zho_Hans'},
- {c:'ja',n:'Japanese',g:'w',sp:'ja-JP',mm:'ja',nl:'jpn_Jpan'},
- {c:'ko',n:'Korean',g:'w',sp:'ko-KR',mm:'ko',nl:'kor_Hang'},
- {c:'hi',n:'Hindi',g:'w',sp:'hi-IN',mm:'hi',nl:'hin_Deva'},
- {c:'ur',n:'Urdu',g:'w',sp:'ur-PK',mm:'ur',nl:'urd_Arab'},
- {c:'bn',n:'Bengali',g:'w',sp:'bn-BD',mm:'bn',nl:'ben_Beng'},
- {c:'ru',n:'Russian',g:'w',sp:'ru-RU',mm:'ru',nl:'rus_Cyrl'},
- {c:'tr',n:'Turkish',g:'w',sp:'tr-TR',mm:'tr',nl:'tur_Latn'},
- {c:'id',n:'Indonesian',g:'w',sp:'id-ID',mm:'id',nl:'ind_Latn'}
-];
+const CFG=window.WALTRANS_CONFIG||{};
+const FEEDBACK={email:CFG.feedbackEmail||'',whatsapp:CFG.feedbackWhatsapp||'',formUrl:CFG.feedbackFormUrl||''};
+const APP_VERSION='3.0';
+
+/* =========================================================
+   LANGUAGES (generated: 237 languages)
+   c id · n name · g group · sb Sunbird code · sc speech code · stt/tts Sunbird speech
+   nl NLLB (offline pack) · mm MyMemory · sp browser speech tag · r region
+   ========================================================= */
+const LANGS=[{"c":"en","n":"English","g":"y","sb":"eng","stt":1,"tts":1,"nl":"eng_Latn","mm":"en","sp":"en-GB","o":"Europe","p":"England (spoken worldwide)"},{"c":"ace_Arab","n":"Acehnese (Arabic script)","g":"w","nl":"ace_Arab","o":"Southeast Asia","p":"Indonesia (Aceh)"},{"c":"ace_Latn","n":"Acehnese (Latin script)","g":"w","nl":"ace_Latn","o":"Southeast Asia","p":"Indonesia (Aceh)"},{"c":"acm_Arab","n":"Mesopotamian Arabic","g":"w","nl":"acm_Arab","o":"North Africa & Middle East","p":"Iraq"},{"c":"acq_Arab","n":"Ta'izzi-Adeni Arabic","g":"w","nl":"acq_Arab","o":"North Africa & Middle East","p":"Yemen"},{"c":"aeb_Arab","n":"Tunisian Arabic","g":"w","nl":"aeb_Arab","o":"North Africa & Middle East","p":"Tunisia"},{"c":"af","n":"Afrikaans","g":"w","sb":"afr","stt":1,"tts":1,"nl":"afr_Latn","mm":"af","sp":"af-ZA","o":"Southern Africa","p":"South Africa, Namibia"},{"c":"ajp_Arab","n":"South Levantine Arabic","g":"w","nl":"ajp_Arab","o":"North Africa & Middle East","p":"Jordan, Palestine"},{"c":"aka_Latn","n":"Akan","g":"w","sb":"aka","stt":1,"nl":"aka_Latn","o":"West Africa","p":"Ghana"},{"c":"als_Latn","n":"Albanian","g":"w","nl":"als_Latn","mm":"sq","o":"Europe","p":"Albania"},{"c":"am","n":"Amharic","g":"w","sb":"amh","stt":1,"nl":"amh_Ethi","mm":"am","sp":"am-ET","o":"East Africa","p":"Ethiopia"},{"c":"apc_Arab","n":"North Levantine Arabic","g":"w","nl":"apc_Arab","o":"North Africa & Middle East","p":"Syria, Lebanon"},{"c":"ar","n":"Arabic (Standard)","g":"w","nl":"arb_Arab","mm":"ar","sp":"ar-SA","o":"North Africa & Middle East","p":"Arab world"},{"c":"ars_Arab","n":"Najdi Arabic","g":"w","nl":"ars_Arab","o":"North Africa & Middle East","p":"Saudi Arabia"},{"c":"ary_Arab","n":"Moroccan Arabic","g":"w","nl":"ary_Arab","o":"North Africa & Middle East","p":"Morocco"},{"c":"arz_Arab","n":"Egyptian Arabic","g":"w","nl":"arz_Arab","o":"North Africa & Middle East","p":"Egypt"},{"c":"asm_Beng","n":"Assamese","g":"w","nl":"asm_Beng","o":"South Asia","p":"India (Assam)"},{"c":"ast_Latn","n":"Asturian","g":"w","nl":"ast_Latn","o":"Europe","p":"Spain"},{"c":"awa_Deva","n":"Awadhi","g":"w","nl":"awa_Deva","o":"South Asia","p":"India"},{"c":"ayr_Latn","n":"Aymara","g":"w","nl":"ayr_Latn","o":"Americas","p":"Bolivia, Peru"},{"c":"azb_Arab","n":"South Azerbaijani","g":"w","nl":"azb_Arab","o":"North Africa & Middle East","p":"Iran"},{"c":"azj_Latn","n":"Azerbaijani","g":"w","nl":"azj_Latn","mm":"az","sp":"az-AZ","o":"Caucasus & Central Asia","p":"Azerbaijan"},{"c":"bak_Cyrl","n":"Bashkir","g":"w","nl":"bak_Cyrl","o":"Europe","p":"Russia (Bashkortostan)"},{"c":"bam_Latn","n":"Bambara","g":"w","sb":"bam","stt":1,"nl":"bam_Latn","o":"West Africa","p":"Mali"},{"c":"ban_Latn","n":"Balinese","g":"w","nl":"ban_Latn","o":"Southeast Asia","p":"Indonesia (Bali)"},{"c":"bel_Cyrl","n":"Belarusian","g":"w","nl":"bel_Cyrl","mm":"be","o":"Europe","p":"Belarus"},{"c":"bem_Latn","n":"Bemba","g":"w","sb":"bem","stt":1,"nl":"bem_Latn","o":"Southern Africa","p":"Zambia"},{"c":"bn","n":"Bengali","g":"w","nl":"ben_Beng","mm":"bn","sp":"bn-BD","o":"South Asia","p":"Bangladesh, India"},{"c":"bho_Deva","n":"Bhojpuri","g":"w","nl":"bho_Deva","o":"South Asia","p":"India, Nepal"},{"c":"bjn_Arab","n":"Banjar (Arabic script)","g":"w","nl":"bjn_Arab","o":"Southeast Asia","p":"Indonesia (Borneo)"},{"c":"bjn_Latn","n":"Banjar (Latin script)","g":"w","nl":"bjn_Latn","o":"Southeast Asia","p":"Indonesia (Borneo)"},{"c":"bod_Tibt","n":"Tibetan","g":"w","nl":"bod_Tibt","o":"East Asia","p":"Tibet"},{"c":"bos_Latn","n":"Bosnian","g":"w","nl":"bos_Latn","o":"Europe","p":"Bosnia and Herzegovina"},{"c":"bug_Latn","n":"Buginese","g":"w","nl":"bug_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"bul_Cyrl","n":"Bulgarian","g":"w","nl":"bul_Cyrl","mm":"bg","sp":"bg-BG","o":"Europe","p":"Bulgaria"},{"c":"cat_Latn","n":"Catalan","g":"w","nl":"cat_Latn","mm":"ca","sp":"ca-ES","o":"Europe","p":"Spain"},{"c":"ceb_Latn","n":"Cebuano","g":"w","nl":"ceb_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"ces_Latn","n":"Czech","g":"w","nl":"ces_Latn","mm":"cs","sp":"cs-CZ","o":"Europe","p":"Czechia"},{"c":"cjk_Latn","n":"Chokwe","g":"w","nl":"cjk_Latn","o":"Southern Africa","p":"Angola"},{"c":"ckb_Arab","n":"Kurdish (Sorani)","g":"w","nl":"ckb_Arab","o":"North Africa & Middle East","p":"Iraq, Iran"},{"c":"crh_Latn","n":"Crimean Tatar","g":"w","nl":"crh_Latn","o":"Europe","p":"Crimea"},{"c":"cym_Latn","n":"Welsh","g":"w","nl":"cym_Latn","mm":"cy","o":"Europe","p":"Wales"},{"c":"dan_Latn","n":"Danish","g":"w","nl":"dan_Latn","mm":"da","sp":"da-DK","o":"Europe","p":"Denmark"},{"c":"de","n":"German","g":"w","nl":"deu_Latn","mm":"de","sp":"de-DE","o":"Europe","p":"Germany"},{"c":"dik_Latn","n":"Dinka","g":"w","sb":"din","nl":"dik_Latn","o":"East Africa","p":"South Sudan"},{"c":"dyu_Latn","n":"Dyula","g":"w","nl":"dyu_Latn","o":"West Africa","p":"Burkina Faso, Côte d’Ivoire"},{"c":"dzo_Tibt","n":"Dzongkha","g":"w","nl":"dzo_Tibt","o":"South Asia","p":"Bhutan"},{"c":"ell_Grek","n":"Greek","g":"w","nl":"ell_Grek","mm":"el","sp":"el-GR","o":"Europe","p":"Greece"},{"c":"epo_Latn","n":"Esperanto","g":"w","nl":"epo_Latn","o":"Europe","p":"Constructed language"},{"c":"est_Latn","n":"Estonian","g":"w","nl":"est_Latn","mm":"et","sp":"et-EE","o":"Europe","p":"Estonia"},{"c":"eus_Latn","n":"Basque","g":"w","nl":"eus_Latn","mm":"eu","sp":"eu-ES","o":"Europe","p":"Spain, France"},{"c":"ewe_Latn","n":"Ewe","g":"w","sb":"ewe","stt":1,"tts":1,"nl":"ewe_Latn","o":"West Africa","p":"Ghana, Togo"},{"c":"fao_Latn","n":"Faroese","g":"w","nl":"fao_Latn","o":"Europe","p":"Faroe Islands"},{"c":"fij_Latn","n":"Fijian","g":"w","nl":"fij_Latn","o":"Pacific","p":"Fiji"},{"c":"fin_Latn","n":"Finnish","g":"w","nl":"fin_Latn","mm":"fi","sp":"fi-FI","o":"Europe","p":"Finland"},{"c":"fon_Latn","n":"Fon","g":"w","nl":"fon_Latn","o":"West Africa","p":"Benin"},{"c":"fr","n":"French","g":"w","stt":1,"sc":"fra","nl":"fra_Latn","mm":"fr","sp":"fr-FR","o":"Europe","p":"France"},{"c":"fur_Latn","n":"Friulian","g":"w","nl":"fur_Latn","o":"Europe","p":"Italy"},{"c":"fuv_Latn","n":"Fulfulde (Nigeria)","g":"w","sb":"ful","stt":1,"tts":1,"nl":"fuv_Latn","o":"West Africa","p":"Nigeria"},{"c":"gaz_Latn","n":"Oromo","g":"w","sb":"orm","stt":1,"nl":"gaz_Latn","o":"East Africa","p":"Ethiopia, Kenya"},{"c":"gla_Latn","n":"Scottish Gaelic","g":"w","nl":"gla_Latn","o":"Europe","p":"Scotland"},{"c":"gle_Latn","n":"Irish","g":"w","nl":"gle_Latn","mm":"ga","o":"Europe","p":"Ireland"},{"c":"glg_Latn","n":"Galician","g":"w","nl":"glg_Latn","mm":"gl","sp":"gl-ES","o":"Europe","p":"Spain"},{"c":"grn_Latn","n":"Guarani","g":"w","nl":"grn_Latn","o":"Americas","p":"Paraguay"},{"c":"guj_Gujr","n":"Gujarati","g":"w","nl":"guj_Gujr","mm":"gu","sp":"gu-IN","o":"South Asia","p":"India"},{"c":"hat_Latn","n":"Haitian Creole","g":"w","nl":"hat_Latn","o":"Americas","p":"Haiti"},{"c":"ha","n":"Hausa","g":"w","sb":"hau","stt":1,"tts":1,"nl":"hau_Latn","mm":"ha","o":"West Africa","p":"Nigeria, Niger"},{"c":"heb_Hebr","n":"Hebrew","g":"w","nl":"heb_Hebr","mm":"he","sp":"he-IL","o":"North Africa & Middle East","p":"Israel"},{"c":"hi","n":"Hindi","g":"w","nl":"hin_Deva","mm":"hi","sp":"hi-IN","o":"South Asia","p":"India"},{"c":"hne_Deva","n":"Chhattisgarhi","g":"w","nl":"hne_Deva","o":"South Asia","p":"India"},{"c":"hrv_Latn","n":"Croatian","g":"w","nl":"hrv_Latn","mm":"hr","sp":"hr-HR","o":"Europe","p":"Croatia"},{"c":"hun_Latn","n":"Hungarian","g":"w","nl":"hun_Latn","mm":"hu","sp":"hu-HU","o":"Europe","p":"Hungary"},{"c":"hye_Armn","n":"Armenian","g":"w","nl":"hye_Armn","mm":"hy","sp":"hy-AM","o":"Caucasus & Central Asia","p":"Armenia"},{"c":"ig","n":"Igbo","g":"w","sb":"ibo","stt":1,"tts":1,"nl":"ibo_Latn","mm":"ig","o":"West Africa","p":"Nigeria"},{"c":"ilo_Latn","n":"Iloko","g":"w","nl":"ilo_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"id","n":"Indonesian","g":"w","nl":"ind_Latn","mm":"id","sp":"id-ID","o":"Southeast Asia","p":"Indonesia"},{"c":"isl_Latn","n":"Icelandic","g":"w","nl":"isl_Latn","mm":"is","sp":"is-IS","o":"Europe","p":"Iceland"},{"c":"it","n":"Italian","g":"w","nl":"ita_Latn","mm":"it","sp":"it-IT","o":"Europe","p":"Italy"},{"c":"jav_Latn","n":"Javanese","g":"w","nl":"jav_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"ja","n":"Japanese","g":"w","nl":"jpn_Jpan","mm":"ja","sp":"ja-JP","o":"East Asia","p":"Japan"},{"c":"kab_Latn","n":"Kabyle","g":"w","sb":"kab","stt":1,"nl":"kab_Latn","o":"North Africa & Middle East","p":"Algeria"},{"c":"kac_Latn","n":"Kachin","g":"w","nl":"kac_Latn","o":"Southeast Asia","p":"Myanmar"},{"c":"kam_Latn","n":"Kamba","g":"w","nl":"kam_Latn","o":"East Africa","p":"Kenya"},{"c":"kan_Knda","n":"Kannada","g":"w","nl":"kan_Knda","mm":"kn","sp":"kn-IN","o":"South Asia","p":"India"},{"c":"kas_Arab","n":"Kashmiri (Arabic script)","g":"w","nl":"kas_Arab","o":"South Asia","p":"Kashmir"},{"c":"kas_Deva","n":"Kashmiri (Devanagari)","g":"w","nl":"kas_Deva","o":"South Asia","p":"Kashmir"},{"c":"kat_Geor","n":"Georgian","g":"w","nl":"kat_Geor","mm":"ka","sp":"ka-GE","o":"Caucasus & Central Asia","p":"Georgia"},{"c":"kaz_Cyrl","n":"Kazakh","g":"w","nl":"kaz_Cyrl","mm":"kk","sp":"kk-KZ","o":"Caucasus & Central Asia","p":"Kazakhstan"},{"c":"kbp_Latn","n":"Kabiyè","g":"w","nl":"kbp_Latn","o":"West Africa","p":"Togo"},{"c":"kea_Latn","n":"Kabuverdianu","g":"w","nl":"kea_Latn","o":"West Africa","p":"Cape Verde"},{"c":"khk_Cyrl","n":"Mongolian","g":"w","nl":"khk_Cyrl","o":"East Asia","p":"Mongolia"},{"c":"khm_Khmr","n":"Khmer","g":"w","nl":"khm_Khmr","mm":"km","sp":"km-KH","o":"Southeast Asia","p":"Cambodia"},{"c":"kik_Latn","n":"Kikuyu","g":"w","sb":"kik","stt":1,"tts":1,"nl":"kik_Latn","o":"East Africa","p":"Kenya"},{"c":"kir_Cyrl","n":"Kyrgyz","g":"w","nl":"kir_Cyrl","o":"Caucasus & Central Asia","p":"Kyrgyzstan"},{"c":"kmb_Latn","n":"Kimbundu","g":"w","nl":"kmb_Latn","o":"Southern Africa","p":"Angola"},{"c":"kmr_Latn","n":"Kurdish (Kurmanji)","g":"w","nl":"kmr_Latn","o":"North Africa & Middle East","p":"Turkey, Syria"},{"c":"knc_Arab","n":"Kanuri (Arabic script)","g":"w","nl":"knc_Arab","o":"West Africa","p":"Nigeria, Niger"},{"c":"knc_Latn","n":"Kanuri (Latin script)","g":"w","nl":"knc_Latn","o":"West Africa","p":"Nigeria, Niger"},{"c":"kon_Latn","n":"Kongo","g":"w","nl":"kon_Latn","o":"Central Africa","p":"DR Congo, Angola"},{"c":"ko","n":"Korean","g":"w","nl":"kor_Hang","mm":"ko","sp":"ko-KR","o":"East Asia","p":"Korea"},{"c":"lao_Laoo","n":"Lao","g":"w","nl":"lao_Laoo","mm":"lo","o":"Southeast Asia","p":"Laos"},{"c":"lij_Latn","n":"Ligurian","g":"w","nl":"lij_Latn","o":"Europe","p":"Italy"},{"c":"lim_Latn","n":"Limburgish","g":"w","nl":"lim_Latn","o":"Europe","p":"Netherlands, Belgium"},{"c":"lin","n":"Lingala","g":"w","sb":"lin","stt":1,"tts":1,"nl":"lin_Latn","o":"Central Africa","p":"DR Congo, Congo"},{"c":"lit_Latn","n":"Lithuanian","g":"w","nl":"lit_Latn","mm":"lt","sp":"lt-LT","o":"Europe","p":"Lithuania"},{"c":"lmo_Latn","n":"Lombard","g":"w","nl":"lmo_Latn","o":"Europe","p":"Italy"},{"c":"ltg_Latn","n":"Latgalian","g":"w","nl":"ltg_Latn","o":"Europe","p":"Latvia"},{"c":"ltz_Latn","n":"Luxembourgish","g":"w","nl":"ltz_Latn","o":"Europe","p":"Luxembourg"},{"c":"lua_Latn","n":"Luba-Lulua","g":"w","nl":"lua_Latn","o":"Central Africa","p":"DR Congo"},{"c":"luo","n":"Dholuo (Kenya & Tanzania)","g":"w","sb":"luo","stt":1,"tts":1,"nl":"luo_Latn","o":"East Africa","p":"Kenya, Tanzania"},{"c":"lus_Latn","n":"Mizo","g":"w","nl":"lus_Latn","o":"South Asia","p":"India (Mizoram)"},{"c":"lvs_Latn","n":"Latvian","g":"w","nl":"lvs_Latn","mm":"lv","sp":"lv-LV","o":"Europe","p":"Latvia"},{"c":"mag_Deva","n":"Magahi","g":"w","nl":"mag_Deva","o":"South Asia","p":"India"},{"c":"mai_Deva","n":"Maithili","g":"w","nl":"mai_Deva","o":"South Asia","p":"India, Nepal"},{"c":"mal_Mlym","n":"Malayalam","g":"w","nl":"mal_Mlym","mm":"ml","sp":"ml-IN","o":"South Asia","p":"India"},{"c":"mar_Deva","n":"Marathi","g":"w","nl":"mar_Deva","mm":"mr","sp":"mr-IN","o":"South Asia","p":"India"},{"c":"min_Latn","n":"Minangkabau","g":"w","nl":"min_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"mkd_Cyrl","n":"Macedonian","g":"w","nl":"mkd_Cyrl","mm":"mk","o":"Europe","p":"North Macedonia"},{"c":"mlt_Latn","n":"Maltese","g":"w","nl":"mlt_Latn","mm":"mt","o":"Europe","p":"Malta"},{"c":"mni_Beng","n":"Manipuri","g":"w","nl":"mni_Beng","o":"South Asia","p":"India (Manipur)"},{"c":"mos_Latn","n":"Mossi","g":"w","nl":"mos_Latn","o":"West Africa","p":"Burkina Faso"},{"c":"mri_Latn","n":"Māori","g":"w","nl":"mri_Latn","o":"Pacific","p":"New Zealand"},{"c":"mya_Mymr","n":"Burmese","g":"w","nl":"mya_Mymr","mm":"my","o":"Southeast Asia","p":"Myanmar"},{"c":"nl","n":"Dutch","g":"w","nl":"nld_Latn","mm":"nl","sp":"nl-NL","o":"Europe","p":"Netherlands"},{"c":"nno_Latn","n":"Norwegian Nynorsk","g":"w","nl":"nno_Latn","o":"Europe","p":"Norway"},{"c":"nob_Latn","n":"Norwegian Bokmål","g":"w","nl":"nob_Latn","mm":"no","sp":"nb-NO","o":"Europe","p":"Norway"},{"c":"npi_Deva","n":"Nepali","g":"w","nl":"npi_Deva","mm":"ne","sp":"ne-NP","o":"South Asia","p":"Nepal"},{"c":"nso_Latn","n":"Northern Sotho","g":"w","nl":"nso_Latn","o":"Southern Africa","p":"South Africa"},{"c":"nus_Latn","n":"Nuer","g":"w","nl":"nus_Latn","o":"East Africa","p":"South Sudan"},{"c":"ny","n":"Chichewa / Nyanja","g":"w","sb":"nya","stt":1,"nl":"nya_Latn","mm":"ny","o":"Southern Africa","p":"Malawi, Zambia"},{"c":"oci_Latn","n":"Occitan","g":"w","nl":"oci_Latn","o":"Europe","p":"France"},{"c":"ory_Orya","n":"Odia","g":"w","nl":"ory_Orya","o":"South Asia","p":"India"},{"c":"pag_Latn","n":"Pangasinan","g":"w","nl":"pag_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"pan_Guru","n":"Punjabi","g":"w","nl":"pan_Guru","mm":"pa","sp":"pa-IN","o":"South Asia","p":"India, Pakistan"},{"c":"pap_Latn","n":"Papiamento","g":"w","nl":"pap_Latn","o":"Americas","p":"Curaçao, Aruba"},{"c":"pbt_Arab","n":"Pashto","g":"w","nl":"pbt_Arab","o":"Caucasus & Central Asia","p":"Afghanistan, Pakistan"},{"c":"pes_Arab","n":"Persian (Iran)","g":"w","nl":"pes_Arab","mm":"fa","sp":"fa-IR","o":"North Africa & Middle East","p":"Iran"},{"c":"plt_Latn","n":"Malagasy","g":"w","sb":"mlg","stt":1,"nl":"plt_Latn","o":"Southern Africa","p":"Madagascar"},{"c":"pol_Latn","n":"Polish","g":"w","nl":"pol_Latn","mm":"pl","sp":"pl-PL","o":"Europe","p":"Poland"},{"c":"pt","n":"Portuguese","g":"w","nl":"por_Latn","mm":"pt","sp":"pt-PT","o":"Europe","p":"Portugal"},{"c":"prs_Arab","n":"Dari","g":"w","nl":"prs_Arab","o":"Caucasus & Central Asia","p":"Afghanistan"},{"c":"quy_Latn","n":"Quechua","g":"w","nl":"quy_Latn","o":"Americas","p":"Peru, Bolivia"},{"c":"ron_Latn","n":"Romanian","g":"w","nl":"ron_Latn","mm":"ro","sp":"ro-RO","o":"Europe","p":"Romania"},{"c":"run_Latn","n":"Kirundi","g":"w","sb":"run","nl":"run_Latn","o":"East Africa","p":"Burundi"},{"c":"ru","n":"Russian","g":"w","nl":"rus_Cyrl","mm":"ru","sp":"ru-RU","o":"Europe","p":"Russia"},{"c":"sag_Latn","n":"Sango","g":"w","nl":"sag_Latn","o":"Central Africa","p":"Central African Republic"},{"c":"san_Deva","n":"Sanskrit","g":"w","nl":"san_Deva","o":"South Asia","p":"India (classical)"},{"c":"sat_Beng","n":"Santali","g":"w","nl":"sat_Beng","o":"South Asia","p":"India"},{"c":"scn_Latn","n":"Sicilian","g":"w","nl":"scn_Latn","o":"Europe","p":"Italy"},{"c":"shn_Mymr","n":"Shan","g":"w","nl":"shn_Mymr","o":"Southeast Asia","p":"Myanmar"},{"c":"sin_Sinh","n":"Sinhala","g":"w","nl":"sin_Sinh","mm":"si","sp":"si-LK","o":"South Asia","p":"Sri Lanka"},{"c":"slk_Latn","n":"Slovak","g":"w","nl":"slk_Latn","mm":"sk","sp":"sk-SK","o":"Europe","p":"Slovakia"},{"c":"slv_Latn","n":"Slovenian","g":"w","nl":"slv_Latn","mm":"sl","o":"Europe","p":"Slovenia"},{"c":"smo_Latn","n":"Samoan","g":"w","nl":"smo_Latn","o":"Pacific","p":"Samoa"},{"c":"sn","n":"Shona","g":"w","sb":"sna","stt":1,"nl":"sna_Latn","mm":"sn","o":"Southern Africa","p":"Zimbabwe"},{"c":"snd_Arab","n":"Sindhi","g":"w","nl":"snd_Arab","o":"South Asia","p":"Pakistan"},{"c":"so","n":"Somali","g":"w","sb":"som","stt":1,"nl":"som_Latn","mm":"so","o":"East Africa","p":"Somalia"},{"c":"sot_Latn","n":"Southern Sotho","g":"w","sb":"sot","stt":1,"nl":"sot_Latn","o":"Southern Africa","p":"Lesotho"},{"c":"es","n":"Spanish","g":"w","nl":"spa_Latn","mm":"es","sp":"es-ES","o":"Europe","p":"Spain"},{"c":"srd_Latn","n":"Sardinian","g":"w","nl":"srd_Latn","o":"Europe","p":"Italy"},{"c":"srp_Cyrl","n":"Serbian","g":"w","nl":"srp_Cyrl","mm":"sr","o":"Europe","p":"Serbia"},{"c":"ssw_Latn","n":"Swati","g":"w","nl":"ssw_Latn","o":"Southern Africa","p":"Eswatini"},{"c":"sun_Latn","n":"Sundanese","g":"w","nl":"sun_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"swe_Latn","n":"Swedish","g":"w","nl":"swe_Latn","mm":"sv","sp":"sv-SE","o":"Europe","p":"Sweden"},{"c":"szl_Latn","n":"Silesian","g":"w","nl":"szl_Latn","o":"Europe","p":"Poland"},{"c":"tam_Taml","n":"Tamil","g":"w","nl":"tam_Taml","mm":"ta","sp":"ta-IN","o":"South Asia","p":"India, Sri Lanka"},{"c":"taq_Latn","n":"Tamasheq (Latin script)","g":"w","nl":"taq_Latn","o":"West Africa","p":"Mali, Niger"},{"c":"taq_Tfng","n":"Tamasheq (Tifinagh)","g":"w","nl":"taq_Tfng","o":"West Africa","p":"Mali, Niger"},{"c":"tat_Cyrl","n":"Tatar","g":"w","nl":"tat_Cyrl","o":"Europe","p":"Russia (Tatarstan)"},{"c":"tel_Telu","n":"Telugu","g":"w","nl":"tel_Telu","mm":"te","sp":"te-IN","o":"South Asia","p":"India"},{"c":"tgk_Cyrl","n":"Tajik","g":"w","nl":"tgk_Cyrl","o":"Caucasus & Central Asia","p":"Tajikistan"},{"c":"tgl_Latn","n":"Filipino (Tagalog)","g":"w","nl":"tgl_Latn","mm":"tl","sp":"fil-PH","o":"Southeast Asia","p":"Philippines"},{"c":"tha_Thai","n":"Thai","g":"w","nl":"tha_Thai","mm":"th","sp":"th-TH","o":"Southeast Asia","p":"Thailand"},{"c":"tir_Ethi","n":"Tigrinya","g":"w","nl":"tir_Ethi","o":"East Africa","p":"Ethiopia, Eritrea"},{"c":"tpi_Latn","n":"Tok Pisin","g":"w","nl":"tpi_Latn","o":"Pacific","p":"Papua New Guinea"},{"c":"tsn_Latn","n":"Tswana","g":"w","sb":"tsn","stt":1,"nl":"tsn_Latn","o":"Southern Africa","p":"Botswana, South Africa"},{"c":"tso_Latn","n":"Tsonga","g":"w","nl":"tso_Latn","o":"Southern Africa","p":"South Africa, Mozambique"},{"c":"tuk_Latn","n":"Turkmen","g":"w","nl":"tuk_Latn","o":"Caucasus & Central Asia","p":"Turkmenistan"},{"c":"tum_Latn","n":"Tumbuka","g":"w","nl":"tum_Latn","o":"Southern Africa","p":"Malawi"},{"c":"tr","n":"Turkish","g":"w","nl":"tur_Latn","mm":"tr","sp":"tr-TR","o":"North Africa & Middle East","p":"Turkey"},{"c":"twi_Latn","n":"Twi","g":"w","nl":"twi_Latn","o":"West Africa","p":"Ghana"},{"c":"tzm_Tfng","n":"Tamazight","g":"w","nl":"tzm_Tfng","o":"North Africa & Middle East","p":"Morocco"},{"c":"uig_Arab","n":"Uyghur","g":"w","nl":"uig_Arab","o":"Caucasus & Central Asia","p":"Xinjiang (China)"},{"c":"ukr_Cyrl","n":"Ukrainian","g":"w","nl":"ukr_Cyrl","mm":"uk","sp":"uk-UA","o":"Europe","p":"Ukraine"},{"c":"umb_Latn","n":"Umbundu","g":"w","nl":"umb_Latn","o":"Southern Africa","p":"Angola"},{"c":"ur","n":"Urdu","g":"w","nl":"urd_Arab","mm":"ur","sp":"ur-PK","o":"South Asia","p":"Pakistan, India"},{"c":"uzn_Latn","n":"Uzbek","g":"w","nl":"uzn_Latn","mm":"uz","sp":"uz-UZ","o":"Caucasus & Central Asia","p":"Uzbekistan"},{"c":"vec_Latn","n":"Venetian","g":"w","nl":"vec_Latn","o":"Europe","p":"Italy"},{"c":"vie_Latn","n":"Vietnamese","g":"w","nl":"vie_Latn","mm":"vi","sp":"vi-VN","o":"Southeast Asia","p":"Vietnam"},{"c":"war_Latn","n":"Waray","g":"w","nl":"war_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"wol_Latn","n":"Wolof","g":"w","sb":"wol","stt":1,"nl":"wol_Latn","o":"West Africa","p":"Senegal"},{"c":"xh","n":"Xhosa","g":"w","sb":"xho","stt":1,"tts":1,"nl":"xho_Latn","mm":"xh","o":"Southern Africa","p":"South Africa"},{"c":"ydd_Hebr","n":"Yiddish","g":"w","nl":"ydd_Hebr","o":"Europe","p":"Eastern Europe (Jewish communities)"},{"c":"yo","n":"Yoruba","g":"w","sb":"yor","stt":1,"tts":1,"nl":"yor_Latn","mm":"yo","o":"West Africa","p":"Nigeria, Benin"},{"c":"yue_Hant","n":"Cantonese","g":"w","nl":"yue_Hant","o":"East Asia","p":"Hong Kong, Guangdong"},{"c":"zh","n":"Chinese (Simplified)","g":"w","nl":"zho_Hans","mm":"zh-CN","sp":"zh-CN","o":"East Asia","p":"China"},{"c":"zho_Hant","n":"Chinese (Traditional)","g":"w","nl":"zho_Hant","mm":"zh-TW","sp":"zh-TW","o":"East Asia","p":"Taiwan, Hong Kong"},{"c":"zsm_Latn","n":"Malay","g":"w","nl":"zsm_Latn","mm":"ms","sp":"ms-MY","o":"Southeast Asia","p":"Malaysia"},{"c":"zu","n":"Zulu","g":"w","sb":"zul","stt":1,"nl":"zul_Latn","mm":"zu","sp":"zu-ZA","o":"Southern Africa","p":"South Africa"},{"c":"lg","n":"Luganda","g":"y","sb":"lug","stt":1,"tts":1,"nl":"lug_Latn","mm":"lg","r":"Central","o":"Uganda","p":"Central"},{"c":"sw","n":"Swahili","g":"y","sb":"swa","stt":1,"tts":1,"nl":"swh_Latn","mm":"sw","sp":"sw-KE","r":"National","o":"East Africa","p":"Kenya, Tanzania, Uganda (national language)"},{"c":"rw","n":"Kinyarwanda / Rufumbira","g":"u","sb":"kin","stt":1,"tts":1,"nl":"kin_Latn","mm":"rw","r":"South-West","o":"Uganda","p":"South-West"},{"c":"ach","n":"Acholi","g":"u","sb":"ach","stt":1,"tts":1,"r":"Northern","o":"Uganda","p":"Northern"},{"c":"alz","n":"Alur","g":"u","sb":"alz","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"luc","n":"Aringa","g":"u","sb":"luc","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"teo","n":"Ateso","g":"u","sb":"teo","stt":1,"tts":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"bfa","n":"Bari / Kuku","g":"u","sb":"bfa","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"adh","n":"Dhopadhola (Jopadhola)","g":"u","sb":"adh","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"keo","n":"Kakwa","g":"u","sb":"keo","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"kdj","n":"Ngakarimojong (Karamojong)","g":"u","sb":"kdj","r":"Karamoja","o":"Uganda","p":"Karamoja"},{"c":"kdi","n":"Kumam","g":"u","sb":"kdi","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"kpz","n":"Kupsabiny","g":"u","sb":"kpz","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"rwm","n":"Kwamba (Rwamba)","g":"u","sb":"rwm","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"laj","n":"Lango","g":"u","sb":"laj","r":"Northern","o":"Uganda","p":"Northern"},{"c":"tlj","n":"Lubwisi","g":"u","sb":"tlj","r":"Western","o":"Uganda","p":"Western"},{"c":"lgg","n":"Lugbara","g":"u","sb":"lgg","stt":1,"r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"rub","n":"Lugungu","g":"u","sb":"rub","r":"Western","o":"Uganda","p":"Western"},{"c":"gwr","n":"Lugwere","g":"u","sb":"gwr","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"myx","n":"Lumasaba (Lugisu)","g":"u","sb":"myx","stt":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"nuj","n":"Lunyole","g":"u","sb":"nuj","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"xog","n":"Lusoga","g":"y","sb":"xog","stt":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"mhi","n":"Ma'di","g":"u","sb":"mhi","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"pok","n":"Pokot","g":"u","sb":"pok","r":"Karamoja","o":"Uganda","p":"Karamoja"},{"c":"cgg","n":"Rukiga","g":"u","sb":"cgg","stt":1,"r":"South-West","o":"Uganda","p":"South-West"},{"c":"koo","n":"Lhukonzo (Rukonjo)","g":"u","sb":"koo","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"nyn","n":"Runyankole","g":"u","sb":"nyn","stt":1,"tts":1,"r":"South-West","o":"Uganda","p":"South-West"},{"c":"nyo","n":"Runyoro","g":"u","sb":"nyo","r":"Western","o":"Uganda","p":"Western"},{"c":"ruc","n":"Ruruuli","g":"u","sb":"ruc","stt":1,"r":"Central","o":"Uganda","p":"Central"},{"c":"ttj","n":"Rutooro","g":"u","sb":"ttj","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"lsm","n":"Samia (Lusamia)","g":"u","sb":"lsm","r":"Eastern","o":"Uganda","p":"Eastern"}];
 const L=Object.fromEntries(LANGS.map(l=>[l.c,l]));
+L.sw.n='Kiswahili';
+L.auto={c:'auto',n:'Detect language',g:'y'};     // pseudo entry: keeps every lookup safe
+const nameOf=id=>(L[id]&&L[id].n)||'Detected language';
 const CORE=['en','lg','xog','sw'];
+const SBMAP=Object.fromEntries(LANGS.filter(l=>l.sb).map(l=>[l.sb,l.c]));
+const NEG=new Set(['not','no','dont','never','cant','cannot','isnt','arent','wont','didnt','without','nothing','nobody','nedda','si','te','tewali','sio','hapana','hakuna','siwezi','sija','siku','sitegeera','sielewi','nta']);
 
 /* =========================================================
    PHRASEBOOK  [en, lg, xog, sw, xogSource]  (xs 'w' = Wikipedia "Soga language")
@@ -348,13 +526,27 @@ const norm=s=>String(s).toLowerCase().replace(/['’`]/g,'').normalize('NFD').re
 const alts=s=>String(s||'').split('/').map(x=>x.trim()).filter(Boolean);
 const first=s=>alts(s)[0]||'';
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const ICON={sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',moon:'<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',palette:'<circle cx="13.5" cy="6.5" r=".6"/><circle cx="17.5" cy="10.5" r=".6"/><circle cx="8.5" cy="7.5" r=".6"/><circle cx="6.5" cy="12.5" r=".6"/><path d="M12 2a10 10 0 0 0 0 20c1.1 0 2-.9 2-2 0-.5-.2-1-.5-1.3-.3-.3-.5-.8-.5-1.3 0-1.1.9-2 2-2h2.4a4.6 4.6 0 0 0 4.6-4.6C22 6.1 17.5 2 12 2z"/>',
+ chev:'<path d="m9 18 6-6-6-6"/>',user:'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+ sliders:'<line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/>',
+ dl:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/>',
+ db:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/>',
+ share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" x2="15.42" y1="13.51" y2="17.49"/><line x1="15.41" x2="8.59" y1="6.51" y2="10.49"/>',
+ msg:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+ help:'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+ info:'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+ shield:'<path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>'
+};
+const svg=n=>'<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+ICON[n]+'</svg>';
 function el(tag,attrs={},...kids){const e=document.createElement(tag);for(const[k,v]of Object.entries(attrs)){if(k==='class')e.className=v;else if(k.startsWith('on'))e.addEventListener(k.slice(2),v);else e.setAttribute(k,v)}for(const k of kids.flat())e.append(k);return e}
 let toastT;function toast(m,ms=3600){document.querySelectorAll('.toast').forEach(t=>t.remove());const t=el('div',{class:'toast',role:'status'},m);document.body.append(t);clearTimeout(toastT);toastT=setTimeout(()=>t.remove(),ms)}
-const cfg=()=>({base:'https://api.sunbird.ai',voice:'auto',explain:'English',...store.get('waltrans.cfg',{})});
+const cfg=()=>({base:'https://api.sunbird.ai',voice:'auto',explain:'English',theme:'auto',myLang:'en',ocr:'auto',...store.get('waltrans.cfg',{})});
 const setCfg=o=>store.set('waltrans.cfg',{...cfg(),...o});
 const token=()=>store.get('waltrans.token',null);
 const customs=()=>store.get('waltrans.custom',[]);
 const allEntries=()=>[...customs(),...BASE];
+window.addEventListener('error',e=>{console.error(e.error||e.message)});
+window.addEventListener('unhandledrejection',e=>{console.error(e.reason)});
 
 /* =========================================================
    TRANSLATION MEMORY (learns; used offline; verified corrections win)
@@ -363,39 +555,47 @@ const tmAll=()=>store.get('waltrans.tm',{});
 const tmKey=(f,t,txt,ctx)=>f+'>'+t+'|'+norm(txt)+(ctx?'|'+norm(ctx):'');
 function tmGet(f,t,txt,ctx){const m=tmAll();return m[tmKey(f,t,txt,ctx)]||m[tmKey(f,t,txt,'')]||null}
 function tmPut(f,t,txt,out,ctx,verified){
-  const m=tmAll(),now=Date.now();
-  const e={t:out,v:verified?1:0,ts:now};
-  const k0=tmKey(f,t,txt,'');
-  if(verified||!m[k0]||!m[k0].v) m[k0]=e;
-  if(ctx) m[tmKey(f,t,txt,ctx)]=e;
-  const keys=Object.keys(m); if(keys.length>1500){keys.sort((a,b)=>(m[a].v-m[b].v)||(m[a].ts-m[b].ts)).slice(0,keys.length-1500).forEach(k=>delete m[k])}
+  const m=tmAll(),now=Date.now(),e={t:out,v:verified?1:0,ts:now},k0=tmKey(f,t,txt,'');
+  if(verified||!m[k0]||!m[k0].v)m[k0]=e;
+  if(ctx)m[tmKey(f,t,txt,ctx)]=e;
+  const keys=Object.keys(m);if(keys.length>1500){keys.sort((a,b)=>(m[a].v-m[b].v)||(m[a].ts-m[b].ts)).slice(0,keys.length-1500).forEach(k=>delete m[k])}
   store.set('waltrans.tm',m);
 }
 
 /* =========================================================
-   LANGUAGE DETECTION (local, for mixed sentences)
+   LANGUAGE DETECTION (on-device: writing system + common words)
    ========================================================= */
 const W={
  en:'the is are am was were to and of in on it you he she we they my your this that with for not have has do does what where when who how why please thank thanks good morning evening night market price water tomorrow today now want need go going come buy sell money friend home school see know like love hello yes but because will can could would should very much more some any from at by or if so just also here there help me him her them our their its be been get give take tell say said make time day week'.split(' '),
  lg:'nze ggwe ye ffe mmwe bo nga era naye ne mu ku ki ani kiki wa otya oli ndi bulungi webale nnyo kati leero enkya jjo nja nina nnina ssente mukwano kye bwe ate nti oba kubanga ddala wano eno ebyo ekyo ssebo nnyabo kale yee nedda bwoba osobola njagala ŋŋenda genda jja njja tuli mwe bali ali ofuna nnyamba tewali waliwo olwaleero ssaawa emmere amazzi eka ennyumba omwaana omukyala omusajja nsaba nsonyiwa sitegeera'.split(' '),
- sw:'na kwa ni sana sasa leo kesho jana nina nataka naomba habari asante hapana ndiyo pole rafiki kuna hakuna lakini huko hapa pia tu bado kila nyumba maji chakula pesa mimi wewe yeye sisi nyinyi wao sijambo hujambo karibu tafadhali samahani sawa kwaheri tutaonana ninaenda nimechoka nina bei gani wapi nani nini kwanini lini vipi ndio sijui nimeelewa unaweza unataka tunaweza ninakupenda mzuri nzuri kubwa ndogo'.split(' ')
+ sw:'na kwa ni sana sasa leo kesho jana nina nataka naomba habari asante hapana ndiyo pole rafiki kuna hakuna lakini huko hapa pia tu bado kila nyumba maji chakula pesa mimi wewe yeye sisi nyinyi wao sijambo hujambo karibu tafadhali samahani sawa kwaheri tutaonana ninaenda nimechoka bei gani wapi nani nini kwanini lini vipi ndio sijui nimeelewa unaweza unataka tunaweza ninakupenda mzuri nzuri kubwa ndogo'.split(' '),
+ fr:'le la les un une et est que pas pour dans nous vous je tu il elle ne ce qui avec des du mais ou sont suis bonjour merci très'.split(' '),
+ es:'el los las una y es que no por para con del en se mi su pero hola gracias muy estoy está son como'.split(' '),
+ pt:'os as um uma que não para com do da em eu você mas olá obrigado muito estou está são como'.split(' '),
+ de:'der die das und ist nicht ein eine ich du wir mit für von zu aber hallo danke sehr bin sind wie'.split(' '),
+ it:'il lo gli un una che non per con di del io tu ma ciao grazie molto sono è come'.split(' ')
 };
 const LEX=Object.fromEntries(Object.entries(W).map(([k,v])=>[k,new Set(v.map(norm))]));
+const SCRIPTS=[[/[؀-ۿ]/,'ar'],[/[぀-ヿ]/,'ja'],[/[가-힯]/,'ko'],[/[一-鿿]/,'zh'],[/[ऀ-ॿ]/,'hi'],[/[Ѐ-ӿ]/,'ru'],[/[ሀ-፿]/,'am'],[/[ঀ-৿]/,'bn'],[/[฀-๿]/,'tha_Thai'],[/[֐-׿]/,'heb_Hebr'],[/[Ͱ-Ͽ]/,'ell_Grek']];
 function detect(text){
-  const toks=norm(text).split(' ').filter(Boolean), c={en:0,lg:0,sw:0};
-  for(const t of toks) for(const k of Object.keys(c)) if(LEX[k].has(t)) c[k]++;
+  const toks=norm(text).split(' ').filter(Boolean),c={};
+  for(const k of Object.keys(LEX))c[k]=0;
+  for(const t of toks)for(const k of Object.keys(c))if(LEX[k].has(t))c[k]++;
   const found=Object.keys(c).filter(k=>c[k]>0).sort((a,b)=>c[b]-c[a]);
-  const mixed=found.length>=2 && toks.length>=3 && c[found[1]]>=1;
-  return {counts:c,langs:found,main:found[0]||null,mixed};
+  const core=found.filter(k=>['en','lg','sw'].includes(k));
+  return{counts:c,langs:found,main:found[0]||null,mixed:core.length>=2&&toks.length>=3};
+}
+function guessSource(text,det){
+  for(const[re,id]of SCRIPTS)if(re.test(text)&&L[id])return id;
+  det=det||detect(text);return det.main&&L[det.main]?det.main:null;
 }
 
 /* =========================================================
    OFFLINE ENGINE 1: phrasebook (exact → closest → word-by-word)
    ========================================================= */
 function exact(txt,src,tgt){const n=norm(txt);for(const e of allEntries()){if(e[src]&&e[tgt]&&alts(e[src]).some(a=>norm(a)===n))return{text:first(e[tgt])}}}
-const NEG=new Set(['not','no','dont','never','cant','cannot','isnt','arent','wont','didnt','without','nothing','nobody','nedda','si','te','tewali','sio','hapana','hakuna','siwezi','sija','siku','sitegeera','sielewi','nta']);
 function fuzzy(txt,src,tgt){
-  const a=new Set(norm(txt).split(' ').filter(Boolean)); if(!a.size)return;
+  const a=new Set(norm(txt).split(' ').filter(Boolean));if(!a.size)return;
   let best=null,score=0;
   for(const e of allEntries()){if(!e[src]||!e[tgt])continue;
     for(const v of alts(e[src])){const b=new Set(norm(v).split(' ').filter(Boolean));let i=0;a.forEach(x=>{if(b.has(x))i++});const j=i/(a.size+b.size-i);
@@ -419,22 +619,19 @@ const packOn=()=>store.get('waltrans.pack',false);
 function getWorker(){
   if(worker)return worker;
   worker=new Worker('nllb-worker.js',{type:'module'});
+  addEventListener('pagehide',ev=>{if(!ev.persisted&&worker){worker.terminate();worker=null}},{once:true});
   worker.onmessage=e=>{const m=e.data;
     if(m.type==='progress'&&packProg)packProg(m.loaded,m.total);
     else if(m.type==='ready'){const w=wwait.get('load');if(w){wwait.delete('load');w.res()}}
     else if(m.type==='result'){const w=wwait.get(m.id);if(w){wwait.delete(m.id);w.res(m.text)}}
-    else if(m.type==='error'){const w=wwait.get(m.id||'load');if(w){wwait.delete(m.id||'load');w.rej(new Error(m.message))}}};
+    else if(m.type==='error'){const k=m.id||'load',w=wwait.get(k);if(w){wwait.delete(k);w.rej(new Error(m.message))}}};
   worker.onerror=e=>{for(const[k,w]of wwait){w.rej(new Error(e.message||'Worker failed'));wwait.delete(k)}worker=null};
   return worker;
 }
 function packLoad(){return new Promise((res,rej)=>{wwait.set('load',{res,rej});getWorker().postMessage({type:'load'})})}
 function packTranslate(text,src,tgt){return new Promise((res,rej)=>{const id=++wid;wwait.set(id,{res,rej});getWorker().postMessage({type:'translate',id,text,src,tgt})})}
-async function packRun(text,src,tgt){
-  const t=Promise.race([packTranslate(text,L[src].nl,L[tgt].nl),sleep(90000).then(()=>{throw new Error('timeout')})]);
-  return {text:await t};
-}
+async function packRun(text,src,tgt){return{text:await Promise.race([packTranslate(text,L[src].nl,L[tgt].nl),sleep(120000).then(()=>{throw new Error('timeout')})])}}
 
-/* Chrome's built-in translator (only some languages; never blocks) */
 const withTimeout=(p,ms)=>Promise.race([p,new Promise((_,j)=>setTimeout(()=>j(new Error('timeout')),ms))]);
 async function deviceTranslate(txt,src,tgt){
   if(!('Translator' in self))return;
@@ -447,56 +644,57 @@ async function deviceTranslate(txt,src,tgt){
    ========================================================= */
 class AuthErr extends Error{}
 async function sb(path,{json,form,body,method='POST',timeout=25000,retry=true}={}){
-  const h={},t=token(); if(t)h.Authorization='Bearer '+t;
-  let b; if(json){h['Content-Type']='application/json';b=JSON.stringify(json)}else if(form){h['Content-Type']='application/x-www-form-urlencoded';b=new URLSearchParams(form).toString()}else if(body){b=body}
+  const h={},t=token();if(t)h.Authorization='Bearer '+t;
+  let b;if(json){h['Content-Type']='application/json';b=JSON.stringify(json)}else if(form){h['Content-Type']='application/x-www-form-urlencoded';b=new URLSearchParams(form).toString()}else if(body){b=body}
   const ac=new AbortController(),to=setTimeout(()=>ac.abort(),timeout);
-  let r; try{r=await fetch(cfg().base.replace(/\/+$/,'')+path,{method,headers:h,body:b,signal:ac.signal})}finally{clearTimeout(to)}
-  if(r.status===401||r.status===403){if(path.startsWith('/auth/'))throw new Error(await errText(r));store.del('waltrans.token');setAi();throw new AuthErr('Please log in again (Settings).')}
+  let r;try{r=await fetch(cfg().base.replace(/\/+$/,'')+path,{method,headers:h,body:b,signal:ac.signal})}finally{clearTimeout(to)}
+  if(r.status===401||r.status===403){if(path.startsWith('/auth/'))throw new Error(await errText(r));store.del('waltrans.token');refreshAccount();throw new AuthErr('Please log in to Sunbird AI again (Settings → Sunbird AI account).')}
   if((r.status===503||r.status===502)&&retry){await sleep(2500);return sb(path,{json,form,body,method,timeout,retry:false})}
   if(!r.ok)throw new Error(await errText(r));
-  const ct=r.headers.get('content-type')||''; return ct.includes('json')?r.json():r;
+  const ct=r.headers.get('content-type')||'';return ct.includes('json')?r.json():r;
 }
-async function errText(r){try{const j=await r.json();const d=j.detail;if(typeof d==='string')return d;if(Array.isArray(d))return d.map(x=>((x.loc||[]).filter(y=>y!=='body').join('.')+' '+(x.msg||'')).trim()).join('; ');return 'HTTP '+r.status+' '+JSON.stringify(j).slice(0,200)}catch{return'HTTP '+r.status}}
+async function errText(r){try{const j=await r.json();const d=j.detail;if(typeof d==='string')return d;if(Array.isArray(d))return d.map(x=>((x.loc||[]).filter(y=>y!=='body').join('.')+' '+(x.msg||'')).trim()).join('; ');return'HTTP '+r.status+' '+JSON.stringify(j).slice(0,200)}catch{return'HTTP '+r.status}}
 const sbReady=()=>!!token()&&navigator.onLine;
-
-function parseJsonLoose(s){
-  const m=String(s).match(/\{[\s\S]*\}/); if(m){try{return JSON.parse(m[0])}catch{}}
-  return null;
-}
-function cleanText(s){return String(s).replace(/^```[a-z]*\n?|```$/gim,'').replace(/^["“]|["”]$/g,'').trim()}
+function parseJsonLoose(s){const m=String(s).match(/\{[\s\S]*\}/);if(m){try{return JSON.parse(m[0])}catch{}}return null}
+const cleanText=s=>String(s).replace(/^```[a-z]*\n?|```$/gim,'').replace(/^["“]|["”]$/g,'').trim();
+function idFromName(n){n=String(n).toLowerCase();const hit=LANGS.find(l=>l.n.toLowerCase()===n)||LANGS.find(l=>n.startsWith(l.n.toLowerCase().split(' ')[0])&&l.n.length>2);return hit?hit.c:null}
 
 async function sbTranslate(text,src,tgt){
-  const body={text,target_language:L[tgt].sb}; if(src&&src!=='auto'&&L[src].sb)body.source_language=L[src].sb;
-  const j=await sb('/tasks/translate',{json:body,timeout:20000});
-  const o=j.output||{}; const out=o.translated_text||o.text; if(!out)throw new Error('empty');
-  return{text:out.trim()};
+  const body={text,target_language:L[tgt].sb};if(src&&src!=='auto'&&L[src]&&L[src].sb)body.source_language=L[src].sb;
+  const j=await sb('/tasks/translate',{json:body,timeout:14000,retry:false});
+  const o=j.output||{},out=o.translated_text||o.text;if(!out)throw new Error('empty');
+  return{text:out.trim(),src:SBMAP[o.source_language]||null};
+}
+async function sbPlain(text,src,tgt){
+  if(text.length<=700)return sbTranslate(text,src,tgt);
+  const parts=await Promise.all(chunks(text,600).map(c=>sbTranslate(c,src,tgt)));      // long text: pieces go in parallel
+  return{text:parts.map(p=>p.text).join(' '),src:parts[0].src};
 }
 async function sbChat(text,src,tgt,ctx,det){
-  const srcName=src&&src!=='auto'?L[src].n:'unknown (detect it)';
+  const srcName=src&&src!=='auto'?nameOf(src):'unknown (detect it)';
   const sys='You are WalTrans, an expert human-quality translator for Ugandan and East African languages (Luganda, Lusoga, Kiswahili, Runyankole, Acholi, etc.) and English. '+
    'Translate the WHOLE message by its meaning and context, as a fluent native speaker would say it. Never translate word by word. Choose word senses that fit the context. '+
    'The input may MIX languages inside one sentence (for example English words inside a Luganda sentence). Understand every part, and translate everything into the target language only. '+
    'Keep names, numbers and places. Use natural everyday speech unless the context asks for formal or respectful speech. '+
    'Reply with ONLY one JSON object, no other text: {"detected":["languages found in the input"],"translation":"the translation"}';
-  const user='Target language: '+L[tgt].n+'\nSource language: '+srcName+(det&&det.mixed?'\nNote: this sentence mixes languages.':'')+(ctx?'\nContext/situation: '+ctx:'')+'\nText:\n'+text;
-  const j=await sb('/tasks/chat/completions',{json:{model:'sunflower-9b',messages:[{role:'system',content:sys},{role:'user',content:user}],temperature:0.1,max_tokens:Math.min(1200,Math.max(120,text.length*4))},timeout:40000});
-  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content; if(!raw)throw new Error('empty');
-  const p=parseJsonLoose(raw);
-  if(p&&p.translation)return{text:String(p.translation).trim(),detected:Array.isArray(p.detected)?p.detected.map(String).slice(0,4):[]};
-  return{text:cleanText(raw),detected:[]};
+  const user='Target language: '+nameOf(tgt)+'\nSource language: '+srcName+(det&&det.mixed?'\nNote: this sentence mixes languages.':'')+(ctx?'\nContext/situation: '+ctx:'')+'\nText:\n'+text;
+  const j=await sb('/tasks/chat/completions',{json:{model:'sunflower-9b',messages:[{role:'system',content:sys},{role:'user',content:user}],temperature:0.1,max_tokens:Math.min(1200,Math.max(120,text.length*4))},timeout:30000,retry:false});
+  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;if(!raw)throw new Error('empty');
+  const p=parseJsonLoose(raw),det2=p&&Array.isArray(p.detected)?p.detected.map(String).slice(0,4):[];
+  const guess=det2.length===1?idFromName(det2[0]):null;
+  if(p&&p.translation)return{text:String(p.translation).trim(),detected:det2,src:guess};
+  return{text:cleanText(raw),detected:[],src:null};
 }
 async function sbExplain(text,lang,inLang,ctx){
   const sys='You are WalTrans, a patient language tutor for Ugandan and East African languages and English. Explain clearly and honestly. If you are unsure about something, say so instead of guessing. Use plain text, no markdown symbols.';
-  const user='Explain this '+L[lang].n+' text for a learner. Write the explanation in '+inLang+'.\nText: '+text+(ctx?'\nSituation: '+ctx:'')+
+  const user='Explain this '+nameOf(lang)+' text for a learner. Write the explanation in '+inLang+'.\nText: '+text+(ctx?'\nSituation: '+ctx:'')+
    '\n\nGive:\n1. Meaning in simple words\n2. Word-by-word breakdown (roots, prefixes, noun classes or tenses where useful)\n3. How and when it is used (casual, formal, respectful) and any cultural note\n4. Two short example sentences with translations\nKeep it concise.';
   const j=await sb('/tasks/chat/completions',{json:{model:'sunflower-9b',messages:[{role:'system',content:sys},{role:'user',content:user}],temperature:0.3,max_tokens:700},timeout:45000});
-  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content; if(!raw)throw new Error('empty');
+  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;if(!raw)throw new Error('empty');
   return String(raw).replace(/\*\*/g,'').replace(/^#+\s*/gm,'').trim();
 }
 
-/* =========================================================
-   ONLINE ENGINE 2: MyMemory (fallback, other languages)
-   ========================================================= */
+/* ONLINE ENGINE 2: MyMemory */
 function chunks(s,max=450){const out=[];let cur='';for(const p of s.split(/(?<=[.!?\n])\s+/)){if((cur+' '+p).length>max&&cur){out.push(cur);cur=p}else cur=cur?cur+' '+p:p}if(cur)out.push(cur);return out.flatMap(c=>c.length>max?c.match(new RegExp('.{1,'+max+'}','g')):[c])}
 async function myMemory(txt,src,tgt){
   const a=L[src].mm,b=L[tgt].mm;
@@ -510,71 +708,108 @@ async function myMemory(txt,src,tgt){
 /* =========================================================
    TRANSLATION ROUTER
    ========================================================= */
+function enginesFor(S,T,auto){
+  const e=[];
+  if(sbReady()&&T.sb&&(auto||(S&&S.sb)))e.push('sb');
+  if(navigator.onLine&&S&&S.mm&&T.mm)e.push('mm');
+  if(packOn()&&S&&S.nl&&T.nl)e.push('pack');
+  return e;
+}
+/* Speed: online engines race. The second one starts as soon as the first fails OR is slow (hedge). First good answer wins. */
+function raceEngines(list,run,hedge){
+  return new Promise((resolve,reject)=>{
+    let idx=0,pending=0,done=false;const errs=[];
+    const next=()=>{
+      if(idx>=list.length)return;const e=list[idx++],mine=idx;pending++;
+      run(e).then(r=>{if(!done){done=true;resolve({r,e})}}).catch(err=>{pending--;errs.push(err);if(done)return;if(idx<list.length)next();else if(pending===0){done=true;reject(errs)}});
+      if(idx<list.length)setTimeout(()=>{if(!done&&idx===mine)next()},hedge);
+    };
+    next();
+  });
+}
+async function runEngine(e,text,S,T,o){
+  if(e==='sb'){
+    const chat=!!o.ctx||!!(o.det&&o.det.mixed);
+    const r=chat?await sbChat(text,o.auto?'auto':S.c,T.c,o.ctx,o.det):await sbPlain(text,o.auto?'auto':S.c,T.c);
+    return{...r,label:chat?(o.det&&o.det.mixed?'Sunbird AI · mixed-language, in context':'Sunbird AI · in context'):'Sunbird AI'};
+  }
+  if(e==='mm')return{...await myMemory(text,S.c,T.c),label:'Online translation (basic, no context)'};
+  if(e==='pack')return{...await packRun(text,S.c,T.c),label:'Offline pack (on-device)',cls:'off'};
+}
 async function translateCore(text,from,to,ctx=''){
-  const det=detect(text);
-  let src=from==='auto'?(det.main||null):from;
-  const S=src?L[src]:null,T=L[to];
-  const tkey=src||'auto';
-  const tm=tmGet(tkey,to,text,ctx);
+  const T=L[to];if(!T||to==='auto')throw new Error('Pick a language to translate into.');
+  const det=detect(text),auto=from==='auto';
+  let src=auto?guessSource(text,det):(L[from]?from:null);
+  if(src&&src===to)return{text,label:'Already in '+T.n,cls:'',det,src};
+  const key=src||'auto';
+  const tm=tmGet(key,to,text,ctx);
   if(tm)return{text:tm.t,label:tm.v?'Your saved correction':'Remembered · instant',cls:'off',det,src};
   if(src){const r=exact(text,src,to);if(r)return{...r,label:'Phrasebook · works offline',cls:'off',det,src}}
-  const online=navigator.onLine;
   let authMsg='';
-  if(sbReady()&&T.sb&&(!S||S.sb)){
-    const chat=!!ctx||det.mixed||text.length>140||/[.!?]\s+\S/.test(text);
-    try{
-      const r=chat?await sbChat(text,from==='auto'?'auto':src,to,ctx,det):await sbTranslate(text,from==='auto'?'auto':src,to);
-      tmPut(tkey,to,text,r.text,ctx,false); if(src&&src!==tkey)tmPut(src,to,text,r.text,ctx,false);
-      return{...r,label:chat?(det.mixed?'Sunbird AI · mixed-language, in context':'Sunbird AI · in context'):'Sunbird AI',cls:'',det,src};
-    }catch(e){if(e instanceof AuthErr)authMsg=e.message}
+  const S0=src?L[src]:null;
+  if(auto&&!src&&!sbReady()){const e=new Error(navigator.onLine?'WalTrans couldn’t tell which language this is. Choose it in the “From” box, or connect Sunbird AI (Settings) so it can detect the language for you.':'Without internet WalTrans can only detect a few languages. Choose the language in the “From” box.');e.det=det;throw e}
+  const engs=enginesFor(S0,T,auto&&!S0),onl=engs.filter(x=>x!=='pack'),local=engs.filter(x=>x==='pack');
+  const mixedOrCtx=!!ctx||!!det.mixed;
+  const attempt=async(e)=>{
+    const r=await runEngine(e,text,S0,T,{ctx,det,auto:auto&&!S0});
+    const rs=src||r.src||null;
+    tmPut(rs||'auto',to,text,r.text,ctx,false);if(rs&&!src)tmPut(src||'auto',to,text,r.text,ctx,false);
+    return{...r,det,src:rs,cls:r.cls||''};
+  };
+  if(onl.length){try{return(await raceEngines(onl,attempt,mixedOrCtx?9000:4500)).r}catch(errs){for(const err of errs)if(err instanceof AuthErr)authMsg=err.message}}
+  for(const e of local){try{return await attempt(e)}catch(err){}}
+  if(!src)src='en';          // last resort when nothing could identify the language
+  const S=L[src];
+  if(src!==to&&src!=='en'&&to!=='en'){                       // pivot through English
+    const a=enginesFor(S,L.en)[0],b=enginesFor(L.en,T)[0];
+    if(a&&b){try{const r1=await runEngine(a,text,S,L.en,{det}),r2=await runEngine(b,r1.text,L.en,T,{});
+      tmPut(src,to,text,r2.text,ctx,false);return{text:r2.text,label:'Via English · '+(r2.label||''),cls:r2.cls||'',det,src}}catch(err){if(err instanceof AuthErr)authMsg=err.message}}
   }
-  if(!src)src='en';
-  const S2=L[src];
-  if(online&&S2.mm&&T.mm&&src!==to){
-    try{const r=await myMemory(text,src,to);tmPut(src,to,text,r.text,ctx,false);return{...r,label:'Online translation (basic, no context)',cls:'',det,src}}catch{}
-  }
-  if(packOn()&&S2.nl&&T.nl){
-    try{const r=await packRun(text,src,to);tmPut(src,to,text,r.text,ctx,false);return{...r,label:'Offline pack (on-device)',cls:'off',det,src}}catch{}
-  }
-  const d=await deviceTranslate(text,src,to); if(d)return{...d,label:'On-device translator · offline',cls:'off',det,src};
-  const f=fuzzy(text,src,to); if(f)return{...f,label:'Closest phrasebook match: “'+f.from+'”',cls:'rough',det,src,warn:1};
-  const r=rough(text,src,to); if(r)return{...r,label:'Rough word-by-word guess (offline)',cls:'rough',det,src,warn:1};
-  let why;
+  const d=await deviceTranslate(text,src,to);if(d)return{...d,label:'On-device translator · offline',cls:'off',det,src};
+  const f=fuzzy(text,src,to);if(f)return{...f,label:'Closest phrasebook match: “'+f.from+'”',cls:'rough',det,src,warn:1};
+  const r=rough(text,src,to);if(r)return{...r,label:'Rough word-by-word guess (offline)',cls:'rough',det,src,warn:1};
+  const online=navigator.onLine;let why;
   if(authMsg)why=authMsg;
-  else if(L[to].c==='xog'||src==='xog')why=online?'Lusoga needs the free Sunbird AI connection: open ⚙️ Settings → Connect.':'Lusoga offline only knows the phrasebook and translations you saved. Connect once while online to build it up.';
-  else if(!online&&packOn()&&S2.nl&&T.nl)why='The offline pack couldn’t start on this device (it may need more memory). Try closing other apps, or reinstall it in ⚙️ Settings.';
-  else if(!online)why=(S2.nl&&T.nl)?'You are offline. Install the offline pack in ⚙️ Settings to translate any sentence without internet.':'You are offline and this isn’t in the phrasebook.';
-  else why='The translation service didn’t respond. Connect Sunbird AI in ⚙️ Settings for better results.';
+  else if(to==='xog'||src==='xog')why=online?'Lusoga needs the free Sunbird AI connection: open ⚙️ Settings → Sunbird AI account.':'Lusoga offline only knows the phrasebook and translations you saved. Connect once while online to build it up.';
+  else if(!online&&packOn()&&S.nl&&T.nl)why='The offline pack couldn’t start on this device (it may need more memory). Close other apps, or reinstall it in Settings → Offline pack.';
+  else if(!online)why=(S.nl&&T.nl)?'You are offline. Install the offline pack (Settings → Offline pack) to translate any sentence without internet.':'You are offline and this isn’t in the phrasebook.';
+  else if(!(S.sb||S.mm||S.nl)||!(T.sb||T.mm||T.nl))why='No translator covers this language pair yet. Try another language.';
+  else why='The translation service didn’t respond. Connect Sunbird AI (Settings) for better results, or try again.';
   const e=new Error(why);e.det=det;throw e;
 }
 
 /* =========================================================
    MAIN TRANSLATE UI
    ========================================================= */
-let last=null,ctxChip='';
+const ST={from:'auto',to:'lg',last:null};
 const CTX=['Everyday','Market / shopping','Formal / official','Respectful (to an elder)','School / study','Health / clinic','Travel / transport','Church / mosque','Farming','Business'];
 const ctxString=()=>[$('ctxSel').value,$('ctxText').value.trim()].filter(Boolean).join('. ');
 function ctxSummary(){const c=ctxString();$('ctxSum').textContent=c?'Context: '+(c.length>46?c.slice(0,44)+'…':c)+' (tap to change)':'＋ Add context (optional)'}
+const saveLangs=()=>store.set('waltrans.langs',{from:ST.from,to:ST.to});
+function updateLangBar(){
+  for(const[id,k,lab]of[['fromBtn','from','From'],['toBtn','to','To']])$(id).replaceChildren(el('small',{},lab),el('b',{},'🔍 '+nameOf(ST[k])));
+}
 async function translate(){
-  const txt=$('src').value.trim(),from=$('from').value,to=$('to').value;
+  const txt=$('src').value.trim(),from=ST.from,to=ST.to;
   if(!txt){toast('Type or speak something first');return}
   if(from===to){showOut({text:txt},'Same language','');return}
   $('go').disabled=true;$('go').textContent='Translating…';
   const t0=performance.now();
   try{
     const r=await translateCore(txt,from,to,ctxString());
-    renderDet(r.det,r.detected);
-    last={text:r.text,src:txt,from:r.src||from,to,ctx:ctxString()};
-    showOut(r,r.label+(r.label.startsWith('Remembered')?'':' · '+((performance.now()-t0)/1000).toFixed(1)+'s'),r.cls,r.warn);
-    pushHist({src:txt,text:r.text,from:last.from,to});
-  }catch(e){renderDet(e.det);showOut(null,e.message,'err')}
+    renderDet(r,from);
+    const used=r.src||(from==='auto'?null:from);
+    ST.last={text:r.text,src:txt,from:used||'auto',to,ctx:ctxString()};
+    showOut(r,r.label+(/^(Remembered|Your saved)/.test(r.label)?'':' · '+((performance.now()-t0)/1000).toFixed(1)+'s'),r.cls,r.warn);
+    pushHist({src:txt,text:r.text,from:used||'auto',to});
+  }catch(e){renderDet(e&&e.det?{det:e.det}:null,from);showOut(null,(e&&e.message)||'Something went wrong. Please try again.','err')}
   finally{$('go').disabled=false;$('go').textContent='Translate'}
 }
-function renderDet(det,ai){
-  const names={en:'English',lg:'Luganda',sw:'Kiswahili'};
+function renderDet(r,from){
   let s='';
-  if(ai&&ai.length)s='Detected: '+ai.join(' + ');
-  else if(det&&det.langs.length)s='Detected: '+det.langs.map(k=>names[k]).join(' + ')+(det.mixed?' (mixed sentence)':'');
+  if(r&&r.detected&&r.detected.length)s='Detected: '+r.detected.join(' + ');
+  else if(r&&r.src&&from==='auto')s='Detected: '+nameOf(r.src);
+  else if(r&&r.det&&r.det.langs.length)s='Detected: '+r.det.langs.map(nameOf).join(' + ')+(r.det.mixed?' (mixed sentence)':'');
   $('det').textContent=s;
 }
 function showOut(r,label,cls,warn){
@@ -585,14 +820,13 @@ function showOut(r,label,cls,warn){
 }
 function closeFix(){$('fixBox').classList.add('hidden');$('fixSave').classList.add('hidden');$('out').classList.remove('hidden')}
 
-/* Explain */
-async function doExplain(text,lang,anchor){
+async function doExplain(text,lang,box){
   if(!text){toast('Nothing to explain yet');return}
-  const box=$('expl');box.classList.remove('hidden');
-  if(lang==='auto')lang=(detect(text).main)||'en';
+  box.classList.remove('hidden');
+  if(lang==='auto'||!L[lang])lang=guessSource(text)||'en';
   if(!sbReady()){
     const hits=allEntries().filter(e=>e[lang]&&alts(e[lang]).some(a=>norm(a)===norm(text)));
-    box.textContent=hits.length?('From the phrasebook:\n'+CORE.filter(c=>hits[0][c]).map(c=>L[c].n+': '+hits[0][c]).join('\n')+'\n\nFor a full explanation (meaning, breakdown, usage), connect Sunbird AI in ⚙️ Settings and go online.'):'Explanations need the AI connection and internet. Connect Sunbird AI in ⚙️ Settings.';
+    box.textContent=hits.length?('From the phrasebook:\n'+CORE.filter(c=>hits[0][c]).map(c=>nameOf(c)+': '+hits[0][c]).join('\n')+'\n\nFor a full explanation (meaning, breakdown, usage), connect Sunbird AI in Settings and go online.'):'Explanations need the AI connection and internet. Connect Sunbird AI in Settings → Sunbird AI account.';
     return;
   }
   box.textContent='Thinking…';
@@ -601,10 +835,13 @@ async function doExplain(text,lang,anchor){
 
 /* History */
 function pushHist(x){const h=store.get('waltrans.history',[]).filter(y=>!(y.src===x.src&&y.from===x.from&&y.to===x.to));h.unshift({...x,t:Date.now()});store.set('waltrans.history',h.slice(0,50));renderHist()}
+function cleanHist(){const h=store.get('waltrans.history',[]);const ok=h.filter(x=>x&&typeof x.src==='string'&&typeof x.text==='string'&&L[x.from]&&x.from!=='auto'&&L[x.to]&&x.to!=='auto');if(ok.length!==h.length)store.set('waltrans.history',ok)}
 function renderHist(){
   const h=store.get('waltrans.history',[]),box=$('histList');
   if(!h.length){box.replaceChildren(el('p',{class:'note'},'No translations yet.'));return}
-  box.replaceChildren(...h.map(x=>el('div',{class:'item'},el('button',{type:'button',style:'width:100%;text-align:left;border:0;background:none;padding:0;min-height:0',onclick:()=>{$('from').value=x.from;$('to').value=x.to;$('src').value=x.src;saveLangs();last={text:x.text,src:x.src,from:x.from,to:x.to,ctx:''};showOut({text:x.text},'From history','');showTab('tr');scrollTo({top:0,behavior:'smooth'})}},el('b',{},x.text),el('br'),el('small',{style:'color:var(--mute)'},L[x.from].n+' → '+L[x.to].n+': '+x.src)))));
+  box.replaceChildren(...h.map(x=>el('div',{class:'item'},el('button',{type:'button',style:'width:100%;text-align:left;border:0;background:none;padding:0;min-height:0',onclick:()=>{
+    ST.from=L[x.from]?x.from:'auto';ST.to=L[x.to]&&x.to!=='auto'?x.to:'en';$('src').value=x.src;saveLangs();updateLangBar();ST.last={text:x.text,src:x.src,from:x.from,to:x.to,ctx:''};showOut({text:x.text},'From history','');go('translate')}},
+    el('b',{},x.text),el('br'),el('small',{style:'color:var(--mute)'},nameOf(x.from)+' → '+nameOf(x.to)+': '+x.src)))));
 }
 
 /* =========================================================
@@ -613,9 +850,10 @@ function renderHist(){
 let player=null;
 async function speakText(text,lang){
   if(!text)return;
+  if(lang==='auto'||!L[lang])lang=guessSource(text)||cfg().myLang;
   const Lg=L[lang];
   if(Lg.tts&&sbReady()){
-    try{const j=await sb('/tasks/audio/speech',{json:{text,language:Lg.sb,response_mode:'url'},timeout:40000});
+    try{const j=await sb('/tasks/audio/speech',{json:{text,language:Lg.sc||Lg.sb,response_mode:'url'},timeout:40000});
       if(j.audio_url){if(player)player.pause();player=new Audio(j.audio_url);await player.play();return}}catch(e){if(e instanceof AuthErr){toast(e.message);return}}
   }
   if(Lg.sp&&'speechSynthesis' in window){
@@ -669,29 +907,29 @@ async function sunbirdListen(lang,onState){
   if(!spoke&&Date.now()-started<2500)return'';
   onState&&onState('Transcribing…');
   const wav=await toWav(new Blob(parts,{type:mr.mimeType||'audio/webm'}));
-  const fd=new FormData();fd.append('audio',wav,'speech.wav');fd.append('language',L[lang].sb);
+  const Lg=L[lang],fd=new FormData();fd.append('audio',wav,'speech.wav');fd.append('language',Lg.sc||Lg.sb);
   const j=await sb('/tasks/audio/transcriptions',{body:fd,timeout:60000});
-  return (j.audio_transcription||'').trim();
+  return(j.audio_transcription||'').trim();
 }
-/* choose engine; returns transcript */
 async function listen(lang,{onInterim,onState}={}){
   const pref=cfg().voice,Lg=L[lang];
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   const canSB=!!Lg.stt&&sbReady(),canBr=!!(SR&&Lg.sp);
-  let useSB=pref==='sunbird'?canSB:pref==='browser'?false:(canSB&&(Lg.af||!canBr));
+  let useSB=pref==='sunbird'?canSB:pref==='browser'?false:(canSB&&(!!Lg.sb&&lang!=='en'||!canBr));
   if(!useSB&&!canBr&&!canSB){
-    if(Lg.stt&&!token())throw new Error('Voice for '+Lg.n+' needs the free Sunbird AI connection: open ⚙️ Settings → Connect.');
+    if(Lg.stt&&!token())throw new Error('Voice for '+Lg.n+' needs the free Sunbird AI connection: Settings → Sunbird AI account.');
     if(Lg.stt&&!navigator.onLine)throw new Error('Voice for '+Lg.n+' needs internet.');
     throw new Error('Voice input isn’t available for '+Lg.n+' on this device. You can still type.');
   }
   if(!useSB&&canBr){
     try{onState&&onState('Listening… tap the mic again to stop');return await browserListen(lang,onInterim)}
-    catch(e){if(canSB&&['language-not-supported','not-allowed','service-not-allowed','network','nosr','error'].includes(e.message)&&e.message!=='not-allowed')useSB=true;else if(e.message==='not-allowed')throw new Error('Microphone permission was denied.');else if(e.message==='no-speech')return'';else throw new Error('Couldn’t use browser voice for '+Lg.n+(canSB?'':'. Connect Sunbird AI in Settings for better coverage.'))}
+    catch(e){
+      if(e.message==='not-allowed')throw new Error('Microphone permission was denied.');
+      if(e.message==='no-speech')return'';
+      if(canSB)useSB=true;else throw new Error('Couldn’t use browser voice for '+Lg.n+'. Connect Sunbird AI in Settings for wider coverage.');
+    }
   }
-  if(useSB){
-    try{return await sunbirdListen(lang,onState)}
-    catch(e){if(e.name==='NotAllowedError')throw new Error('Microphone permission was denied.');throw e}
-  }
+  if(useSB){try{return await sunbirdListen(lang,onState)}catch(e){if(e.name==='NotAllowedError')throw new Error('Microphone permission was denied.');throw e}}
   throw new Error('Voice input isn’t available for '+Lg.n+'.');
 }
 async function micFlow(btn,lang,onText){
@@ -701,20 +939,24 @@ async function micFlow(btn,lang,onText){
   catch(e){document.querySelectorAll('.toast').forEach(x=>x.remove());toast(e.message,6000)}
   finally{activeStop=null;btn.classList.remove('rec')}
 }
+const spokenLang=()=>ST.from==='auto'?cfg().myLang:ST.from;
 
 /* =========================================================
-   CONVERSATION MODE
+   CHAT (two-person conversation)
    ========================================================= */
-let convo=store.get('waltrans.convo',[]);
+let convo=store.get('waltrans.convo',[]).filter(m=>m&&L[m.from]&&L[m.to]);
+const CV=Object.assign({a:'en',b:'lg'},store.get('waltrans.clangs',{}));
+if(!L[CV.a]||CV.a==='auto')CV.a='en';if(!L[CV.b]||CV.b==='auto')CV.b='lg';
 function renderConvo(){
+  $('caBtn').replaceChildren(el('small',{},'Person A'),el('b',{},'🔍 '+nameOf(CV.a)));$('cbBtn').replaceChildren(el('small',{},'Person B'),el('b',{},'🔍 '+nameOf(CV.b)));
   const b=$('bubbles');
   if(!convo.length){b.replaceChildren(el('p',{class:'note'},'No messages yet.'));return}
-  b.replaceChildren(...convo.map(m=>el('div',{class:'bub '+m.side},el('small',{},(m.side==='a'?'A':'B')+' · '+L[m.from].n+': '+m.src),el('b',{},m.out),el('small',{},'→ '+L[m.to].n))));
+  b.replaceChildren(...convo.map(m=>el('div',{class:'bub '+m.side},el('small',{},(m.side==='a'?'A':'B')+' · '+nameOf(m.from)+': '+m.src),el('b',{},m.out),el('small',{},'→ '+nameOf(m.to)))));
   b.scrollTop=b.scrollHeight;
 }
 async function convoSend(side,text){
   text=text.trim();if(!text)return;
-  const a=$('ca').value,bb=$('cb').value,from=side==='a'?a:bb,to=side==='a'?bb:a;
+  const from=side==='a'?CV.a:CV.b,to=side==='a'?CV.b:CV.a;
   try{
     const r=from===to?{text}:await translateCore(text,from,to,'Face-to-face conversation');
     convo.push({side,from,to,src:text,out:r.text});convo=convo.slice(-40);store.set('waltrans.convo',convo);renderConvo();
@@ -733,7 +975,7 @@ function renderBook(){
     const g=el('div',{class:'lg'});
     for(const c of CORE){if(!e[c])continue;const v=el('span',{},e[c]);
       if(c==='xog'&&e.base){v.append(e.xs==='w'?el('span',{class:'src'},'Wikipedia'):el('span',{class:'unv'},'unverified'))}
-      g.append(el('span',{},L[c].n),v)}
+      g.append(el('span',{},nameOf(c)),v)}
     const it=el('div',{class:'item'},g);
     if(e.ci!==undefined)it.append(el('button',{type:'button',style:'margin-top:6px',onclick:()=>{const c=customs();c.splice(e.ci,1);store.set('waltrans.custom',c);renderBook()}},'Delete'));
     return it}));
@@ -746,23 +988,426 @@ function addPhrase(vals){
 }
 
 /* =========================================================
-   SETTINGS: Sunbird account, pack manager, data
+   LANGUAGE PICKER (search)
    ========================================================= */
-function setAi(){const on=!!token();const p=$('ai');p.textContent=on?'AI: on':'AI: off';p.className='pill '+(on?'on':'off');$('sbIn').classList.toggle('hidden',on);$('sbOut').classList.toggle('hidden',!on)}
+let pickCtx=null,pickerOpen=false;
+function badges(l){
+  if(l.c==='auto')return'';
+  const on=l.sb||l.mm,off=l.nl;
+  return(off?'<span class="pb o">Offline</span>':'')+(on?'<span class="pb">Online</span>':'')+((!on&&!off)?'<span class="pb">Phrases only</span>':'');
+}
+const REGIONS=['East Africa','Central Africa','Southern Africa','West Africa','North Africa & Middle East','Europe','Caucasus & Central Asia','South Asia','East Asia','Southeast Asia','Pacific','Americas'];
+function renderPick(){
+  const q=$('pickQ').value.trim().toLowerCase();
+  const m=l=>!q||l.n.toLowerCase().includes(q)||l.c.toLowerCase().includes(q)||(l.o||'').toLowerCase().includes(q)||(l.p||'').toLowerCase().includes(q);
+  const row=l=>{const b=el('button',{type:'button',class:'pick','aria-current':String(l.c===pickCtx.current),onclick:()=>{const f=pickCtx.onPick;closePicker();f(l.c)}});
+    const left=el('span',{},l.n);if(l.o)left.append(el('small',{},l.o+' · '+l.p+(l.c==='xog'?' · Online only (Sunbird AI)':'')));
+    const right=el('span',{});right.innerHTML=badges(l);b.append(left,right);return b};
+  const sorted=a=>a.sort((x,y)=>x.n.localeCompare(y.n));
+  const pool=LANGS.filter(m),done=new Set();
+  const groups=[];
+  if(pickCtx.auto&&m(L.auto))groups.push(['Smart',[L.auto]]);
+  const core=['en','lg','xog','sw'].map(c=>L[c]).filter(m);if(core.length){groups.push(['Your languages',core]);core.forEach(l=>done.add(l.c))}
+  const ug=sorted(pool.filter(l=>l.o==='Uganda'&&!done.has(l.c)));if(ug.length)groups.push(['Languages of Uganda',ug]);
+  for(const r of REGIONS){const li=sorted(pool.filter(l=>l.o===r&&!done.has(l.c)));if(li.length)groups.push([r,li])}
+  const box=$('pickList');box.replaceChildren();
+  if(!groups.length)box.append(el('p',{class:'note'},'No language called “'+$('pickQ').value+'”.'));
+  for(const[t,list]of groups){box.append(el('h3',{},t));list.forEach(l=>box.append(row(l)))}
+}
+function openPicker(o){
+  pickCtx=o;$('pickQ').value='';renderPick();
+  if(!pickerOpen){history.pushState({v:'picker',n:(history.state&&history.state.n||0)+1},'','#picker');pickerOpen=true}
+  $('picker').showModal();setTimeout(()=>$('pickQ').focus(),50);
+}
+function closePicker(){if($('picker').open)$('picker').close()}
+
+/* =========================================================
+   SCAN: camera / photo / file → text → detect language → translate
+   ========================================================= */
+const TESS_URL='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+const PDF_URL='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',PDF_WORKER='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+const OCRMAP={en:'eng',sw:'swa',fr:'fra',es:'spa',pt:'por',de:'deu',it:'ita',nl:'nld',ar:'ara',zh:'chi_sim',ja:'jpn',ko:'kor',hi:'hin',ru:'rus',tr:'tur',id:'ind',ur:'urd',bn:'ben',am:'amh',so:'som',af:'afr',zu:'zul',xh:'xho',pol_Latn:'pol',ukr_Cyrl:'ukr',vie_Latn:'vie',tha_Thai:'tha',heb_Hebr:'heb',ell_Grek:'ell'};
+const OCR_SCRIPTS=[['auto','Automatic (Latin letters: English, Kiswahili, Luganda…)','eng+swa'],['ara','Arabic','ara'],['chi','Chinese','chi_sim'],['jpn','Japanese','jpn'],['kor','Korean','kor'],['hin','Hindi (Devanagari)','hin'],['rus','Russian (Cyrillic)','rus'],['amh','Amharic (Ethiopic)','amh']];
+const scanState={from:'auto',to:null,found:null,res:null,busy:false,stop:false,raw:null,onProg:null};
+const PDF_MAX=100;
+function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector('script[data-src="'+src+'"]'))return res();const s=document.createElement('script');s.src=src;s.dataset.src=src;s.onload=res;s.onerror=()=>{s.remove();rej(new Error('Couldn’t load the text reader. Connect to the internet once, then try again.'))};document.head.append(s)})}
+const median=a=>{if(!a.length)return 0;const b=[...a].sort((x,y)=>x-y);return b[b.length>>1]};
+const hasLetters=t=>/\p{L}/u.test(t);
+function ocrLangs(){
+  const sel=cfg().ocr;const hit=OCR_SCRIPTS.find(x=>x[0]===sel);
+  if(hit&&sel!=='auto')return hit[2];
+  if(scanState.from!=='auto'&&OCRMAP[scanState.from])return OCRMAP[scanState.from];
+  return'eng+swa';
+}
+/* --- photo clean-up: grayscale + even out shadows/lighting so letters stand out --- */
+function enhanceCanvas(c){
+  const w=c.width,h=c.height,x=c.getContext('2d',{willReadFrequently:true}),img=x.getImageData(0,0,w,h),d=img.data;
+  const sc=Math.max(1,Math.round(Math.max(w,h)/400)),sw=Math.ceil(w/sc),sh=Math.ceil(h/sc);
+  const t=document.createElement('canvas');t.width=sw;t.height=sh;const tx=t.getContext('2d',{willReadFrequently:true});tx.drawImage(c,0,0,sw,sh);
+  const sd=tx.getImageData(0,0,sw,sh).data,g=new Float32Array(sw*sh);
+  for(let i=0;i<sw*sh;i++)g[i]=.299*sd[i*4]+.587*sd[i*4+1]+.114*sd[i*4+2];
+  const I=new Float64Array((sw+1)*(sh+1));
+  for(let yy=0;yy<sh;yy++){let row=0;for(let xx=0;xx<sw;xx++){row+=g[yy*sw+xx];I[(yy+1)*(sw+1)+xx+1]=I[yy*(sw+1)+xx+1]+row}}
+  const R=Math.max(6,Math.round(Math.max(sw,sh)/12)),bg=new Float32Array(sw*sh);
+  for(let yy=0;yy<sh;yy++)for(let xx=0;xx<sw;xx++){const x0=Math.max(0,xx-R),x1=Math.min(sw,xx+R+1),y0=Math.max(0,yy-R),y1=Math.min(sh,yy+R+1);
+    bg[yy*sw+xx]=(I[y1*(sw+1)+x1]-I[y0*(sw+1)+x1]-I[y1*(sw+1)+x0]+I[y0*(sw+1)+x0])/((x1-x0)*(y1-y0))||255}
+  for(let yy=0;yy<h;yy++){const by=Math.min(sh-1,(yy/sc)|0)*sw;for(let xx=0;xx<w;xx++){
+    const i=(yy*w+xx)*4,gr=.299*d[i]+.587*d[i+1]+.114*d[i+2],b=Math.max(40,bg[by+Math.min(sw-1,(xx/sc)|0)]);
+    let v=gr/b*238;v=v>255?255:v<0?0:v;d[i]=d[i+1]=d[i+2]=v}}
+  x.putImageData(img,0,0);
+}
+async function prepImage(file,enhance){
+  let bmp;try{bmp=await createImageBitmap(file,{imageOrientation:'from-image'})}catch{bmp=await createImageBitmap(file)}
+  const big=Math.max(bmp.width,bmp.height),k=big<1600?Math.min(2,2000/big):big>2800?2800/big:1;
+  const c=document.createElement('canvas');c.width=Math.max(1,Math.round(bmp.width*k));c.height=Math.max(1,Math.round(bmp.height*k));
+  const x=c.getContext('2d',{willReadFrequently:true});x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bmp,0,0,c.width,c.height);if(bmp.close)bmp.close();
+  return canvasBlob(c,enhance);
+}
+async function canvasBlob(c,enhance){
+  if(enhance)try{enhanceCanvas(c)}catch(e){console.warn('enhance skipped',e)}
+  return new Promise(r=>c.toBlob(r,'image/png'));
+}
+/* --- OCR with layout: put every word back at its place so lines, indents, columns and gaps survive --- */
+async function getOcr(langs){
+  await loadScript(TESS_URL);
+  const w=await Tesseract.createWorker(langs,1,{logger:m=>{if(m.status==='recognizing text'&&scanState.onProg)scanState.onProg(m.progress)}});
+  if(w.setParameters)try{await w.setParameters({preserve_interword_spaces:'1',user_defined_dpi:'300'})}catch{}
+  return w;
+}
+function tessLines(d){
+  let ls=d.lines;
+  if(!Array.isArray(ls)||!ls.length){ls=[];for(const b of d.blocks||[])for(const p of b.paragraphs||[])for(const l of p.lines||[])ls.push(l)}
+  return ls;
+}
+function layoutLines(ls){
+  ls=ls.filter(l=>l&&l.bbox&&String(l.text||'').trim());if(!ls.length)return'';
+  const cy=l=>(l.bbox.y0+l.bbox.y1)/2,H=median(ls.map(l=>l.bbox.y1-l.bbox.y0))||20;
+  const cw=median(ls.map(l=>(l.bbox.x1-l.bbox.x0)/Math.max(1,String(l.text).trim().length)))||H*.5;
+  const xs=ls.map(l=>l.bbox.x0).sort((a,b)=>a-b),minX=xs[Math.floor(xs.length*.05)];
+  const rows=[];
+  for(const l of[...ls].sort((a,b)=>cy(a)-cy(b))){const r=rows[rows.length-1];if(r&&Math.abs(cy(l)-r.cy)<H*.55){r.items.push(l);r.cy=(r.cy*(r.items.length-1)+cy(l))/r.items.length}else rows.push({cy:cy(l),items:[l]})}
+  const out=[];let prevBottom=null;
+  for(const r of rows){
+    const words=r.items.flatMap(l=>(l.words&&l.words.length)?l.words.filter(w=>w&&w.bbox&&String(w.text).trim()):[{text:l.text,bbox:l.bbox}]).sort((a,b)=>a.bbox.x0-b.bbox.x0);
+    let line='';
+    for(const w of words){const col=Math.max(0,Math.round((w.bbox.x0-minX)/cw)),t=String(w.text).trim();line+=line?' '.repeat(Math.max(1,col-line.length))+t:' '.repeat(Math.min(60,col))+t}
+    const top=Math.min(...r.items.map(l=>l.bbox.y0)),bot=Math.max(...r.items.map(l=>l.bbox.y1));
+    if(prevBottom!=null){const gap=top-prevBottom;if(gap>H*.8){out.push('');if(gap>H*2.6)out.push('')}}
+    out.push(line.replace(/\s+$/,''));prevBottom=bot;
+  }
+  return out.join('\n');
+}
+async function ocrPage(w,blob){
+  const r=await w.recognize(blob),d=r.data||{},ls=tessLines(d);
+  return{text:ls.length?layoutLines(ls):String(d.text||'').trim(),conf:typeof d.confidence==='number'?d.confidence:null};
+}
+/* --- PDF text layer with layout --- */
+function pdfLayout(items){
+  const it=items.filter(i=>i&&typeof i.str==='string'&&i.transform);const real=it.filter(i=>i.str.trim());if(!real.length)return'';
+  const H=median(real.map(i=>i.height||Math.abs(i.transform[3])||10))||10;
+  const cw=median(real.filter(i=>i.str.trim().length>1&&i.width).map(i=>i.width/i.str.length))||H*.5;
+  const minX=Math.min(...real.map(i=>i.transform[4])),rows=[];
+  for(const i of[...it].sort((a,b)=>b.transform[5]-a.transform[5])){const r=rows[rows.length-1],y=i.transform[5];if(r&&Math.abs(y-r.y)<H*.5)r.items.push(i);else rows.push({y,items:[i]})}
+  const out=[];let prevY=null;
+  for(const r of rows){
+    r.items.sort((a,b)=>a.transform[4]-b.transform[4]);let line='',end=null;
+    for(const i of r.items){const x=i.transform[4];
+      if(end==null)line=' '.repeat(Math.min(60,Math.max(0,Math.round((x-minX)/cw))))+i.str;
+      else{const gap=x-end;line+=(gap>cw*.35&&!/\s$/.test(line)&&!/^\s/.test(i.str)?' '.repeat(Math.max(1,Math.round(gap/cw))):'')+i.str}
+      end=x+(i.width||cw*i.str.length)}
+    line=line.replace(/\s+$/,'');if(!line.trim())continue;
+    if(prevY!=null&&prevY-r.y>H*1.9)out.push('');
+    out.push(line);prevY=r.y;
+  }
+  return out.join('\n');
+}
+/* --- Word (.docx): a .docx is a zip; read it with the browser's own inflate, no library needed --- */
+async function unzipEntry(buf,name){
+  const u=new Uint8Array(buf),dv=new DataView(buf);let e=-1;
+  for(let i=u.length-22;i>=Math.max(0,u.length-70000);i--)if(dv.getUint32(i,true)===0x06054b50){e=i;break}
+  if(e<0)throw new Error('This Word file looks damaged.');
+  let n=dv.getUint16(e+10,true),o=dv.getUint32(e+16,true);
+  for(;n>0&&dv.getUint32(o,true)===0x02014b50;n--){
+    const meth=dv.getUint16(o+10,true),csz=dv.getUint32(o+20,true),nl=dv.getUint16(o+28,true),xl=dv.getUint16(o+30,true),cl=dv.getUint16(o+32,true),lo=dv.getUint32(o+42,true);
+    const nm=new TextDecoder().decode(u.subarray(o+46,o+46+nl));
+    if(nm===name){
+      const start=lo+30+dv.getUint16(lo+26,true)+dv.getUint16(lo+28,true),raw=u.subarray(start,start+csz);
+      if(meth===0)return new TextDecoder().decode(raw);
+      if(meth!==8||typeof DecompressionStream==='undefined')throw new Error('This browser can’t open Word files. Update your browser, or save the file as PDF.');
+      const st=new Blob([raw]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+      return new TextDecoder().decode(await new Response(st).arrayBuffer());
+    }
+    o+=46+nl+xl+cl;
+  }
+  return null;
+}
+const romanOf=n=>{const m=[[10,'x'],[9,'ix'],[5,'v'],[4,'iv'],[1,'i']];let r='';for(const[v,t]of m)while(n>=v){r+=t;n-=v}return r};
+async function docxPages(file){
+  const buf=await file.arrayBuffer(),xml=await unzipEntry(buf,'word/document.xml');
+  if(!xml)throw new Error('That isn’t a Word (.docx) file. Older .doc files: open them in Word and “Save as” .docx or PDF.');
+  const parse=t=>new DOMParser().parseFromString(t,'application/xml'),doc=parse(xml);
+  if(doc.querySelector('parsererror'))throw new Error('Couldn’t read that Word file.');
+  const numXml=await unzipEntry(buf,'word/numbering.xml').catch(()=>null),fmt={};   // numId -> level -> format
+  if(numXml){const nd=parse(numXml),abs={};
+    for(const a of nd.getElementsByTagNameNS('*','abstractNum')){const id=a.getAttribute('w:abstractNumId'),lv={};for(const l of a.getElementsByTagNameNS('*','lvl')){const f=l.getElementsByTagNameNS('*','numFmt')[0];lv[l.getAttribute('w:ilvl')]=f?f.getAttribute('w:val'):'decimal'}abs[id]=lv}
+    for(const n of nd.getElementsByTagNameNS('*','num')){const a=n.getElementsByTagNameNS('*','abstractNumId')[0];if(a)fmt[n.getAttribute('w:numId')]=abs[a.getAttribute('w:val')]||{}}}
+  const counters={},pages=[[]];let br=false;
+  const kids=(n,tag)=>[...n.children].filter(c=>c.localName===tag),first=(n,tag)=>[...n.getElementsByTagNameNS('*',tag)][0];
+  const runText=n=>{let t='';(function w(x){for(const c of x.childNodes){if(c.nodeType!==1)continue;const k=c.localName;
+    if(k==='t')t+=c.textContent;else if(k==='tab')t+='    ';else if(k==='br'){if(c.getAttribute('w:type')==='page')br=true;else t+='\n'}else if(k==='noBreakHyphen')t+='-';
+    else if(k==='instrText'||k==='delText'||k==='pPr'||k==='rPr')continue;else w(c)}})(n);return t};
+  const para=p=>{
+    br=false;let txt=runText(p),pre='',ind=0;
+    const ppr=kids(p,'pPr')[0];
+    if(ppr){
+      if(kids(ppr,'pageBreakBefore').length&&pages[pages.length-1].length)pages.push([]);
+      const np=first(ppr,'numPr');
+      if(np){const id=(first(np,'numId')||{getAttribute:()=>null}).getAttribute('w:val'),lv=(first(np,'ilvl')||{getAttribute:()=>'0'}).getAttribute('w:val')||'0';
+        if(id&&id!=='0'){const f=(fmt[id]||{})[lv]||'decimal',c=counters[id]=counters[id]||{};c[lv]=(c[lv]||0)+1;for(const k of Object.keys(c))if(+k>+lv)delete c[k];
+          const n=c[lv];pre=f==='bullet'||f==='none'?'• ':/lowerLetter/.test(f)?String.fromCharCode(96+((n-1)%26+1))+') ':/upperLetter/.test(f)?String.fromCharCode(64+((n-1)%26+1))+') ':/lowerRoman/.test(f)?romanOf(n)+') ':/upperRoman/.test(f)?romanOf(n).toUpperCase()+') ':n+'. ';ind=(+lv)*3}}
+      else{const i=first(ppr,'ind'),l=i&&(i.getAttribute('w:left')||i.getAttribute('w:start'));if(l)ind=Math.min(40,Math.round(+l/150))}
+    }
+    const out=txt.split('\n').map((l,i)=>i?l:l);const line=out.map((l,i)=>(i===0?' '.repeat(ind)+pre:' '.repeat(ind+pre.length))+l).join('\n');
+    pages[pages.length-1].push(line.trim()?line.replace(/\s+$/,''):'');
+    if(br)pages.push([]);
+  };
+  const walk=n=>{for(const c of n.children){const k=c.localName;
+    if(k==='p')para(c);
+    else if(k==='tbl'){for(const tr of c.getElementsByTagNameNS('*','tr')){if(tr.parentNode!==c&&tr.parentNode.localName!=='tbl')continue;
+      const cells=kids(tr,'tc').map(tc=>[...tc.getElementsByTagNameNS('*','p')].map(runText).join(' ').replace(/\s+/g,' ').trim());
+      pages[pages.length-1].push(cells.join('  |  '))}pages[pages.length-1].push('')}
+    else if(k!=='sectPr')walk(c)}};
+  walk(doc.getElementsByTagNameNS('*','body')[0]||doc.documentElement);
+  return pages.map(l=>l.join('\n').replace(/\n{4,}/g,'\n\n\n').replace(/^\n+|\s+$/g,'')).filter(t=>t.trim());
+}
+function scanStatus(msg,p){$('scanStat').textContent=msg||'';const b=$('scanBar');if(p==null){b.classList.add('hidden')}else{b.classList.remove('hidden');b.firstElementChild.style.width=Math.round(Math.min(1,p)*100)+'%'}}
+const scanSrc=()=>scanState.from!=='auto'?scanState.from:scanState.found;
+const scanTo=()=>(scanState.to&&L[scanState.to]&&scanState.to!=='auto')?scanState.to:(L[cfg().scanTo]&&cfg().scanTo!=='auto'?cfg().scanTo:cfg().myLang);
+function updateScanLangs(){
+  const f=scanState.from!=='auto'?nameOf(scanState.from):(scanState.found?nameOf(scanState.found)+' (detected)':'Detect language');
+  $('sFrom').replaceChildren(el('small',{},'From'),el('b',{},'🔍 '+f));
+  $('sTo').replaceChildren(el('small',{},'To'),el('b',{},'🔍 '+nameOf(scanTo())));
+}
+async function scanDetect(text){
+  const sample=text.replace(/[ \t]+/g,' ').slice(0,1200),local=guessSource(sample,detect(sample));
+  if(local)return local;
+  if(sbReady()){try{const r=await sbTranslate(sample.slice(0,300),'auto','en');if(r.src&&L[r.src])return r.src}catch{}}
+  return null;
+}
+/* --- read the photos / PDF pages / text files --- */
+async function scanFiles(files){
+  files=[...files].filter(Boolean);if(!files.length)return;
+  if(scanState.busy){toast('Still reading the previous file…');return}
+  scanState.busy=true;scanState.stop=false;
+  $('scanRes').classList.add('hidden');$('scanStop').classList.remove('hidden');$('scanThumbs').replaceChildren();
+  const pages=[],confs=[];let worker=null,total=files.length,done=0,notes=[];
+  const prog=(f)=>Math.min(.98,(done+f)/Math.max(1,total));
+  try{
+    const enhance=$('scanEnh').checked,langs=ocrLangs();
+    for(let fi=0;fi<files.length&&!scanState.stop;fi++){
+      const f=files[fi],tag=files.length>1?'File '+(fi+1)+' of '+files.length+': ':'';
+      if(f.type.startsWith('image/')){
+        const im=el('img',{alt:'Page '+(pages.length+1)});im.src=URL.createObjectURL(f);$('scanThumbs').append(im);
+        scanStatus(tag+'Preparing the photo…',prog(.05));const blob=await prepImage(f,enhance);
+        scanStatus(tag+'Reading the text (the first time it may download reading data)…',prog(.1));
+        worker=worker||await getOcr(langs);scanState.onProg=p=>scanStatus(tag+'Reading the text…',prog(.1+p*.88));
+        const r=await ocrPage(worker,blob);pages.push(r.text);if(r.conf!=null)confs.push(r.conf);done++;
+      }else if(f.type==='application/pdf'||/\.pdf$/i.test(f.name)){
+        scanStatus(tag+'Opening the PDF…',prog(.05));await loadScript(PDF_URL);pdfjsLib.GlobalWorkerOptions.workerSrc=PDF_WORKER;
+        const doc=await pdfjsLib.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise,n=Math.min(doc.numPages,PDF_MAX);
+        total+=n-1;if(doc.numPages>PDF_MAX)notes.push('Only the first '+PDF_MAX+' pages were read.');
+        for(let p=1;p<=n&&!scanState.stop;p++){
+          scanStatus(tag+'Reading page '+p+' of '+n+'…',prog(.1));const pg=await doc.getPage(p);
+          let t=pdfLayout((await pg.getTextContent()).items);
+          if(t.replace(/\s/g,'').length<25){          // scanned page (a picture): read it like a photo
+            const w0=pg.view?pg.view[2]-pg.view[0]:612,h0=pg.view?pg.view[3]-pg.view[1]:792,vp=pg.getViewport({scale:Math.min(4,2600/Math.max(w0,h0))});
+            const c=document.createElement('canvas');c.width=Math.round(vp.width);c.height=Math.round(vp.height);
+            const cx=c.getContext('2d',{willReadFrequently:true});cx.fillStyle='#fff';cx.fillRect(0,0,c.width,c.height);
+            await pg.render({canvasContext:cx,viewport:vp}).promise;
+            worker=worker||await getOcr(langs);scanState.onProg=q=>scanStatus(tag+'Reading page '+p+' of '+n+'…',prog(.1+q*.88));
+            const r=await ocrPage(worker,await canvasBlob(c,enhance));t=r.text;if(r.conf!=null)confs.push(r.conf);
+          }
+          pages.push(t);done++;
+        }
+      }else if(/\.docx$/i.test(f.name)||f.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document'){
+        scanStatus(tag+'Reading the Word file…',prog(.2));const dp=await docxPages(f);pages.push(...dp);done++;if(dp.length===0)notes.push('No text was found in “'+f.name+'”. If it only has pictures, save the pages as photos or PDF.');
+      }else if(f.type.startsWith('text/')||/\.txt$/i.test(f.name)){
+        pages.push((await f.text()).replace(/\r\n?/g,'\n').replace(/\s+$/,''));done++;
+      }else{notes.push('“'+f.name+'” isn’t supported (use photos, PDF, Word .docx or .txt).');done++}
+    }
+  }catch(e){scanStatus((e&&e.message)||'Couldn’t read that file. Please try another.',null);scanState.busy=false;$('scanStop').classList.add('hidden');if(worker)try{await worker.terminate()}catch{};return}
+  if(worker)try{await worker.terminate()}catch{}
+  scanState.busy=false;$('scanStop').classList.add('hidden');
+  const text=pages.length>1?pages.map((t,i)=>'──── Page '+(i+1)+' ────\n\n'+t).join('\n\n'):(pages[0]||'');
+  if(!text.trim()){scanStatus((notes.join(' ')+' No text found. Try a clearer, closer photo with good light, or choose the alphabet under “Reading options”.').trim(),null);return}
+  scanStatus('',null);
+  $('scanText').value=text;scanState.raw=null;$('scanUndo').classList.add('hidden');$('scanRes').classList.remove('hidden');
+  $('scanOut').textContent='Translation appears here.';$('scanOut').classList.add('empty');$('scanMeta').replaceChildren();$('scanExpl').classList.add('hidden');scanState.res=null;
+  const avg=confs.length?confs.reduce((a,b)=>a+b,0)/confs.length:null;
+  $('scanFix').textContent=[(pages.length>1?pages.length+' pages read. ':''),notes.join(' '),(avg!=null&&avg<55?'The reading looks unsure. Try a clearer photo, or choose the document’s alphabet under “Reading options”.':'')].join(' ').trim();
+  scanState.found=null;updateScanLangs();
+  scanState.found=await scanDetect(text);updateScanLangs();
+  if($('aiFix').checked&&sbReady()&&(pages.length&&pages.some(t=>t))&&files.some(f=>!/text\//.test(f.type)&&!/\.(txt|docx)$/i.test(f.name)))await scanAiFix(true);
+  if($('scanText').value.length<=1500)await scanTranslate();
+  else $('scanOut').textContent='This is a long document. Choose the language in the “To” box, then tap Translate.';
+}
+/* --- AI clean-up of reading mistakes (Sunbird AI; text only) --- */
+async function sbFixOcr(text,langName){
+  const sys='You correct OCR (text-recognition) mistakes. You receive text read from a photo or scan. Fix only clear recognition errors: wrong or missing letters, broken or merged words, stray symbols, wrong accents or punctuation. Keep the SAME language. Never translate, summarise, explain, add or remove content. Keep every line break, blank line, number, bullet and the spaces at the start of each line exactly as given. If you are unsure about a word, leave it unchanged. Reply with ONLY the corrected text.';
+  const user=(langName?'The text is probably '+langName+'.\n':'')+'Text:\n'+text;
+  const j=await sb('/tasks/chat/completions',{json:{model:'sunflower-9b',messages:[{role:'system',content:sys},{role:'user',content:user}],temperature:0,max_tokens:Math.min(2400,text.length*2+120)},timeout:40000,retry:false});
+  const raw=j.choices&&j.choices[0]&&j.choices[0].message&&j.choices[0].message.content;if(!raw)throw new Error('empty');
+  return String(raw).replace(/^\s*```[a-z]*\n?/i,'').replace(/\n?```\s*$/,'').replace(/\s+$/,'');
+}
+function mergeFix(orig,fixed){
+  const A=orig.split('\n'),B=fixed.split('\n');if(A.length!==B.length)return null;
+  const ratio=fixed.length/Math.max(1,orig.length);if(ratio<.75||ratio>1.3)return null;
+  return B.map((l,i)=>{const ind=(A[i].match(/^\s*/)||[''])[0];return A[i].trim()?ind+l.trimStart():A[i]}).join('\n');
+}
+async function scanAiFix(auto){
+  const text=$('scanText').value;if(!text.trim())return;
+  if(!sbReady()){toast(navigator.onLine?'Connect Sunbird AI first (Settings → Sunbird AI account).':'AI fixing needs internet.');return}
+  const lines=text.split('\n'),chunks=[];let cur=[],len=0;
+  for(const ln of lines){cur.push(ln);len+=ln.length+1;if((len>800&&!ln.trim())||len>1300){chunks.push(cur);cur=[];len=0}}
+  if(cur.length)chunks.push(cur);
+  const lang=scanSrc()?nameOf(scanSrc()):'',outs=new Array(chunks.length);let k=0,n=0,changed=0,skipped=0;
+  $('aiFixBtn').disabled=true;scanStatus('AI is checking the text…',0.03);
+  const worker=async()=>{while(k<chunks.length){const i=k++,orig=chunks[i].join('\n');
+    if(!/\p{L}{2}/u.test(orig)){outs[i]=orig;n++;continue}
+    try{const m=mergeFix(orig,await sbFixOcr(orig,lang));if(m&&m!==orig){outs[i]=m;changed++}else{outs[i]=orig;if(!m)skipped++}}
+    catch(e){if(e instanceof AuthErr){outs[i]=orig;k=chunks.length;skipped++;continue}outs[i]=orig;skipped++}
+    n++;scanStatus('AI is checking the text… '+n+' of '+chunks.length,n/chunks.length)}};
+  await Promise.all([worker(),worker(),worker()]);
+  scanStatus('',null);$('aiFixBtn').disabled=false;
+  if(changed){scanState.raw=text;$('scanText').value=outs.map((o,i)=>o??chunks[i].join('\n')).join('\n');$('scanUndo').classList.remove('hidden')}
+  $('scanFix').textContent=($('scanFix').textContent.replace(/\s*AI [^.]*\.$/,'')+' '+(changed?'AI corrected '+changed+' part'+(changed>1?'s':'')+' of the text. Please check it.':'AI found nothing to fix.')+(skipped?' ('+skipped+' part'+(skipped>1?'s':'')+' left as read.)':'')).trim();
+  if(!auto&&changed)scanState.found=await scanDetect($('scanText').value)||scanState.found,updateScanLangs();
+}
+/* --- translate the document keeping its structure --- */
+const PAGE_MARK=/^\s*[─—-]{2,}\s*Page\s+\d+\s*[─—-]{2,}\s*$/;
+const PREFIX=/^(\s*)((?:\(?\d{1,3}(?:\.\d+)*[.)]|\(?[a-zA-Z][.)]|\(?[ivxIVX]{1,5}[.)]|[•·▪◦*–—-]|Q(?:uestion)?\s?\d+[.:)]?)\s+)?([\s\S]*)$/;
+function parseLine(l){if(!l.trim()||PAGE_MARK.test(l)||!hasLetters(l))return{keep:true,raw:l};const m=l.match(PREFIX);return{keep:!hasLetters(m[3]),raw:l,ind:m[1],pre:m[2]||'',body:m[3].trim()}}
+async function scanTranslate(){
+  if(scanState.tBusy){scanState.stop=true;return}
+  const text=$('scanText').value;if(!text.trim()){toast('There is no text to translate');return}
+  const to=scanTo();let src=scanSrc();
+  if(!src){src=await scanDetect(text);if(src){scanState.found=src;updateScanLangs()}}
+  const out=$('scanOut');
+  if(src&&src===to){out.textContent='This text is already in '+nameOf(to)+'. Choose another language in the “To” box.';out.classList.add('empty');return}
+  const keep=$('scanKeep').checked,lines=text.split('\n'),res=lines.slice(),units=[];
+  let i=0;
+  while(i<lines.length){
+    if(!lines[i].trim()){i++;continue}
+    const idx=[];while(i<lines.length&&lines[i].trim()){idx.push(i);i++}
+    const parts=idx.map(j=>({j,...parseLine(lines[j])})),todo=parts.filter(p=>!p.keep);if(!todo.length)continue;
+    units.push({parts,todo});
+  }
+  scanState.tBusy=true;scanState.stop=false;$('scanGo').textContent='Stop';$('scanOut').classList.remove('empty');
+  const meta={label:'',cls:'',n:0};let ok=0,bad=0,firstErr='',k=0,finished=0;
+  const tr=async t=>{const r=await translateCore(t,src||'auto',to,'');meta.label=r.label||meta.label;meta.cls=r.cls||meta.cls;if(!src&&r.src&&!scanState.found){scanState.found=r.src;updateScanLangs()}return r.text};
+  const render=()=>{out.textContent=res.filter(x=>x!==null).join('\n')};
+  const doUnit=async u=>{
+    try{
+      if(keep){
+        let outs=null;
+        if(u.todo.length>1){try{const o=(await tr(u.todo.map(p=>p.body).join('\n'))).split('\n');if(o.length===u.todo.length)outs=o}catch(e){if(e instanceof AuthErr)throw e}}
+        if(!outs){outs=[];for(const p of u.todo){if(scanState.stop)break;try{outs.push(await tr(p.body))}catch(e){if(!firstErr)firstErr=e.message;outs.push(null);bad++}}}
+        u.todo.forEach((p,x)=>{if(outs[x]!=null){res[p.j]=p.ind+p.pre+String(outs[x]).replace(/\s*\n\s*/g,' ').trim();ok++}})
+      }else{
+        const joined=u.todo.map(p=>p.body).join(' '),t=await tr(joined),first=u.todo[0];
+        res[first.j]=first.ind+t.replace(/\s*\n\s*/g,' ').trim();u.todo.slice(1).forEach(p=>{res[p.j]=null});ok++;
+      }
+    }catch(e){bad++;if(!firstErr)firstErr=(e&&e.message)||'error'}
+    finished++;$('scanFix').dataset.prog=finished;
+  };
+  const pool=async()=>{while(k<units.length&&!scanState.stop){const u=units[k++];await doUnit(u);render();scanStatus('Translating… '+finished+' of '+units.length,finished/units.length);if(ok===0&&bad>=3&&finished>=3){scanState.stop=true}}};
+  scanStatus('Translating… 0 of '+units.length,0.02);
+  await Promise.all([pool(),pool(),pool(),pool()]);
+  const joinedOut=res.filter(x=>x!==null).join('\n');
+  scanState.tBusy=false;$('scanGo').textContent='Translate';scanStatus('',null);
+  if(ok===0){out.textContent=firstErr||'Couldn’t translate this text.';out.classList.add('empty');$('scanMeta').replaceChildren();scanState.res=null;return}
+  out.textContent=joinedOut;
+  scanState.res={text:joinedOut,src:src||'en',to,orig:text};
+  $('scanMeta').replaceChildren(el('span',{class:'badge '+(meta.cls||'')},meta.label||'Translated'),...(bad?[el('span',{class:'badge err'},bad+' line'+(bad>1?'s':'')+' could not be translated and '+(bad>1?'are':'is')+' shown as read')]:[]));
+  pushHist({src:text.replace(/\s+/g,' ').slice(0,300),text:joinedOut.replace(/\s+/g,' ').slice(0,600),from:src||'en',to});
+}
+function initScan(){
+  const c=cfg();$('ocrScript').replaceChildren(...OCR_SCRIPTS.map(x=>el('option',{value:x[0]},x[1])));$('ocrScript').value=c.ocr;
+  $('scanEnh').checked=c.scanEnh!==false;$('aiFix').checked=c.scanAi!==false;$('scanKeep').checked=c.scanKeep!==false;
+  updateScanLangs();
+}
+
+/* =========================================================
+   SETTINGS, ACCOUNT, PACK, THEME, FEEDBACK, SHARE
+   ========================================================= */
+const isDark=()=>{const t=cfg().theme;return t==='dark'||(t!=='light'&&matchMedia('(prefers-color-scheme: dark)').matches)};
+function applyTheme(){
+  const t=cfg().theme;if(t==='light'||t==='dark')document.documentElement.dataset.theme=t;else delete document.documentElement.dataset.theme;
+  const dark=isDark(),b=$('themeBtn');
+  document.querySelector('meta[name=theme-color]').content=dark?'#121f3a':'#ffffff';
+  b.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');b.title=dark?'Light mode':'Dark mode';
+  b.innerHTML=dark?svg('sun'):svg('moon');
+}
+const FONTS=[['system','Default (clean)','system-ui,-apple-system,"Segoe UI",Roboto,sans-serif'],['serif','Classic (serif)','Georgia,"Times New Roman",Cambria,serif'],['easy','Easy to read (wide)','Verdana,Tahoma,"Trebuchet MS",sans-serif'],['friendly','Friendly (casual)','"Comic Sans MS","Chalkboard SE","Comic Neue",cursive,sans-serif'],['mono','Typewriter (fixed width)','ui-monospace,Menlo,Consolas,"Courier New",monospace']];
+function applyFont(){
+  const c=cfg(),f=FONTS.find(x=>x[0]===c.font)||FONTS[0],fs=Math.min(1.6,Math.max(.8,+c.fs||1)),r=document.documentElement.style;
+  r.setProperty('--ff',f[2]);r.setProperty('--fs',fs);
+  const rg=$('fsRange');if(rg){rg.value=Math.round(fs*100);$('fsVal').textContent='· '+Math.round(fs*100)+'%'}
+  document.querySelectorAll('#fontList button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.f===f[0])));
+  fixPad();
+}
+function buildFonts(){
+  $('fontList').replaceChildren(...FONTS.map(([id,n,css])=>{const b=el('button',{type:'button',class:'fontopt','data-f':id,onclick:()=>{setCfg({font:id});applyFont()}},n);b.style.fontFamily=css;return b}));
+  const setFs=v=>{setCfg({fs:Math.min(1.6,Math.max(.8,Math.round(v*100)/100))});applyFont()};
+  $('fsRange').oninput=e=>setFs(e.target.value/100);$('fsDown').onclick=()=>setFs((+cfg().fs||1)-.05);$('fsUp').onclick=()=>setFs((+cfg().fs||1)+.05);
+  $('fsReset').onclick=()=>{setCfg({font:'system',fs:1});applyFont()};
+}
+function shareUrl(){return CFG.appUrl||(location.origin+location.pathname.replace(/index\.html$/,''))}
+async function shareApp(){
+  const data={title:'WalTrans',text:'Try WalTrans: translate Luganda, Lusoga, Kiswahili, English and 200+ more languages. Type, speak or scan.',url:shareUrl()};
+  if(navigator.share){try{await navigator.share(data);return}catch(e){if(e&&e.name==='AbortError')return}}
+  try{await navigator.clipboard.writeText(data.text+' '+data.url);toast('Link copied. Paste it in WhatsApp or anywhere.')}
+  catch{prompt('Copy this link to share WalTrans:',data.url)}
+}
+const MENU=[
+ ['account','user','Sunbird AI account','Lusoga, Luganda, context & voice'],
+ ['prefs','sliders','Preferences','My language, voice, explanations'],
+ ['appearance','palette','Appearance','Font style and text size'],
+ ['offline','dl','Offline pack','Translate without internet'],
+ ['data','db','Your data','Export, import, delete'],
+ ['SHARE','share','Share WalTrans','Send the app to a friend'],
+ ['feedback','msg','Send feedback','Suggestions and complaints'],
+ ['howto','help','How to use WalTrans','A quick guide'],
+ ['about','info','About','Version and credits'],
+ ['privacy','shield','Privacy policy','What stays on your device']
+];
+function buildMenu(){
+  $('menuList').replaceChildren(...MENU.map(([id,ic,t,sub])=>{const b=el('button',{type:'button',class:'mrow',role:'menuitem',onclick:()=>{closeMenu();id==='SHARE'?shareApp():go(id)}});
+    b.innerHTML=svg(ic)+'<span class="t"></span>'+svg('chev');b.querySelector('.t').append(document.createTextNode(t),el('small',{},sub));return b}));
+}
+function openMenu(){$('menuPop').classList.remove('hidden');$('mscrim').classList.remove('hidden');$('settingsBtn').setAttribute('aria-expanded','true');const f=$('menuList').querySelector('button');if(f)f.focus({preventScroll:true})}
+function closeMenu(){$('menuPop').classList.add('hidden');$('mscrim').classList.add('hidden');$('settingsBtn').setAttribute('aria-expanded','false')}
+function refreshAccount(){const on=!!token();const ai=$('ai');ai.textContent=on?'AI: on':'AI: off';ai.className='pill '+(on?'on':'off');ai.title=on?'Sunbird AI is connected':'Sunbird AI is not connected. Tap to connect.';$('sbIn').classList.toggle('hidden',on);$('sbOut').classList.toggle('hidden',!on)}
 async function sbLogin(email,pass){
   const j=await sb('/auth/token',{form:{username:email,email:email,password:pass}});
-  if(!j.access_token)throw new Error('Login failed');store.set('waltrans.token',j.access_token);setAi();
+  if(!j.access_token)throw new Error('Login failed');store.set('waltrans.token',j.access_token);refreshAccount();
 }
-function fmtMB(n){return (n/1048576).toFixed(0)+' MB'}
+const fmtMB=n=>(n/1048576).toFixed(0)+' MB';
 function setPackUi(){
-  const on=packOn();$('packState').textContent=on?'Installed. Offline translation is ready for the languages with an on-device model.':'Not installed.';
+  const on=packOn();$('packState').textContent=on?'Installed. Offline translation is ready.':'Not installed.';
   $('packGet').classList.toggle('hidden',on);$('packDel').classList.toggle('hidden',!on);
+  const m=navigator.deviceMemory,w=$('memWarn');
+  if(m&&m<4){w.textContent='This device reports about '+m+' GB of RAM. The offline pack may crash or run very slowly here.';w.classList.remove('hidden')}else w.classList.add('hidden');
+}
+async function verifyPack(){
+  if(!packOn())return;
+  try{const ks=await caches.keys();if(!ks.includes('transformers-cache')){store.set('waltrans.pack',false);setPackUi()}}catch{}
 }
 async function packInstall(){
   if(!navigator.onLine){toast('Connect to Wi-Fi first');return}
   $('packGet').disabled=true;$('packBar').classList.remove('hidden');
   try{await navigator.storage?.persist?.()}catch{}
-  packProg=(l,t)=>{$('packBar').firstElementChild.style.width=Math.min(100,l/t*100)+'%';$('packState').textContent='Downloading… '+fmtMB(l)+' of '+fmtMB(t)};
+  packProg=(l,t)=>{$('packBar').firstElementChild.style.width=Math.min(100,l/t*100)+'%';$('packState').textContent='Downloading… '+fmtMB(l)+' of '+fmtMB(t)+'. Keep this page open.'};
   try{await packLoad();store.set('waltrans.pack',true);toast('Offline pack ready')}
   catch(e){$('packState').textContent='Download failed: '+e.message+'. Try again on a stable connection.'}
   finally{packProg=null;$('packGet').disabled=false;$('packBar').classList.add('hidden');if(packOn())setPackUi()}
@@ -771,83 +1416,173 @@ async function packRemove(){
   try{if(worker){worker.terminate();worker=null}await caches.delete('transformers-cache')}catch{}
   store.set('waltrans.pack',false);setPackUi();toast('Offline pack removed');
 }
+function fbBody(){
+  const info=$('fbInfo').checked?'\n\n---\nWalTrans '+APP_VERSION+' · '+(navigator.onLine?'online':'offline')+' · '+nameOf(ST.from)+' → '+nameOf(ST.to)+' · '+navigator.userAgent.slice(0,90):'';
+  const c=$('fbContact').value.trim();
+  return $('fbType').value+':\n'+$('fbMsg').value.trim()+(c?'\n\nContact: '+c:'')+info;
+}
+async function sendFeedback(){
+  if($('fbMsg').value.trim().length<3){toast('Please write your message first');return}
+  const body=fbBody(),subj='WalTrans feedback: '+$('fbType').value;
+  const done=()=>{$('fbMsg').value='';$('fbNote').textContent='Thank you! Your feedback helps improve WalTrans.'};
+  if(FEEDBACK.formUrl){
+    try{const r=await fetch(FEEDBACK.formUrl,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({type:$('fbType').value,message:$('fbMsg').value.trim(),contact:$('fbContact').value.trim(),info:body})});
+      if(r.ok){done();return}}catch{}
+    $('fbNote').textContent='Couldn’t send it right now. Try again, or use “Share via another app”.';return;
+  }
+  if(FEEDBACK.email){location.href='mailto:'+encodeURIComponent(FEEDBACK.email)+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);done();return}
+  if(FEEDBACK.whatsapp){window.open('https://wa.me/'+FEEDBACK.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent(subj+'\n\n'+body),'_blank','noopener');done();return}
+  if(location.hostname.endsWith('.github.io')){
+    const user=location.hostname.split('.')[0],repo=location.pathname.split('/')[1];
+    if(repo){window.open('https://github.com/'+user+'/'+repo+'/issues/new?title='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body),'_blank','noopener');$('fbNote').textContent='GitHub opened with your message ready. Tap “Submit new issue” there to send it.';return}
+  }
+  await shareFeedback();
+}
+async function shareFeedback(){
+  const body=fbBody();
+  if(navigator.share){try{await navigator.share({title:'WalTrans feedback',text:body});return}catch(e){if(e&&e.name==='AbortError')return}}
+  try{await navigator.clipboard.writeText(body);$('fbNote').textContent='Your message was copied. Paste it into an email or WhatsApp to the developer.'}catch{prompt('Copy your feedback:',body)}
+}
 
 /* =========================================================
-   WIRING
+   NAVIGATION (fixed header, back arrow, phone back button)
    ========================================================= */
-function fillSelects(){
-  const mk=(auto)=>{const gs=[];if(auto)gs.push(el('option',{value:'auto'},'Detect language'));
-    for(const[k,n]of Object.entries(G))gs.push(el('optgroup',{label:n},...LANGS.filter(l=>l.g===k).map(l=>el('option',{value:l.c},l.n))));return gs};
-  $('from').replaceChildren(...mk(true));$('to').replaceChildren(...mk(false));$('ca').replaceChildren(...mk(false));$('cb').replaceChildren(...mk(false));
-  const sv=store.get('waltrans.langs',{from:'en',to:'lg'});$('from').value=sv.from==='auto'||L[sv.from]?sv.from:'en';$('to').value=L[sv.to]?sv.to:'lg';
-  const cv=store.get('waltrans.clangs',{a:'en',b:'lg'});$('ca').value=L[cv.a]?cv.a:'en';$('cb').value=L[cv.b]?cv.b:'lg';
+const VIEWS={translate:{t:'WalTrans',tab:1},chat:{t:'Chat',tab:1},book:{t:'Phrasebook',tab:1},hist:{t:'History',tab:1},appearance:{t:'Appearance'},account:{t:'Sunbird AI account'},prefs:{t:'Preferences'},offline:{t:'Offline pack'},data:{t:'Your data'},feedback:{t:'Send feedback'},howto:{t:'How to use WalTrans'},about:{t:'About'},privacy:{t:'Privacy policy'},scan:{t:'Scan text'}};
+let cur='translate';
+function show(v,keep){
+  if(!VIEWS[v])v='translate';cur=v;const V=VIEWS[v];
+  for(const k in VIEWS){const e=$(k==='translate'?'v-translate':'v-'+k);if(e)e.classList.toggle('hidden',k!==v)}
+  $('back').classList.toggle('hidden',v==='translate');
+  $('logo').classList.toggle('hidden',v!=='translate');
+  const pt=$('ptitle');pt.textContent=V.t;pt.classList.toggle('hidden',!!V.tab);
+  closeMenu();
+  document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v===v)));
+  if(v==='hist')renderHist();if(v==='book')renderBook();if(v==='chat')renderConvo();
+  if(v==='account')refreshAccount();if(v==='offline'){setPackUi();verifyPack()}if(v==='prefs')loadPrefs();
+  fixPad();if(!keep)window.scrollTo(0,0);
 }
-const saveLangs=()=>store.set('waltrans.langs',{from:$('from').value,to:$('to').value});
-function net(){const on=navigator.onLine;const n=$('net');n.textContent=on?'Online':'Offline';n.className='pill '+(on?'on':'off')}
-function showTab(t){for(const k of['tr','chat','book','hist']){$('t-'+k).setAttribute('aria-selected',k===t);$('p-'+k).classList.toggle('hidden',k!==t)}}
+function go(v){if(v===cur)return;history.pushState({v,n:(history.state&&history.state.n||0)+1},'','#'+v);show(v)}
+function goBack(){
+  if(history.state&&history.state.n>0)history.back();
+  else{history.replaceState({v:'translate',n:0},'',location.pathname+location.search);show('translate')}
+}
+function fixPad(){const h=$('hdr').offsetHeight;if(h)document.documentElement.style.setProperty('--hh',h+'px')}
+function loadPrefs(){
+  const c=cfg();$('voiceMode').value=c.voice;$('explainLang').value=c.explain;
+  $('myBtn').replaceChildren(el('small',{},'My language'),el('b',{},'🔍 '+nameOf(c.myLang)));
+}
 
-fillSelects();net();renderHist();renderBook();renderConvo();setAi();setPackUi();
-$('ctxSel').replaceChildren(el('option',{value:''},'None (everyday default)'),...CTX.map(c=>el('option',{value:c},c)));
-$('ctxSel').onchange=ctxSummary;$('ctxText').oninput=ctxSummary;
-if(window.matchMedia&&matchMedia('(min-width:720px)').matches)$('ctxBox').open=true;
-addEventListener('online',()=>{net();setAi()});addEventListener('offline',net);
-$('from').onchange=$('to').onchange=saveLangs;
-$('ca').onchange=$('cb').onchange=()=>store.set('waltrans.clangs',{a:$('ca').value,b:$('cb').value});
-$('swap').onclick=()=>{let f=$('from').value;if(f==='auto')f=(last&&last.from)||'en';$('from').value=$('to').value;$('to').value=f;if(last&&last.text)$('src').value=last.text;saveLangs();if($('src').value.trim())translate()};
-$('go').onclick=translate;
-$('src').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();translate()}});
-$('clear').onclick=()=>{$('src').value='';$('out').textContent='Translation appears here.';$('out').classList.add('empty');$('meta').replaceChildren();$('det').textContent='';$('expl').classList.add('hidden');closeFix();$('src').focus()};
-$('mic').onclick=()=>micFlow($('mic'),$('from').value==='auto'?'en':$('from').value,(t,fin)=>{$('src').value=t;if(fin)translate()});
-$('speakSrc').onclick=()=>speakText($('src').value.trim(),$('from').value==='auto'?'en':$('from').value);
-$('speakOut').onclick=()=>last&&speakText(last.text,last.to);
-$('copy').onclick=async()=>{if(!last)return;try{await navigator.clipboard.writeText(last.text);toast('Copied')}catch{toast('Copy not allowed here')}};
-if(navigator.share){$('share').classList.remove('hidden');$('share').onclick=()=>last&&navigator.share({text:last.text}).catch(()=>{})}
-$('explainSrc').onclick=()=>doExplain($('src').value.trim(),$('from').value);
-$('explainOut').onclick=()=>last&&doExplain(last.text,last.to);
-$('fix').onclick=()=>{if(!last){toast('Translate something first');return}$('fixBox').value=last.text;$('fixBox').classList.remove('hidden');$('fixSave').classList.remove('hidden');$('out').classList.add('hidden');$('fixBox').focus()};
-$('fixSave').onclick=()=>{const v=$('fixBox').value.trim();if(!v||!last)return;tmPut(last.from,last.to,last.src,v,last.ctx,true);last.text=v;
-  if(CORE.includes(last.from)&&CORE.includes(last.to)){const e={};e[last.from]=last.src;e[last.to]=v;const c=customs();if(!c.some(x=>x[last.from]===e[last.from]&&x[last.to]===e[last.to])){c.unshift(e);store.set('waltrans.custom',c);renderBook()}}
-  showOut({text:v},'Your saved correction','off');toast('Saved. WalTrans will use this from now on, even offline.')};
-for(const k of['tr','chat','book','hist'])$('t-'+k).onclick=()=>showTab(k);
-$('histClear').onclick=()=>{store.set('waltrans.history',[]);renderHist()};
-$('q').oninput=renderBook;
-$('addPhrase').onclick=()=>{const v={};for(const c of CORE)v[c]=$('n-'+c).value;if(addPhrase(v)){for(const c of CORE)$('n-'+c).value='';toast('Phrase added')}};
-/* conversation */
-$('micA').onclick=()=>micFlow($('micA'),$('ca').value,(t,fin)=>{if(fin)convoSend('a',t)});
-$('micB').onclick=()=>micFlow($('micB'),$('cb').value,(t,fin)=>{if(fin)convoSend('b',t)});
-$('sendA').onclick=()=>{convoSend('a',$('chatText').value);$('chatText').value=''};
-$('sendB').onclick=()=>{convoSend('b',$('chatText').value);$('chatText').value=''};
-$('chatClear').onclick=()=>{convo=[];store.set('waltrans.convo',[]);renderConvo()};
-/* settings */
-$('settingsBtn').onclick=()=>{const c=cfg();$('sbBase').value=c.base;$('voiceMode').value=c.voice;$('explainLang').value=c.explain;setAi();setPackUi();$('dlg').showModal()};
-$('dlgClose').onclick=()=>{setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai',voice:$('voiceMode').value,explain:$('explainLang').value});$('dlg').close()};
-$('sbLogin').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value;if(!e||!p){toast('Enter email and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
-  try{await sbLogin(e,p);$('sbPass').value='';toast('Connected to Sunbird AI')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Login failed: '+x.message+(/401|incorrect|invalid|credential/i.test(x.message)?'. Wrong email or password, or the account was made with Google and has no password yet (create one with “Create account” using a different email).':''),12000)}};
-$('sbReg').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value,u=$('sbUser').value.trim(),o=$('sbOrg').value.trim()||'Personal';if(!e||!p||!u){toast('Enter email, username and password');return}setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
-  try{await sb('/auth/register',{json:{email:e,password:p,username:u,organization:o}});await sbLogin(e,p);$('sbPass').value='';toast('Account created and connected')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Sign-up failed: '+x.message,7000)}};
-$('sbTokGo').onclick=async()=>{
-  const t=$('sbTok').value.trim().replace(/^Bearer\s+/i,'').replace(/^["']|["']$/g,'');
-  if(t.length<20){toast('Paste the full access token from Sunbird’s token page');return}
-  setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
-  store.set('waltrans.token',t);
-  const btn=$('sbTokGo');btn.disabled=true;btn.textContent='Checking…';
-  try{await sbTranslate('Hello','en','lg');$('sbTok').value='';setAi();toast('Connected to Sunbird AI')}
-  catch(x){store.del('waltrans.token');setAi();toast(x instanceof AuthErr||/401|403/.test(x.message)?'Sunbird didn’t accept that token. Copy it again from the token page.':x.name==='TypeError'?'Couldn’t reach Sunbird. Check your internet.':'Couldn’t verify the token: '+x.message,9000)}
-  finally{btn.disabled=false;btn.textContent='2 · Connect with token'}};
-$('sbLogout').onclick=()=>{store.del('waltrans.token');setAi()};
-$('packGet').onclick=packInstall;$('packDel').onclick=packRemove;
-$('tmClear').onclick=()=>{store.del('waltrans.tm');toast('Saved translations cleared')};
-$('exp').onclick=()=>{const b=new Blob([JSON.stringify({custom:customs(),tm:tmAll()},null,1)],{type:'application/json'});const a=el('a',{href:URL.createObjectURL(b),download:'waltrans-data.json'});a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
-$('imp').onclick=()=>$('impFile').click();
-$('impFile').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());
-  const cs=(Array.isArray(j)?j:j.custom||[]).filter(x=>x&&typeof x==='object').map(x=>Object.fromEntries(CORE.map(c=>[c,String(x[c]||'').slice(0,300)])));
-  store.set('waltrans.custom',[...cs,...customs()]);
-  if(j.tm&&typeof j.tm==='object'){const m=tmAll();for(const[k,v]of Object.entries(j.tm))if(v&&typeof v.t==='string'&&!m[k])m[k]={t:v.t.slice(0,2000),v:v.v?1:0,ts:+v.ts||Date.now()};store.set('waltrans.tm',m)}
-  renderBook();toast('Imported')}catch{toast('That file isn’t valid')}e.target.value=''};
-let dip;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('install').classList.remove('hidden')});
-$('install').onclick=async()=>{if(!dip)return;dip.prompt();await dip.userChoice;dip=null;$('install').classList.add('hidden')};
-if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js').catch(()=>{});
-window.__wt={translateCore,detect,toWav,listen,L,sb};
+/* =========================================================
+   WIRING + BOOT (each step isolated so one failure can't freeze the app)
+   ========================================================= */
+function net(){const on=navigator.onLine;const n=$('net');n.querySelector('.lbl').textContent=on?'Online':'Offline';n.className='pill '+(on?'on':'off');n.title=on?'You are online':'You are offline'}
+function safe(fn){try{fn()}catch(e){console.error(e)}}
+function wire(){
+  $('back').onclick=goBack;
+  $('settingsBtn').onclick=()=>$('menuPop').classList.contains('hidden')?openMenu():closeMenu();
+  $('mscrim').onclick=closeMenu;addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();$('settingsBtn').focus()}});
+  $('themeBtn').onclick=()=>{setCfg({theme:isDark()?'light':'dark'});applyTheme()};
+  $('ai').onclick=()=>go('account');
+  buildFonts();
+  document.querySelectorAll('#tabs button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+  addEventListener('popstate',e=>{const was=pickerOpen;pickerOpen=false;if($('picker').open)$('picker').close();show((e.state&&e.state.v&&e.state.v!=='picker'&&e.state.v)||cur,was)});
+  $('picker').addEventListener('close',()=>{if(pickerOpen&&history.state&&history.state.v==='picker'){pickerOpen=false;history.back()}else pickerOpen=false});
+  $('pickBack').onclick=closePicker;$('pickQ').oninput=renderPick;
+  $('fromBtn').onclick=()=>openPicker({auto:true,current:ST.from,onPick:id=>{ST.from=id;saveLangs();updateLangBar()}});
+  $('toBtn').onclick=()=>openPicker({auto:false,current:ST.to,onPick:id=>{ST.to=id;saveLangs();updateLangBar()}});
+  $('caBtn').onclick=()=>openPicker({auto:false,current:CV.a,onPick:id=>{CV.a=id;store.set('waltrans.clangs',CV);renderConvo()}});
+  $('cbBtn').onclick=()=>openPicker({auto:false,current:CV.b,onPick:id=>{CV.b=id;store.set('waltrans.clangs',CV);renderConvo()}});
+  $('myBtn').onclick=()=>openPicker({auto:false,current:cfg().myLang,onPick:id=>{setCfg({myLang:id});loadPrefs()}});
+  $('sFrom').onclick=()=>openPicker({auto:true,current:scanState.from,onPick:id=>{scanState.from=id;updateScanLangs();if(scanState.res)scanTranslate()}});
+  $('sTo').onclick=()=>openPicker({auto:false,current:scanTo(),onPick:id=>{scanState.to=id;setCfg({scanTo:id});updateScanLangs();if(scanState.res)scanTranslate()}});
+  $('swap').onclick=()=>{let f=ST.from;if(f==='auto')f=(ST.last&&ST.last.from&&L[ST.last.from]&&ST.last.from!=='auto')?ST.last.from:'en';ST.from=ST.to;ST.to=f;if(ST.last&&ST.last.text)$('src').value=ST.last.text;saveLangs();updateLangBar();if($('src').value.trim())translate()};
+  $('go').onclick=translate;
+  $('src').addEventListener('focus',()=>{if(packOn()&&!navigator.onLine)try{getWorker()}catch{}},{once:true});
+  $('src').addEventListener('keydown',e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){e.preventDefault();translate()}});
+  $('clear').onclick=()=>{$('src').value='';$('out').textContent='Translation appears here.';$('out').classList.add('empty');$('meta').replaceChildren();$('det').textContent='';$('expl').classList.add('hidden');closeFix();$('src').focus()};
+  $('mic').onclick=()=>micFlow($('mic'),spokenLang(),(t,fin)=>{$('src').value=t;if(fin)translate()});
+  $('speakSrc').onclick=()=>speakText($('src').value.trim(),ST.from);
+  $('speakOut').onclick=()=>ST.last&&speakText(ST.last.text,ST.last.to);
+  $('copy').onclick=async()=>{if(!ST.last)return;try{await navigator.clipboard.writeText(ST.last.text);toast('Copied')}catch{toast('Copy not allowed here')}};
+  if(navigator.share){$('share').classList.remove('hidden');$('share').onclick=()=>ST.last&&navigator.share({text:ST.last.text}).catch(()=>{})}
+  $('explainSrc').onclick=()=>doExplain($('src').value.trim(),ST.from,$('expl'));
+  $('explainOut').onclick=()=>ST.last&&doExplain(ST.last.text,ST.last.to,$('expl'));
+  $('fix').onclick=()=>{if(!ST.last){toast('Translate something first');return}$('fixBox').value=ST.last.text;$('fixBox').classList.remove('hidden');$('fixSave').classList.remove('hidden');$('out').classList.add('hidden');$('fixBox').focus()};
+  $('fixSave').onclick=()=>{const v=$('fixBox').value.trim(),l=ST.last;if(!v||!l)return;tmPut(l.from,l.to,l.src,v,l.ctx,true);l.text=v;
+    if(CORE.includes(l.from)&&CORE.includes(l.to)){const e={};e[l.from]=l.src;e[l.to]=v;const c=customs();if(!c.some(x=>x[l.from]===e[l.from]&&x[l.to]===e[l.to])){c.unshift(e);store.set('waltrans.custom',c);renderBook()}}
+    showOut({text:v},'Your saved correction','off');toast('Saved. WalTrans will use this from now on, even offline.')};
+  $('ctxSel').replaceChildren(el('option',{value:''},'None (everyday default)'),...CTX.map(c=>el('option',{value:c},c)));
+  $('ctxSel').onchange=ctxSummary;$('ctxText').oninput=ctxSummary;
+  if(window.matchMedia&&matchMedia('(min-width:720px)').matches)$('ctxBox').open=true;
+  $('histClear').onclick=$('histClear2').onclick=()=>{store.set('waltrans.history',[]);renderHist();toast('History cleared')};
+  $('q').oninput=renderBook;
+  $('addPhrase').onclick=()=>{const v={};for(const c of CORE)v[c]=$('n-'+c).value;if(addPhrase(v)){for(const c of CORE)$('n-'+c).value='';toast('Phrase added')}};
+  $('micA').onclick=()=>micFlow($('micA'),CV.a,(t,fin)=>{if(fin)convoSend('a',t)});
+  $('micB').onclick=()=>micFlow($('micB'),CV.b,(t,fin)=>{if(fin)convoSend('b',t)});
+  $('sendA').onclick=()=>{convoSend('a',$('chatText').value);$('chatText').value=''};
+  $('sendB').onclick=()=>{convoSend('b',$('chatText').value);$('chatText').value=''};
+  $('chatClear').onclick=()=>{convo=[];store.set('waltrans.convo',[]);renderConvo()};
+  /* scan */
+  $('scanBtn').onclick=()=>go('scan');
+  $('camBtn').onclick=()=>$('camIn').click();$('fileBtn').onclick=()=>$('fileIn').click();
+  $('camIn').onchange=e=>{const f=[...e.target.files];e.target.value='';scanFiles(f)};$('fileIn').onchange=e=>{const f=[...e.target.files];e.target.value='';scanFiles(f)};
+  $('scanStop').onclick=()=>{scanState.stop=true;scanStatus('Stopping…',null)};
+  $('aiFixBtn').onclick=()=>scanAiFix(false);
+  $('scanUndo').onclick=()=>{if(scanState.raw!=null){$('scanText').value=scanState.raw;scanState.raw=null;$('scanUndo').classList.add('hidden')}};
+  $('scanCopySrc').onclick=async()=>{try{await navigator.clipboard.writeText($('scanText').value);toast('Copied')}catch{toast('Copy not allowed here')}};
+  $('scanGo').onclick=scanTranslate;
+  $('scanCopy').onclick=async()=>{if(!scanState.res)return;try{await navigator.clipboard.writeText(scanState.res.text);toast('Copied')}catch{toast('Copy not allowed here')}};
+  $('scanSpeak').onclick=()=>scanState.res&&speakText(scanState.res.text,scanState.res.to);
+  $('scanExplain').onclick=()=>scanState.res&&doExplain(scanState.res.orig.replace(/\s+/g,' ').slice(0,500),scanState.res.src,$('scanExpl'));
+  $('scanOpen').onclick=()=>{const t=$('scanText').value;if(!t.trim())return;const r=scanState.res,src=r?r.src:(scanSrc()||'auto');ST.from=src;ST.to=scanTo();$('src').value=t.slice(0,2000);saveLangs();updateLangBar();
+    if(r){ST.last={text:r.text,src:t,from:ST.from,to:ST.to,ctx:''};showOut({text:r.text.slice(0,2000)},'From scan','')}go('translate')};
+  /* settings */
+  $('voiceMode').onchange=()=>setCfg({voice:$('voiceMode').value});
+  $('explainLang').onchange=()=>setCfg({explain:$('explainLang').value});
+  $('ocrScript').onchange=()=>setCfg({ocr:$('ocrScript').value});$('scanEnh').onchange=()=>setCfg({scanEnh:$('scanEnh').checked});$('aiFix').onchange=()=>setCfg({scanAi:$('aiFix').checked});$('scanKeep').onchange=()=>setCfg({scanKeep:$('scanKeep').checked});
+  $('sbBase').value=cfg().base;$('sbBase').onchange=()=>setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
+  $('sbLogin').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value;if(!e||!p){toast('Enter email and password');return}
+    try{await sbLogin(e,p);$('sbPass').value='';toast('Connected to Sunbird AI')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Login failed: '+x.message+(/401|incorrect|invalid|credential/i.test(x.message)?'. Wrong email or password, or the account was made with Google and has no password (use the token option above).':''),12000)}};
+  $('sbReg').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value,u=$('sbUser').value.trim(),o=$('sbOrg').value.trim()||'Personal';if(!e||!p||!u){toast('Enter email, username and password');return}
+    try{await sb('/auth/register',{json:{email:e,password:p,username:u,organization:o}});await sbLogin(e,p);$('sbPass').value='';toast('Account created and connected')}catch(x){toast(x.name==='TypeError'?'Couldn’t reach Sunbird. Check internet (or see the README about the proxy).':'Sign-up failed: '+x.message,9000)}};
+  $('sbTokGo').onclick=async()=>{
+    const t=$('sbTok').value.trim().replace(/^Bearer\s+/i,'').replace(/^["']|["']$/g,'');
+    if(t.length<20){toast('Paste the full access token from Sunbird’s token page');return}
+    store.set('waltrans.token',t);const btn=$('sbTokGo');btn.disabled=true;btn.textContent='Checking…';
+    try{await sbTranslate('Hello','en','lg');$('sbTok').value='';refreshAccount();toast('Connected to Sunbird AI')}
+    catch(x){store.del('waltrans.token');refreshAccount();toast(x instanceof AuthErr||/401|403/.test(x.message)?'Sunbird didn’t accept that token. Copy it again from the token page.':x.name==='TypeError'?'Couldn’t reach Sunbird. Check your internet.':'Couldn’t verify the token: '+x.message,9000)}
+    finally{btn.disabled=false;btn.textContent='2 · Connect with token'}};
+  $('sbLogout').onclick=()=>{store.del('waltrans.token');refreshAccount()};
+  $('packGet').onclick=packInstall;$('packDel').onclick=packRemove;
+  $('tmClear').onclick=()=>{store.del('waltrans.tm');toast('Saved translations cleared')};
+  $('resetAll').onclick=()=>{if(confirm('Delete ALL WalTrans data on this device (history, corrections, settings, login)?')){try{localStorage.clear()}catch{}location.reload()}};
+  $('exp').onclick=()=>{const b=new Blob([JSON.stringify({custom:customs(),tm:tmAll()},null,1)],{type:'application/json'});const a=el('a',{href:URL.createObjectURL(b),download:'waltrans-data.json'});a.click();setTimeout(()=>URL.revokeObjectURL(a.href),2000)};
+  $('imp').onclick=()=>$('impFile').click();
+  $('impFile').onchange=async e=>{try{const j=JSON.parse(await e.target.files[0].text());
+    const cs=(Array.isArray(j)?j:j.custom||[]).filter(x=>x&&typeof x==='object').map(x=>Object.fromEntries(CORE.map(c=>[c,String(x[c]||'').slice(0,300)])));
+    store.set('waltrans.custom',[...cs,...customs()]);
+    if(j.tm&&typeof j.tm==='object'){const m=tmAll();for(const[k,v]of Object.entries(j.tm))if(v&&typeof v.t==='string'&&!m[k])m[k]={t:v.t.slice(0,2000),v:v.v?1:0,ts:+v.ts||Date.now()};store.set('waltrans.tm',m)}
+    renderBook();toast('Imported')}catch{toast('That file isn’t valid')}e.target.value=''};
+  $('fbSend').onclick=sendFeedback;$('fbShare').onclick=shareFeedback;
+  let dip;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('install').classList.remove('hidden')});
+  $('install').onclick=async()=>{if(!dip)return;dip.prompt();await dip.userChoice;dip=null;$('install').classList.add('hidden')};
+  addEventListener('online',net);addEventListener('offline',net);addEventListener('resize',fixPad);
+  if(window.ResizeObserver)new ResizeObserver(fixPad).observe($('hdr'));
+  matchMedia('(prefers-color-scheme: dark)').addEventListener&&matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);
+}
+function boot(){
+  safe(()=>{const sv=store.get('waltrans.langs',{});ST.from=(sv.from==='auto'||L[sv.from])?sv.from:'auto';ST.to=(L[sv.to]&&sv.to!=='auto')?sv.to:'lg'});
+  safe(cleanHist);
+  safe(applyTheme);safe(applyFont);safe(net);safe(buildMenu);safe(updateLangBar);safe(renderHist);safe(renderBook);safe(renderConvo);safe(setPackUi);safe(verifyPack);safe(refreshAccount);
+  safe(wire);
+  safe(()=>{if(!L[cfg().myLang])setCfg({myLang:'en'})});safe(initScan);
+  safe(()=>{history.replaceState({v:'translate',n:0},'',location.pathname+location.search);show('translate',true)});
+  safe(()=>{const sp=$('splash');const wait=Math.max(0,1500-performance.now());setTimeout(()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),400)},wait)});
+  safe(()=>{if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js').catch(()=>{})});
+  safe(fixPad);
+}
+boot();
+window.__wt={translateCore,detect,guessSource,toWav,listen,L,sb,ST,scanFiles,go,show,shareUrl,layoutLines,pdfLayout};
 </script>
 </body>
 </html>
