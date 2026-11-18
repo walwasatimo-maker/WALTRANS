@@ -1,14 +1,14 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="loading">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>WalTrans</title>
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#0a1428">
 <meta name="description" content="WalTrans translates Luganda, Lusoga, Kiswahili, English and 200+ more languages. Type, speak or scan.">
 <link rel="manifest" href="manifest.json">
-<link rel="icon" href="icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png?v=2" type="image/png">
+<link rel="apple-touch-icon" href="icon-512.png?v=2">
 <link rel="preconnect" href="https://api.sunbird.ai">
 <link rel="preconnect" href="https://api.mymemory.translated.net">
 <script>try{var c=JSON.parse(localStorage.getItem('waltrans.cfg'))||{},d=document.documentElement,F={serif:'Georgia,"Times New Roman",Cambria,serif',easy:'Verdana,Tahoma,"Trebuchet MS",sans-serif',friendly:'"Comic Sans MS","Chalkboard SE","Comic Neue",cursive,sans-serif',mono:'ui-monospace,Menlo,Consolas,"Courier New",monospace'};if(c.theme==='light'||c.theme==='dark')d.dataset.theme=c.theme;if(F[c.font])d.style.setProperty('--ff',F[c.font]);if(c.fs>=.8&&c.fs<=1.6)d.style.setProperty('--fs',c.fs)}catch(e){}</script>
@@ -24,7 +24,7 @@ body{background:var(--bg);color:var(--ink);font:1rem/1.45 var(--ff);min-height:1
 .hdr{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--card);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top)}
 .hdr-in{max-width:760px;margin:0 auto;display:flex;align-items:center;gap:8px;padding:6px 12px;min-height:50px}
 .logo{width:34px;height:34px;border-radius:9px;flex:none}
-.ttl{font-size:1.18rem;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ttl{min-width:0;font-size:1.18rem;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tabs{max-width:760px;margin:0 auto;display:flex;gap:4px;padding:0 12px 8px}
 .tabs button{flex:1;padding:7px 2px;font-size:.9rem;min-height:38px}
 .tabs button[aria-selected=true]{background:var(--brand);color:var(--brand-ink);border-color:var(--brand);font-weight:600}
@@ -70,11 +70,14 @@ button.pill{min-height:0;border-radius:99px;padding:3px 8px;cursor:pointer}
 #net .dt{display:inline-block;width:9px;height:9px;border-radius:50%;background:#16a34a;margin-right:5px;vertical-align:baseline}
 #net.off .dt{background:#d97706}
 @media (max-width:430px){#net .lbl{display:none}#net .dt{margin:0}}
+@media (max-width:420px){.hdr-in{gap:4px;padding:6px 8px}.hdr-in .ib{width:36px;min-height:36px}.logo{width:30px;height:30px}.ttl{font-size:1.05rem}.pill{padding:3px 6px}}
 .ptitle{font-size:1.2rem;font-weight:700;margin:14px 0 0}
-.splash{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--card);color:var(--ink);text-align:center;padding:24px;transition:opacity .35s ease}
+.splash{position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#0a1428;color:#e8eefb;text-align:center;padding:24px;transition:opacity .2s ease}
 .splash.out{opacity:0;pointer-events:none}
 .splash img{width:96px;height:96px;border-radius:24px;box-shadow:0 8px 28px rgba(0,0,0,.18);animation:pop .6s ease both}
-.splash h1{margin:6px 0 0;font-size:1.7rem}.splash p{margin:0;max-width:22em;font-size:1.02rem;color:var(--mute)}
+.splash h1{margin:6px 0 0;font-size:1.7rem}.splash p{margin:0;max-width:22em;font-size:1.02rem;color:#b4c3e0}
+.splash .dev{position:absolute;left:0;right:0;max-width:none;text-align:center;bottom:calc(20px + env(safe-area-inset-bottom));font-size:.85rem;color:#97a9ca;margin:0}
+html.loading,html.loading body{background:#0a1428}
 @keyframes pop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
 @media (prefers-reduced-motion:reduce){.splash img{animation:none}.splash{transition:none}}
 .mscrim{position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.28)}
@@ -88,6 +91,7 @@ footer{text-align:center;padding:6px 16px calc(14px + env(safe-area-inset-bottom
 footer .credit{font-size:.74rem;color:var(--mute);margin-top:10px}
 .scantxt{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;font-size:.92rem;white-space:pre;overflow:auto;border:1px solid var(--line);border-radius:10px;min-height:220px;max-height:60vh;tab-size:4;line-height:1.4}
 .out.layout{font-family:ui-monospace,Menlo,Consolas,"Courier New",monospace;font-size:.92rem;white-space:pre-wrap;line-height:1.4}
+.audiochip{flex:1 1 100%;min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--card)}.audiochip b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.95rem}.audiochip audio{width:100%;margin-top:8px}
 .thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}.thumbs img{height:64px;border-radius:8px;border:1px solid var(--line)}
 .chk{display:flex;gap:8px;align-items:flex-start;font-size:.92rem;color:var(--ink);margin:8px 0}.chk input{margin-top:4px}
 .menu{padding:0;overflow:hidden}
@@ -114,6 +118,7 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
   <img src="icon-192.png" alt="" width="96" height="96">
   <h1>WalTrans</h1>
   <p>Welcome! Translate Luganda, Lusoga, Kiswahili, English and 200+ more languages.</p>
+  <p class="dev">Developed by Walwasa Timothy</p>
 </div>
 <header class="hdr" id="hdr">
   <div class="hdr-in">
@@ -159,7 +164,7 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
     <div id="det" class="note"></div>
     <div class="row">
       <button id="mic" class="ib" type="button" aria-label="Speak your message" title="Speak"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg></button>
-      <button id="scanBtn" class="ib" type="button" aria-label="Scan text from a photo or file" title="Scan a photo or file"><svg class="ic" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
+      <button id="scanBtn" class="ib" type="button" aria-label="Scan a photo or file, or upload audio" title="Scan a photo or file, or upload audio"><svg class="ic" viewBox="0 0 24 24"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></button>
       <button id="speakSrc" class="ib" type="button" aria-label="Listen to the input" title="Listen"><svg class="ic" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button>
       <button id="explainSrc" class="ib" type="button" aria-label="Explain the input" title="Explain"><svg class="ic" viewBox="0 0 24 24"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg></button>
       <button id="clear" class="ib" type="button" aria-label="Clear" title="Clear"><svg class="ic" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
@@ -287,6 +292,7 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
     </select>
     <label for="explainLang">Explain in</label>
     <select id="explainLang" style="margin:4px 0 12px"><option>English</option><option>Luganda</option><option>Kiswahili</option></select>
+    <label class="chk" id="statsRow"><input type="checkbox" id="statsOpt" checked><span>Share anonymous usage counts with the developer (how often the app is opened, installed and used, never what you type, say, scan or translate).</span></label>
   </div>
 </section>
 
@@ -317,11 +323,12 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
   <div class="card">
     <p class="note" style="margin-top:0">Tell us what to improve or what went wrong. Every message is read.</p>
     <label for="fbType">Type</label>
-    <select id="fbType" style="margin:4px 0 10px" required><option>Suggestion</option><option>Appreciation</option><option>Complaint</option><option>Bug / something broke</option><option>Wrong translation</option><option>Compliment</option></select>
+    <select id="fbType" style="margin:4px 0 10px"><option>Suggestion</option><option>Appreciation</option><option>Support</option><option>Complaint</option><option>Bug / something broke</option><option>Wrong translation</option><option>Compliment</option></select>
     <label for="fbMsg">Your message</label>
     <textarea id="fbMsg" style="border:1px solid var(--line);border-radius:10px;min-height:120px" maxlength="2000" placeholder="Write here…"></textarea>
     <label for="fbContact">How can we reply? (optional)</label>
     <input type="text" id="fbContact" placeholder="Email or phone (optional)" maxlength="120">
+    <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden"><label>Leave this empty<input type="text" id="fbTrap" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
     <label style="display:block;margin:6px 0"><input type="checkbox" id="fbInfo" checked> Include basic app info (version, languages, online/offline)</label>
     <div class="row"><button id="fbSend" class="primary" type="button">Send feedback</button><button id="fbShare" type="button">Share via another app</button></div>
     <p class="note" id="fbNote"></p>
@@ -334,53 +341,58 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
     <h2>1 · Choose languages</h2>
     <p>Tap the <b>From</b> and <b>To</b> boxes and search for any language. Choose <b>Detect language</b> and WalTrans works out what you typed, even in mixed sentences.</p>
     <h2>2 · Type, speak or scan</h2>
-    <p>Type your text, tap the 🎤 to speak, or tap the camera to take a photo or pick a file. WalTrans reads the text, finds its language and translates it into <b>your language</b>.</p>
+    <p>Type your text, tap the 🎤 to speak, or tap the camera to take a photo, pick a file or upload a recorded audio file. WalTrans reads the text, finds its language and translates it into <b>your language</b>.</p>
     <h2>3 · Translate</h2>
     <p>Tap <b>Translate</b>. Open <b>＋ Add context</b> (market, formal, respectful…) to get wording that fits the situation.</p>
     <h2>4 · Understand and improve</h2>
     <ul><li><b>💡 Explain</b> tells you what a word or sentence means and how it is used.</li><li><b>✎ Correct</b> teaches WalTrans the right translation. It remembers it, even offline.</li><li>The <b>Chat</b> tab lets two people talk in two languages.</li></ul>
     <h2>5 · Get the best results</h2>
-    <ul><li>Connect your free <b>Sunbird AI</b> account in Settings for most of the Ugandan languges e.g Lusoga, Luganda, e.t.c, context and voice in these languages.</li><li>Download the <b>Offline pack</b> on Wi-Fi to translate without internet.</li></ul>
+    <ul><li>Connect your free <b>Sunbird AI</b> account in Settings for all the Ugandan local languages e.g Lusoga, Luganda, e.t.c, context and voice in these languages.</li><li>Download the <b>Offline pack</b> on Wi-Fi to translate without internet.</li></ul>
   </div>
 </section>
 
 <!-- ===== ABOUT ===== -->
 <section id="v-about" class="page hidden">
   <div class="card">
-    <div class="row" style="gap:12px"><img src="icon-192.png" alt="" width="64" height="64" style="border-radius:16px"><div><b style="font-size:1.2rem">WalTrans</b><br><span class="note">Version 4.0 · Developed by Walwasa Timothy</span></div></div>
-    <p>WalTrans is a language translator built by a Ugandan University student for Uganda, Africa and the world at large. It understands Luganda, Lusoga, Kiswahili and majority of the major languages in the world, handles sentences that mix languages, explains words, reads text from photos and works offline.</p>
+    <div class="row" style="gap:12px"><img src="icon-192.png" alt="" width="64" height="64" style="border-radius:16px"><div><b style="font-size:1.2rem">WalTrans</b><br><span class="note">Version 4.4 · Developed by Walwasa Timothy</span></div></div>
+    <p>WalTrans is a language translator built by a Ugandan University student for Uganda, Africa and the world at large. It understands all the Ugandan local languages e.g Luganda, Lusoga, Runyankore, Kiswahili, e.t.c and MOST of the languages in the world. 
+      It handles sentences that mix languages, explains words, reads text from photos and works both online and offline.</p>
     <h2>Built with</h2>
     <ul>
       <li><a href="https://sunbird.ai" target="_blank" rel="noopener noreferrer">Sunbird AI</a> (Sunflower) for Ugandan and African languages, voice and explanations.</li>
       <li>Meta NLLB-200 for the offline pack (non-commercial licence).</li>
-      <li>MyMemory as a basic online fallback.</li>
+      <li>Microsoft Translator and Cloudflare AI (through the app’s small free translation service) and MyMemory as online fallbacks.</li>
       <li>Tesseract.js and PDF.js for reading photos and files.</li>
       <li>Some Lusoga words from Wikipedia’s “Soga language” page.</li>
     </ul>
     <h2>Please remember</h2>
-    <p>Machine translation can be wrong, especially for smaller languages. Don't rely on it for medical, legal or other critical decisions. Use ✎ Correct to help improve the app's accuracy.</p>
+    <p>Machine translation can be wrong, especially for smaller languages. Don't rely on it for medical, legal or other critical decisions. Use ✎ Correct to help improve it.</p>
   </div>
 </section>
 
 <!-- ===== PRIVACY ===== -->
 <section id="v-privacy" class="page hidden">
   <div class="card">
-    <p class="note" style="margin-top:0">Last updated: 15 November 2026</p>
+    <p class="note" style="margin-top:0">Last updated: 18 November 2026</p>
     <h2>In short</h2>
-    <p>WalTrans has no accounts of its own, no ads and no tracking or analytics. What you type, say or scan stays on your device, except when it has to be sent to a translation service to get your result (explained below).</p>
+    <p>WalTrans has no accounts of its own, no ads and does not track what you do. The only thing it counts is anonymous usage numbers for the developer, which you can switch off (explained below). What you type, say or scan stays on your device, except when it has to be sent to a translation service to get your result (explained below).</p>
     <h2>Stored on your device only</h2>
     <p>Your history, saved corrections and translation memory, your own phrasebook entries, your settings, and (if you connect Sunbird AI) your Sunbird access token. Your Sunbird password is never stored. Delete everything any time in Settings → Your data, or by clearing this site’s data in your browser.</p>
     <h2>What is sent over the internet (only when you use it while online)</h2>
     <ul>
-      <li><b>Text you translate or ask to explain</b> goes to Sunbird AI (api.sunbird.ai) when you are connected, otherwise to MyMemory (api.mymemory.translated.net). These services receive your text and the language names, and have their own privacy policies. Please don't enter passwords, ID numbers or other sensitive details.</li>
+      <li><b>Text you translate or ask to explain</b> goes to Sunbird AI (api.sunbird.ai) when you are connected, otherwise to the app’s free translation service (run by the developer on Cloudflare, which passes it on to Microsoft Translator or Cloudflare AI) or to MyMemory (api.mymemory.translated.net). These services receive your text and the language names, and have their own privacy policies. Please don't enter passwords, ID numbers or other sensitive details.</li>
       <li><b>Speech:</b> for Luganda, Lusoga and other languages your recording is sent to Sunbird AI to be turned into text. If you use your browser’s own voice recognition (for example for English), your browser company processes the audio under its own policy.</li>
+      <li><b>Audio files you upload</b> are turned into text by Sunbird AI (when you are connected and the language is Luganda, Lusoga or another African language) or by the app’s free online service (Cloudflare speech recognition, run by the developer). The recording is sent in short pieces to do this and is not kept by WalTrans; it is not saved in your history. Delete it any time with the Delete button.</li>
       <li><b>Photos and files</b> are read on your device by open-source software (Tesseract.js, PDF.js); the picture itself is not uploaded. If you switch on “Use AI to fix reading mistakes”, the text that was read (not the picture) is sent to Sunbird AI. The first time you scan a language, the app downloads that language’s reading data from a public CDN. The text found is then translated like any other text (see above).</li>
       <li><b>Offline pack:</b> the model downloads from Hugging Face and runs on your device. Text translated with it never leaves your phone.</li>
       <li><b>Code libraries</b> load from public CDNs (cdn.jsdelivr.net, cdnjs.cloudflare.com). Like any website, they can see your IP address.</li>
+      <li><b>Anonymous usage counts</b> (can be switched off, see below).</li>
       <li><b>Feedback</b> is sent only when you press Send. It contains your message, the optional contact you type, and, if ticked, basic app info.</li>
     </ul>
+    <h2>Anonymous usage counts</h2>
+    <p>So the developer can tell whether the app is really being used, WalTrans sends a few plain numbers to the developer’s own counting page: a random ID made on your device (not linked to your name, phone number or accounts), the app version, your device type (for example Android), whether WalTrans is installed on your home screen, and simple counts such as “app opened”, “a translation was made” and “a document was scanned”. Your country is worked out by the server from your connection; your network address is not saved. <b>Nothing you type, say, scan or translate is ever included.</b> The random ID is new if you clear the app’s data. Turn this off any time in Settings → Preferences.</p>
     <h2>Your choices</h2>
-    <p>You can use WalTrans fully offline (phrasebook and offline pack) so nothing leaves your device, disconnect Sunbird AI at any time, and delete your data in Settings.</p>
+    <p>You can use WalTrans fully offline (phrasebook and offline pack) so nothing leaves your device, switch off the anonymous usage counts, disconnect Sunbird AI at any time, and delete your data in Settings.</p>
     <h2>Changes and contact</h2>
     <p>If this policy changes, the date above will change. For questions or requests, use Settings → Send feedback.</p>
   </div>
@@ -389,13 +401,14 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
 <!-- ===== SCAN ===== -->
 <section id="v-scan" class="page hidden">
   <div class="card">
-    <p class="note" style="margin-top:0">Take a photo or choose photos, a PDF, a Word (.docx) or a text file. WalTrans writes down what it reads <b>exactly as it appears</b> (same lines and layout), shows the language it found in the “From” box, then translates into the language you choose.</p>
+    <p class="note" style="margin-top:0">Take a photo, or choose photos, a PDF, a Word (.docx), a text file or <b>a recorded audio file</b> (MP3, M4A, WAV…) with the same button. WalTrans writes down what it reads <b>exactly as it appears</b> (same lines and layout), shows the language it found in the “From” box, then translates into the language you choose.</p>
     <div class="row">
       <button id="camBtn" class="primary" type="button">📷 Take a photo</button>
-      <button id="fileBtn" type="button">🖼 Photos or file</button>
+      <button id="fileBtn" type="button">📎 Photos, file or audio</button>
     </div>
+    <p class="note" style="margin:8px 0 0">For audio, WalTrans listens, writes down what was said, finds the language and translates it. For a recording, it uses the first 5 minutes (up to 15 MB).</p>
     <input type="file" id="camIn" accept="image/*" capture="environment" class="hidden">
-    <input type="file" id="fileIn" accept="image/*,.pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" multiple class="hidden">
+    <input type="file" id="fileIn" accept="image/*,.pdf,.docx,.txt,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,audio/*,.mp3,.m4a,.aac,.wav,.ogg,.oga,.opus,.amr,.3gp,.flac,.webm" multiple class="hidden">
     <details style="margin-top:10px" id="scanOpts">
       <summary style="cursor:pointer;min-height:32px">Reading options</summary>
       <label for="ocrScript">Alphabet used in the document</label>
@@ -407,7 +420,7 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
     <div id="scanThumbs" class="thumbs"></div>
     <div id="scanStat" class="note" role="status"></div>
     <div class="bar hidden" id="scanBar"><i></i></div>
-    <button id="scanStop" class="hidden" type="button">Stop</button>
+    <div class="row"><button id="scanStop" class="hidden" type="button">Stop</button><button id="scanDel" class="hidden" type="button">🗑 Delete</button></div>
   </div>
   <div class="card hidden" id="scanRes">
     <div class="langbar">
@@ -421,7 +434,7 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
     <div class="row" style="margin-top:6px"><button id="aiFixBtn" type="button">✨ Fix with AI</button><button id="scanUndo" class="hidden" type="button">Undo AI fixes</button><button id="scanCopySrc" type="button">Copy</button><span class="grow"></span><button id="scanGo" class="primary" type="button">Translate</button></div>
     <div id="scanOut" class="out layout empty" style="margin-top:12px" aria-live="polite">Translation appears here.</div>
     <div id="scanMeta"></div>
-    <div class="row"><button id="scanCopy" type="button">Copy translation</button><button id="scanSpeak" class="ib" type="button" aria-label="Listen"><svg class="ic" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button><button id="scanExplain" type="button">Explain</button><button id="scanOpen" type="button">Open in translator</button></div>
+    <div class="row"><button id="scanCopy" type="button">Copy translation</button><button id="scanSpeak" class="ib" type="button" aria-label="Listen"><svg class="ic" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></svg></button><button id="scanExplain" type="button">Explain</button><button id="scanOpen" type="button">Open in translator</button><span class="grow"></span><button id="scanDel2" type="button">🗑 Delete</button></div>
     <div id="scanExpl" class="expl hidden"></div>
   </div>
 </section>
@@ -450,15 +463,40 @@ dialog#picker::backdrop{background:rgba(0,0,0,.5)}
    If none is set and the app is hosted on GitHub Pages, feedback opens a new GitHub issue.
    ========================================================= */
 const CFG=window.WALTRANS_CONFIG||{};
+const PROXY=String(CFG.proxyUrl||'').trim().replace(/\/+$/,'');
+/* --- anonymous usage counts (only when the proxy is set up; user can switch off in Preferences) --- */
+const statsOn=()=>!!PROXY&&CFG.stats!==false&&(store.get('waltrans.cfg',{})||{}).stats!==false;
+function aid(){let i=store.get('waltrans.aid','');if(!/^[a-f0-9]{16,32}$/.test(i)){const a=new Uint8Array(12);(crypto||msCrypto).getRandomValues(a);i=[...a].map(b=>b.toString(16).padStart(2,'0')).join('');store.set('waltrans.aid',i)}return i}
+function isStandalone(){try{return matchMedia('(display-mode: standalone)').matches||matchMedia('(display-mode: fullscreen)').matches||navigator.standalone===true}catch{return false}}
+function platformOf(){const u=navigator.userAgent;return /android/i.test(u)?'android':(/iphone|ipad|ipod/i.test(u)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1))?'ios':/windows/i.test(u)?'windows':/mac/i.test(u)?'mac':/linux|cros/i.test(u)?'linux':'other'}
+const stat={e:{},last:0};
+function track(ev){if(statsOn())stat.e[ev]=(stat.e[ev]||0)+1}
+function flushStats(force){
+  if(!statsOn()){stat.e={};return}
+  const e=stat.e;if(!Object.keys(e).length||(!force&&Date.now()-stat.last<120000))return;
+  stat.e={};stat.last=Date.now();
+  try{fetch(PROXY+'/collect',{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain'},body:JSON.stringify({i:aid(),v:APP_VERSION,p:platformOf(),s:isStandalone()?1:0,e})})
+    .catch(()=>{for(const k in e)stat.e[k]=(stat.e[k]||0)+e[k]})}catch{}
+}
+function startStats(){
+  if(!statsOn()||stat.on)return;stat.on=1;
+  const last=+store.get('waltrans.lastOpen',0)||0,now=Date.now();
+  if(now-last>30*60000)track('open');
+  store.set('waltrans.lastOpen',now);
+  if(isStandalone()&&!store.get('waltrans.sa',0)){store.set('waltrans.sa',1);track('standalone')}
+  setTimeout(()=>flushStats(true),3000);
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){store.set('waltrans.lastOpen',Date.now());flushStats(true)}});
+  addEventListener('pagehide',()=>flushStats(true));addEventListener('online',()=>flushStats(false));
+}
 const FEEDBACK={email:CFG.feedbackEmail||'',whatsapp:CFG.feedbackWhatsapp||'',formUrl:CFG.feedbackFormUrl||''};
-const APP_VERSION='3.0';
+const APP_VERSION='4.4';
 
 /* =========================================================
    LANGUAGES (generated: 237 languages)
    c id · n name · g group · sb Sunbird code · sc speech code · stt/tts Sunbird speech
    nl NLLB (offline pack) · mm MyMemory · sp browser speech tag · r region
    ========================================================= */
-const LANGS=[{"c":"en","n":"English","g":"y","sb":"eng","stt":1,"tts":1,"nl":"eng_Latn","mm":"en","sp":"en-GB","o":"Europe","p":"England (spoken worldwide)"},{"c":"ace_Arab","n":"Acehnese (Arabic script)","g":"w","nl":"ace_Arab","o":"Southeast Asia","p":"Indonesia (Aceh)"},{"c":"ace_Latn","n":"Acehnese (Latin script)","g":"w","nl":"ace_Latn","o":"Southeast Asia","p":"Indonesia (Aceh)"},{"c":"acm_Arab","n":"Mesopotamian Arabic","g":"w","nl":"acm_Arab","o":"North Africa & Middle East","p":"Iraq"},{"c":"acq_Arab","n":"Ta'izzi-Adeni Arabic","g":"w","nl":"acq_Arab","o":"North Africa & Middle East","p":"Yemen"},{"c":"aeb_Arab","n":"Tunisian Arabic","g":"w","nl":"aeb_Arab","o":"North Africa & Middle East","p":"Tunisia"},{"c":"af","n":"Afrikaans","g":"w","sb":"afr","stt":1,"tts":1,"nl":"afr_Latn","mm":"af","sp":"af-ZA","o":"Southern Africa","p":"South Africa, Namibia"},{"c":"ajp_Arab","n":"South Levantine Arabic","g":"w","nl":"ajp_Arab","o":"North Africa & Middle East","p":"Jordan, Palestine"},{"c":"aka_Latn","n":"Akan","g":"w","sb":"aka","stt":1,"nl":"aka_Latn","o":"West Africa","p":"Ghana"},{"c":"als_Latn","n":"Albanian","g":"w","nl":"als_Latn","mm":"sq","o":"Europe","p":"Albania"},{"c":"am","n":"Amharic","g":"w","sb":"amh","stt":1,"nl":"amh_Ethi","mm":"am","sp":"am-ET","o":"East Africa","p":"Ethiopia"},{"c":"apc_Arab","n":"North Levantine Arabic","g":"w","nl":"apc_Arab","o":"North Africa & Middle East","p":"Syria, Lebanon"},{"c":"ar","n":"Arabic (Standard)","g":"w","nl":"arb_Arab","mm":"ar","sp":"ar-SA","o":"North Africa & Middle East","p":"Arab world"},{"c":"ars_Arab","n":"Najdi Arabic","g":"w","nl":"ars_Arab","o":"North Africa & Middle East","p":"Saudi Arabia"},{"c":"ary_Arab","n":"Moroccan Arabic","g":"w","nl":"ary_Arab","o":"North Africa & Middle East","p":"Morocco"},{"c":"arz_Arab","n":"Egyptian Arabic","g":"w","nl":"arz_Arab","o":"North Africa & Middle East","p":"Egypt"},{"c":"asm_Beng","n":"Assamese","g":"w","nl":"asm_Beng","o":"South Asia","p":"India (Assam)"},{"c":"ast_Latn","n":"Asturian","g":"w","nl":"ast_Latn","o":"Europe","p":"Spain"},{"c":"awa_Deva","n":"Awadhi","g":"w","nl":"awa_Deva","o":"South Asia","p":"India"},{"c":"ayr_Latn","n":"Aymara","g":"w","nl":"ayr_Latn","o":"Americas","p":"Bolivia, Peru"},{"c":"azb_Arab","n":"South Azerbaijani","g":"w","nl":"azb_Arab","o":"North Africa & Middle East","p":"Iran"},{"c":"azj_Latn","n":"Azerbaijani","g":"w","nl":"azj_Latn","mm":"az","sp":"az-AZ","o":"Caucasus & Central Asia","p":"Azerbaijan"},{"c":"bak_Cyrl","n":"Bashkir","g":"w","nl":"bak_Cyrl","o":"Europe","p":"Russia (Bashkortostan)"},{"c":"bam_Latn","n":"Bambara","g":"w","sb":"bam","stt":1,"nl":"bam_Latn","o":"West Africa","p":"Mali"},{"c":"ban_Latn","n":"Balinese","g":"w","nl":"ban_Latn","o":"Southeast Asia","p":"Indonesia (Bali)"},{"c":"bel_Cyrl","n":"Belarusian","g":"w","nl":"bel_Cyrl","mm":"be","o":"Europe","p":"Belarus"},{"c":"bem_Latn","n":"Bemba","g":"w","sb":"bem","stt":1,"nl":"bem_Latn","o":"Southern Africa","p":"Zambia"},{"c":"bn","n":"Bengali","g":"w","nl":"ben_Beng","mm":"bn","sp":"bn-BD","o":"South Asia","p":"Bangladesh, India"},{"c":"bho_Deva","n":"Bhojpuri","g":"w","nl":"bho_Deva","o":"South Asia","p":"India, Nepal"},{"c":"bjn_Arab","n":"Banjar (Arabic script)","g":"w","nl":"bjn_Arab","o":"Southeast Asia","p":"Indonesia (Borneo)"},{"c":"bjn_Latn","n":"Banjar (Latin script)","g":"w","nl":"bjn_Latn","o":"Southeast Asia","p":"Indonesia (Borneo)"},{"c":"bod_Tibt","n":"Tibetan","g":"w","nl":"bod_Tibt","o":"East Asia","p":"Tibet"},{"c":"bos_Latn","n":"Bosnian","g":"w","nl":"bos_Latn","o":"Europe","p":"Bosnia and Herzegovina"},{"c":"bug_Latn","n":"Buginese","g":"w","nl":"bug_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"bul_Cyrl","n":"Bulgarian","g":"w","nl":"bul_Cyrl","mm":"bg","sp":"bg-BG","o":"Europe","p":"Bulgaria"},{"c":"cat_Latn","n":"Catalan","g":"w","nl":"cat_Latn","mm":"ca","sp":"ca-ES","o":"Europe","p":"Spain"},{"c":"ceb_Latn","n":"Cebuano","g":"w","nl":"ceb_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"ces_Latn","n":"Czech","g":"w","nl":"ces_Latn","mm":"cs","sp":"cs-CZ","o":"Europe","p":"Czechia"},{"c":"cjk_Latn","n":"Chokwe","g":"w","nl":"cjk_Latn","o":"Southern Africa","p":"Angola"},{"c":"ckb_Arab","n":"Kurdish (Sorani)","g":"w","nl":"ckb_Arab","o":"North Africa & Middle East","p":"Iraq, Iran"},{"c":"crh_Latn","n":"Crimean Tatar","g":"w","nl":"crh_Latn","o":"Europe","p":"Crimea"},{"c":"cym_Latn","n":"Welsh","g":"w","nl":"cym_Latn","mm":"cy","o":"Europe","p":"Wales"},{"c":"dan_Latn","n":"Danish","g":"w","nl":"dan_Latn","mm":"da","sp":"da-DK","o":"Europe","p":"Denmark"},{"c":"de","n":"German","g":"w","nl":"deu_Latn","mm":"de","sp":"de-DE","o":"Europe","p":"Germany"},{"c":"dik_Latn","n":"Dinka","g":"w","sb":"din","nl":"dik_Latn","o":"East Africa","p":"South Sudan"},{"c":"dyu_Latn","n":"Dyula","g":"w","nl":"dyu_Latn","o":"West Africa","p":"Burkina Faso, Côte d’Ivoire"},{"c":"dzo_Tibt","n":"Dzongkha","g":"w","nl":"dzo_Tibt","o":"South Asia","p":"Bhutan"},{"c":"ell_Grek","n":"Greek","g":"w","nl":"ell_Grek","mm":"el","sp":"el-GR","o":"Europe","p":"Greece"},{"c":"epo_Latn","n":"Esperanto","g":"w","nl":"epo_Latn","o":"Europe","p":"Constructed language"},{"c":"est_Latn","n":"Estonian","g":"w","nl":"est_Latn","mm":"et","sp":"et-EE","o":"Europe","p":"Estonia"},{"c":"eus_Latn","n":"Basque","g":"w","nl":"eus_Latn","mm":"eu","sp":"eu-ES","o":"Europe","p":"Spain, France"},{"c":"ewe_Latn","n":"Ewe","g":"w","sb":"ewe","stt":1,"tts":1,"nl":"ewe_Latn","o":"West Africa","p":"Ghana, Togo"},{"c":"fao_Latn","n":"Faroese","g":"w","nl":"fao_Latn","o":"Europe","p":"Faroe Islands"},{"c":"fij_Latn","n":"Fijian","g":"w","nl":"fij_Latn","o":"Pacific","p":"Fiji"},{"c":"fin_Latn","n":"Finnish","g":"w","nl":"fin_Latn","mm":"fi","sp":"fi-FI","o":"Europe","p":"Finland"},{"c":"fon_Latn","n":"Fon","g":"w","nl":"fon_Latn","o":"West Africa","p":"Benin"},{"c":"fr","n":"French","g":"w","stt":1,"sc":"fra","nl":"fra_Latn","mm":"fr","sp":"fr-FR","o":"Europe","p":"France"},{"c":"fur_Latn","n":"Friulian","g":"w","nl":"fur_Latn","o":"Europe","p":"Italy"},{"c":"fuv_Latn","n":"Fulfulde (Nigeria)","g":"w","sb":"ful","stt":1,"tts":1,"nl":"fuv_Latn","o":"West Africa","p":"Nigeria"},{"c":"gaz_Latn","n":"Oromo","g":"w","sb":"orm","stt":1,"nl":"gaz_Latn","o":"East Africa","p":"Ethiopia, Kenya"},{"c":"gla_Latn","n":"Scottish Gaelic","g":"w","nl":"gla_Latn","o":"Europe","p":"Scotland"},{"c":"gle_Latn","n":"Irish","g":"w","nl":"gle_Latn","mm":"ga","o":"Europe","p":"Ireland"},{"c":"glg_Latn","n":"Galician","g":"w","nl":"glg_Latn","mm":"gl","sp":"gl-ES","o":"Europe","p":"Spain"},{"c":"grn_Latn","n":"Guarani","g":"w","nl":"grn_Latn","o":"Americas","p":"Paraguay"},{"c":"guj_Gujr","n":"Gujarati","g":"w","nl":"guj_Gujr","mm":"gu","sp":"gu-IN","o":"South Asia","p":"India"},{"c":"hat_Latn","n":"Haitian Creole","g":"w","nl":"hat_Latn","o":"Americas","p":"Haiti"},{"c":"ha","n":"Hausa","g":"w","sb":"hau","stt":1,"tts":1,"nl":"hau_Latn","mm":"ha","o":"West Africa","p":"Nigeria, Niger"},{"c":"heb_Hebr","n":"Hebrew","g":"w","nl":"heb_Hebr","mm":"he","sp":"he-IL","o":"North Africa & Middle East","p":"Israel"},{"c":"hi","n":"Hindi","g":"w","nl":"hin_Deva","mm":"hi","sp":"hi-IN","o":"South Asia","p":"India"},{"c":"hne_Deva","n":"Chhattisgarhi","g":"w","nl":"hne_Deva","o":"South Asia","p":"India"},{"c":"hrv_Latn","n":"Croatian","g":"w","nl":"hrv_Latn","mm":"hr","sp":"hr-HR","o":"Europe","p":"Croatia"},{"c":"hun_Latn","n":"Hungarian","g":"w","nl":"hun_Latn","mm":"hu","sp":"hu-HU","o":"Europe","p":"Hungary"},{"c":"hye_Armn","n":"Armenian","g":"w","nl":"hye_Armn","mm":"hy","sp":"hy-AM","o":"Caucasus & Central Asia","p":"Armenia"},{"c":"ig","n":"Igbo","g":"w","sb":"ibo","stt":1,"tts":1,"nl":"ibo_Latn","mm":"ig","o":"West Africa","p":"Nigeria"},{"c":"ilo_Latn","n":"Iloko","g":"w","nl":"ilo_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"id","n":"Indonesian","g":"w","nl":"ind_Latn","mm":"id","sp":"id-ID","o":"Southeast Asia","p":"Indonesia"},{"c":"isl_Latn","n":"Icelandic","g":"w","nl":"isl_Latn","mm":"is","sp":"is-IS","o":"Europe","p":"Iceland"},{"c":"it","n":"Italian","g":"w","nl":"ita_Latn","mm":"it","sp":"it-IT","o":"Europe","p":"Italy"},{"c":"jav_Latn","n":"Javanese","g":"w","nl":"jav_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"ja","n":"Japanese","g":"w","nl":"jpn_Jpan","mm":"ja","sp":"ja-JP","o":"East Asia","p":"Japan"},{"c":"kab_Latn","n":"Kabyle","g":"w","sb":"kab","stt":1,"nl":"kab_Latn","o":"North Africa & Middle East","p":"Algeria"},{"c":"kac_Latn","n":"Kachin","g":"w","nl":"kac_Latn","o":"Southeast Asia","p":"Myanmar"},{"c":"kam_Latn","n":"Kamba","g":"w","nl":"kam_Latn","o":"East Africa","p":"Kenya"},{"c":"kan_Knda","n":"Kannada","g":"w","nl":"kan_Knda","mm":"kn","sp":"kn-IN","o":"South Asia","p":"India"},{"c":"kas_Arab","n":"Kashmiri (Arabic script)","g":"w","nl":"kas_Arab","o":"South Asia","p":"Kashmir"},{"c":"kas_Deva","n":"Kashmiri (Devanagari)","g":"w","nl":"kas_Deva","o":"South Asia","p":"Kashmir"},{"c":"kat_Geor","n":"Georgian","g":"w","nl":"kat_Geor","mm":"ka","sp":"ka-GE","o":"Caucasus & Central Asia","p":"Georgia"},{"c":"kaz_Cyrl","n":"Kazakh","g":"w","nl":"kaz_Cyrl","mm":"kk","sp":"kk-KZ","o":"Caucasus & Central Asia","p":"Kazakhstan"},{"c":"kbp_Latn","n":"Kabiyè","g":"w","nl":"kbp_Latn","o":"West Africa","p":"Togo"},{"c":"kea_Latn","n":"Kabuverdianu","g":"w","nl":"kea_Latn","o":"West Africa","p":"Cape Verde"},{"c":"khk_Cyrl","n":"Mongolian","g":"w","nl":"khk_Cyrl","o":"East Asia","p":"Mongolia"},{"c":"khm_Khmr","n":"Khmer","g":"w","nl":"khm_Khmr","mm":"km","sp":"km-KH","o":"Southeast Asia","p":"Cambodia"},{"c":"kik_Latn","n":"Kikuyu","g":"w","sb":"kik","stt":1,"tts":1,"nl":"kik_Latn","o":"East Africa","p":"Kenya"},{"c":"kir_Cyrl","n":"Kyrgyz","g":"w","nl":"kir_Cyrl","o":"Caucasus & Central Asia","p":"Kyrgyzstan"},{"c":"kmb_Latn","n":"Kimbundu","g":"w","nl":"kmb_Latn","o":"Southern Africa","p":"Angola"},{"c":"kmr_Latn","n":"Kurdish (Kurmanji)","g":"w","nl":"kmr_Latn","o":"North Africa & Middle East","p":"Turkey, Syria"},{"c":"knc_Arab","n":"Kanuri (Arabic script)","g":"w","nl":"knc_Arab","o":"West Africa","p":"Nigeria, Niger"},{"c":"knc_Latn","n":"Kanuri (Latin script)","g":"w","nl":"knc_Latn","o":"West Africa","p":"Nigeria, Niger"},{"c":"kon_Latn","n":"Kongo","g":"w","nl":"kon_Latn","o":"Central Africa","p":"DR Congo, Angola"},{"c":"ko","n":"Korean","g":"w","nl":"kor_Hang","mm":"ko","sp":"ko-KR","o":"East Asia","p":"Korea"},{"c":"lao_Laoo","n":"Lao","g":"w","nl":"lao_Laoo","mm":"lo","o":"Southeast Asia","p":"Laos"},{"c":"lij_Latn","n":"Ligurian","g":"w","nl":"lij_Latn","o":"Europe","p":"Italy"},{"c":"lim_Latn","n":"Limburgish","g":"w","nl":"lim_Latn","o":"Europe","p":"Netherlands, Belgium"},{"c":"lin","n":"Lingala","g":"w","sb":"lin","stt":1,"tts":1,"nl":"lin_Latn","o":"Central Africa","p":"DR Congo, Congo"},{"c":"lit_Latn","n":"Lithuanian","g":"w","nl":"lit_Latn","mm":"lt","sp":"lt-LT","o":"Europe","p":"Lithuania"},{"c":"lmo_Latn","n":"Lombard","g":"w","nl":"lmo_Latn","o":"Europe","p":"Italy"},{"c":"ltg_Latn","n":"Latgalian","g":"w","nl":"ltg_Latn","o":"Europe","p":"Latvia"},{"c":"ltz_Latn","n":"Luxembourgish","g":"w","nl":"ltz_Latn","o":"Europe","p":"Luxembourg"},{"c":"lua_Latn","n":"Luba-Lulua","g":"w","nl":"lua_Latn","o":"Central Africa","p":"DR Congo"},{"c":"luo","n":"Dholuo (Kenya & Tanzania)","g":"w","sb":"luo","stt":1,"tts":1,"nl":"luo_Latn","o":"East Africa","p":"Kenya, Tanzania"},{"c":"lus_Latn","n":"Mizo","g":"w","nl":"lus_Latn","o":"South Asia","p":"India (Mizoram)"},{"c":"lvs_Latn","n":"Latvian","g":"w","nl":"lvs_Latn","mm":"lv","sp":"lv-LV","o":"Europe","p":"Latvia"},{"c":"mag_Deva","n":"Magahi","g":"w","nl":"mag_Deva","o":"South Asia","p":"India"},{"c":"mai_Deva","n":"Maithili","g":"w","nl":"mai_Deva","o":"South Asia","p":"India, Nepal"},{"c":"mal_Mlym","n":"Malayalam","g":"w","nl":"mal_Mlym","mm":"ml","sp":"ml-IN","o":"South Asia","p":"India"},{"c":"mar_Deva","n":"Marathi","g":"w","nl":"mar_Deva","mm":"mr","sp":"mr-IN","o":"South Asia","p":"India"},{"c":"min_Latn","n":"Minangkabau","g":"w","nl":"min_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"mkd_Cyrl","n":"Macedonian","g":"w","nl":"mkd_Cyrl","mm":"mk","o":"Europe","p":"North Macedonia"},{"c":"mlt_Latn","n":"Maltese","g":"w","nl":"mlt_Latn","mm":"mt","o":"Europe","p":"Malta"},{"c":"mni_Beng","n":"Manipuri","g":"w","nl":"mni_Beng","o":"South Asia","p":"India (Manipur)"},{"c":"mos_Latn","n":"Mossi","g":"w","nl":"mos_Latn","o":"West Africa","p":"Burkina Faso"},{"c":"mri_Latn","n":"Māori","g":"w","nl":"mri_Latn","o":"Pacific","p":"New Zealand"},{"c":"mya_Mymr","n":"Burmese","g":"w","nl":"mya_Mymr","mm":"my","o":"Southeast Asia","p":"Myanmar"},{"c":"nl","n":"Dutch","g":"w","nl":"nld_Latn","mm":"nl","sp":"nl-NL","o":"Europe","p":"Netherlands"},{"c":"nno_Latn","n":"Norwegian Nynorsk","g":"w","nl":"nno_Latn","o":"Europe","p":"Norway"},{"c":"nob_Latn","n":"Norwegian Bokmål","g":"w","nl":"nob_Latn","mm":"no","sp":"nb-NO","o":"Europe","p":"Norway"},{"c":"npi_Deva","n":"Nepali","g":"w","nl":"npi_Deva","mm":"ne","sp":"ne-NP","o":"South Asia","p":"Nepal"},{"c":"nso_Latn","n":"Northern Sotho","g":"w","nl":"nso_Latn","o":"Southern Africa","p":"South Africa"},{"c":"nus_Latn","n":"Nuer","g":"w","nl":"nus_Latn","o":"East Africa","p":"South Sudan"},{"c":"ny","n":"Chichewa / Nyanja","g":"w","sb":"nya","stt":1,"nl":"nya_Latn","mm":"ny","o":"Southern Africa","p":"Malawi, Zambia"},{"c":"oci_Latn","n":"Occitan","g":"w","nl":"oci_Latn","o":"Europe","p":"France"},{"c":"ory_Orya","n":"Odia","g":"w","nl":"ory_Orya","o":"South Asia","p":"India"},{"c":"pag_Latn","n":"Pangasinan","g":"w","nl":"pag_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"pan_Guru","n":"Punjabi","g":"w","nl":"pan_Guru","mm":"pa","sp":"pa-IN","o":"South Asia","p":"India, Pakistan"},{"c":"pap_Latn","n":"Papiamento","g":"w","nl":"pap_Latn","o":"Americas","p":"Curaçao, Aruba"},{"c":"pbt_Arab","n":"Pashto","g":"w","nl":"pbt_Arab","o":"Caucasus & Central Asia","p":"Afghanistan, Pakistan"},{"c":"pes_Arab","n":"Persian (Iran)","g":"w","nl":"pes_Arab","mm":"fa","sp":"fa-IR","o":"North Africa & Middle East","p":"Iran"},{"c":"plt_Latn","n":"Malagasy","g":"w","sb":"mlg","stt":1,"nl":"plt_Latn","o":"Southern Africa","p":"Madagascar"},{"c":"pol_Latn","n":"Polish","g":"w","nl":"pol_Latn","mm":"pl","sp":"pl-PL","o":"Europe","p":"Poland"},{"c":"pt","n":"Portuguese","g":"w","nl":"por_Latn","mm":"pt","sp":"pt-PT","o":"Europe","p":"Portugal"},{"c":"prs_Arab","n":"Dari","g":"w","nl":"prs_Arab","o":"Caucasus & Central Asia","p":"Afghanistan"},{"c":"quy_Latn","n":"Quechua","g":"w","nl":"quy_Latn","o":"Americas","p":"Peru, Bolivia"},{"c":"ron_Latn","n":"Romanian","g":"w","nl":"ron_Latn","mm":"ro","sp":"ro-RO","o":"Europe","p":"Romania"},{"c":"run_Latn","n":"Kirundi","g":"w","sb":"run","nl":"run_Latn","o":"East Africa","p":"Burundi"},{"c":"ru","n":"Russian","g":"w","nl":"rus_Cyrl","mm":"ru","sp":"ru-RU","o":"Europe","p":"Russia"},{"c":"sag_Latn","n":"Sango","g":"w","nl":"sag_Latn","o":"Central Africa","p":"Central African Republic"},{"c":"san_Deva","n":"Sanskrit","g":"w","nl":"san_Deva","o":"South Asia","p":"India (classical)"},{"c":"sat_Beng","n":"Santali","g":"w","nl":"sat_Beng","o":"South Asia","p":"India"},{"c":"scn_Latn","n":"Sicilian","g":"w","nl":"scn_Latn","o":"Europe","p":"Italy"},{"c":"shn_Mymr","n":"Shan","g":"w","nl":"shn_Mymr","o":"Southeast Asia","p":"Myanmar"},{"c":"sin_Sinh","n":"Sinhala","g":"w","nl":"sin_Sinh","mm":"si","sp":"si-LK","o":"South Asia","p":"Sri Lanka"},{"c":"slk_Latn","n":"Slovak","g":"w","nl":"slk_Latn","mm":"sk","sp":"sk-SK","o":"Europe","p":"Slovakia"},{"c":"slv_Latn","n":"Slovenian","g":"w","nl":"slv_Latn","mm":"sl","o":"Europe","p":"Slovenia"},{"c":"smo_Latn","n":"Samoan","g":"w","nl":"smo_Latn","o":"Pacific","p":"Samoa"},{"c":"sn","n":"Shona","g":"w","sb":"sna","stt":1,"nl":"sna_Latn","mm":"sn","o":"Southern Africa","p":"Zimbabwe"},{"c":"snd_Arab","n":"Sindhi","g":"w","nl":"snd_Arab","o":"South Asia","p":"Pakistan"},{"c":"so","n":"Somali","g":"w","sb":"som","stt":1,"nl":"som_Latn","mm":"so","o":"East Africa","p":"Somalia"},{"c":"sot_Latn","n":"Southern Sotho","g":"w","sb":"sot","stt":1,"nl":"sot_Latn","o":"Southern Africa","p":"Lesotho"},{"c":"es","n":"Spanish","g":"w","nl":"spa_Latn","mm":"es","sp":"es-ES","o":"Europe","p":"Spain"},{"c":"srd_Latn","n":"Sardinian","g":"w","nl":"srd_Latn","o":"Europe","p":"Italy"},{"c":"srp_Cyrl","n":"Serbian","g":"w","nl":"srp_Cyrl","mm":"sr","o":"Europe","p":"Serbia"},{"c":"ssw_Latn","n":"Swati","g":"w","nl":"ssw_Latn","o":"Southern Africa","p":"Eswatini"},{"c":"sun_Latn","n":"Sundanese","g":"w","nl":"sun_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"swe_Latn","n":"Swedish","g":"w","nl":"swe_Latn","mm":"sv","sp":"sv-SE","o":"Europe","p":"Sweden"},{"c":"szl_Latn","n":"Silesian","g":"w","nl":"szl_Latn","o":"Europe","p":"Poland"},{"c":"tam_Taml","n":"Tamil","g":"w","nl":"tam_Taml","mm":"ta","sp":"ta-IN","o":"South Asia","p":"India, Sri Lanka"},{"c":"taq_Latn","n":"Tamasheq (Latin script)","g":"w","nl":"taq_Latn","o":"West Africa","p":"Mali, Niger"},{"c":"taq_Tfng","n":"Tamasheq (Tifinagh)","g":"w","nl":"taq_Tfng","o":"West Africa","p":"Mali, Niger"},{"c":"tat_Cyrl","n":"Tatar","g":"w","nl":"tat_Cyrl","o":"Europe","p":"Russia (Tatarstan)"},{"c":"tel_Telu","n":"Telugu","g":"w","nl":"tel_Telu","mm":"te","sp":"te-IN","o":"South Asia","p":"India"},{"c":"tgk_Cyrl","n":"Tajik","g":"w","nl":"tgk_Cyrl","o":"Caucasus & Central Asia","p":"Tajikistan"},{"c":"tgl_Latn","n":"Filipino (Tagalog)","g":"w","nl":"tgl_Latn","mm":"tl","sp":"fil-PH","o":"Southeast Asia","p":"Philippines"},{"c":"tha_Thai","n":"Thai","g":"w","nl":"tha_Thai","mm":"th","sp":"th-TH","o":"Southeast Asia","p":"Thailand"},{"c":"tir_Ethi","n":"Tigrinya","g":"w","nl":"tir_Ethi","o":"East Africa","p":"Ethiopia, Eritrea"},{"c":"tpi_Latn","n":"Tok Pisin","g":"w","nl":"tpi_Latn","o":"Pacific","p":"Papua New Guinea"},{"c":"tsn_Latn","n":"Tswana","g":"w","sb":"tsn","stt":1,"nl":"tsn_Latn","o":"Southern Africa","p":"Botswana, South Africa"},{"c":"tso_Latn","n":"Tsonga","g":"w","nl":"tso_Latn","o":"Southern Africa","p":"South Africa, Mozambique"},{"c":"tuk_Latn","n":"Turkmen","g":"w","nl":"tuk_Latn","o":"Caucasus & Central Asia","p":"Turkmenistan"},{"c":"tum_Latn","n":"Tumbuka","g":"w","nl":"tum_Latn","o":"Southern Africa","p":"Malawi"},{"c":"tr","n":"Turkish","g":"w","nl":"tur_Latn","mm":"tr","sp":"tr-TR","o":"North Africa & Middle East","p":"Turkey"},{"c":"twi_Latn","n":"Twi","g":"w","nl":"twi_Latn","o":"West Africa","p":"Ghana"},{"c":"tzm_Tfng","n":"Tamazight","g":"w","nl":"tzm_Tfng","o":"North Africa & Middle East","p":"Morocco"},{"c":"uig_Arab","n":"Uyghur","g":"w","nl":"uig_Arab","o":"Caucasus & Central Asia","p":"Xinjiang (China)"},{"c":"ukr_Cyrl","n":"Ukrainian","g":"w","nl":"ukr_Cyrl","mm":"uk","sp":"uk-UA","o":"Europe","p":"Ukraine"},{"c":"umb_Latn","n":"Umbundu","g":"w","nl":"umb_Latn","o":"Southern Africa","p":"Angola"},{"c":"ur","n":"Urdu","g":"w","nl":"urd_Arab","mm":"ur","sp":"ur-PK","o":"South Asia","p":"Pakistan, India"},{"c":"uzn_Latn","n":"Uzbek","g":"w","nl":"uzn_Latn","mm":"uz","sp":"uz-UZ","o":"Caucasus & Central Asia","p":"Uzbekistan"},{"c":"vec_Latn","n":"Venetian","g":"w","nl":"vec_Latn","o":"Europe","p":"Italy"},{"c":"vie_Latn","n":"Vietnamese","g":"w","nl":"vie_Latn","mm":"vi","sp":"vi-VN","o":"Southeast Asia","p":"Vietnam"},{"c":"war_Latn","n":"Waray","g":"w","nl":"war_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"wol_Latn","n":"Wolof","g":"w","sb":"wol","stt":1,"nl":"wol_Latn","o":"West Africa","p":"Senegal"},{"c":"xh","n":"Xhosa","g":"w","sb":"xho","stt":1,"tts":1,"nl":"xho_Latn","mm":"xh","o":"Southern Africa","p":"South Africa"},{"c":"ydd_Hebr","n":"Yiddish","g":"w","nl":"ydd_Hebr","o":"Europe","p":"Eastern Europe (Jewish communities)"},{"c":"yo","n":"Yoruba","g":"w","sb":"yor","stt":1,"tts":1,"nl":"yor_Latn","mm":"yo","o":"West Africa","p":"Nigeria, Benin"},{"c":"yue_Hant","n":"Cantonese","g":"w","nl":"yue_Hant","o":"East Asia","p":"Hong Kong, Guangdong"},{"c":"zh","n":"Chinese (Simplified)","g":"w","nl":"zho_Hans","mm":"zh-CN","sp":"zh-CN","o":"East Asia","p":"China"},{"c":"zho_Hant","n":"Chinese (Traditional)","g":"w","nl":"zho_Hant","mm":"zh-TW","sp":"zh-TW","o":"East Asia","p":"Taiwan, Hong Kong"},{"c":"zsm_Latn","n":"Malay","g":"w","nl":"zsm_Latn","mm":"ms","sp":"ms-MY","o":"Southeast Asia","p":"Malaysia"},{"c":"zu","n":"Zulu","g":"w","sb":"zul","stt":1,"nl":"zul_Latn","mm":"zu","sp":"zu-ZA","o":"Southern Africa","p":"South Africa"},{"c":"lg","n":"Luganda","g":"y","sb":"lug","stt":1,"tts":1,"nl":"lug_Latn","mm":"lg","r":"Central","o":"Uganda","p":"Central"},{"c":"sw","n":"Swahili","g":"y","sb":"swa","stt":1,"tts":1,"nl":"swh_Latn","mm":"sw","sp":"sw-KE","r":"National","o":"East Africa","p":"Kenya, Tanzania, Uganda (national language)"},{"c":"rw","n":"Kinyarwanda / Rufumbira","g":"u","sb":"kin","stt":1,"tts":1,"nl":"kin_Latn","mm":"rw","r":"South-West","o":"Uganda","p":"South-West"},{"c":"ach","n":"Acholi","g":"u","sb":"ach","stt":1,"tts":1,"r":"Northern","o":"Uganda","p":"Northern"},{"c":"alz","n":"Alur","g":"u","sb":"alz","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"luc","n":"Aringa","g":"u","sb":"luc","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"teo","n":"Ateso","g":"u","sb":"teo","stt":1,"tts":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"bfa","n":"Bari / Kuku","g":"u","sb":"bfa","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"adh","n":"Dhopadhola (Jopadhola)","g":"u","sb":"adh","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"keo","n":"Kakwa","g":"u","sb":"keo","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"kdj","n":"Ngakarimojong (Karamojong)","g":"u","sb":"kdj","r":"Karamoja","o":"Uganda","p":"Karamoja"},{"c":"kdi","n":"Kumam","g":"u","sb":"kdi","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"kpz","n":"Kupsabiny","g":"u","sb":"kpz","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"rwm","n":"Kwamba (Rwamba)","g":"u","sb":"rwm","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"laj","n":"Lango","g":"u","sb":"laj","r":"Northern","o":"Uganda","p":"Northern"},{"c":"tlj","n":"Lubwisi","g":"u","sb":"tlj","r":"Western","o":"Uganda","p":"Western"},{"c":"lgg","n":"Lugbara","g":"u","sb":"lgg","stt":1,"r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"rub","n":"Lugungu","g":"u","sb":"rub","r":"Western","o":"Uganda","p":"Western"},{"c":"gwr","n":"Lugwere","g":"u","sb":"gwr","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"myx","n":"Lumasaba (Lugisu)","g":"u","sb":"myx","stt":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"nuj","n":"Lunyole","g":"u","sb":"nuj","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"xog","n":"Lusoga","g":"y","sb":"xog","stt":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"mhi","n":"Ma'di","g":"u","sb":"mhi","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"pok","n":"Pokot","g":"u","sb":"pok","r":"Karamoja","o":"Uganda","p":"Karamoja"},{"c":"cgg","n":"Rukiga","g":"u","sb":"cgg","stt":1,"r":"South-West","o":"Uganda","p":"South-West"},{"c":"koo","n":"Lhukonzo (Rukonjo)","g":"u","sb":"koo","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"nyn","n":"Runyankole","g":"u","sb":"nyn","stt":1,"tts":1,"r":"South-West","o":"Uganda","p":"South-West"},{"c":"nyo","n":"Runyoro","g":"u","sb":"nyo","r":"Western","o":"Uganda","p":"Western"},{"c":"ruc","n":"Ruruuli","g":"u","sb":"ruc","stt":1,"r":"Central","o":"Uganda","p":"Central"},{"c":"ttj","n":"Rutooro","g":"u","sb":"ttj","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"lsm","n":"Samia (Lusamia)","g":"u","sb":"lsm","r":"Eastern","o":"Uganda","p":"Eastern"}];
+const LANGS=[{"c":"en","n":"English","g":"y","sb":"eng","stt":1,"tts":1,"nl":"eng_Latn","mm":"en","sp":"en-GB","o":"Europe","p":"England (spoken worldwide)","pm":1,"pc":1},{"c":"ace_Arab","n":"Acehnese (Arabic script)","g":"w","nl":"ace_Arab","o":"Southeast Asia","p":"Indonesia (Aceh)"},{"c":"ace_Latn","n":"Acehnese (Latin script)","g":"w","nl":"ace_Latn","o":"Southeast Asia","p":"Indonesia (Aceh)"},{"c":"acm_Arab","n":"Mesopotamian Arabic","g":"w","nl":"acm_Arab","o":"North Africa & Middle East","p":"Iraq"},{"c":"acq_Arab","n":"Ta'izzi-Adeni Arabic","g":"w","nl":"acq_Arab","o":"North Africa & Middle East","p":"Yemen"},{"c":"aeb_Arab","n":"Tunisian Arabic","g":"w","nl":"aeb_Arab","o":"North Africa & Middle East","p":"Tunisia"},{"c":"af","n":"Afrikaans","g":"w","sb":"afr","stt":1,"tts":1,"nl":"afr_Latn","mm":"af","sp":"af-ZA","o":"Southern Africa","p":"South Africa, Namibia","pm":1,"pc":1},{"c":"ajp_Arab","n":"South Levantine Arabic","g":"w","nl":"ajp_Arab","o":"North Africa & Middle East","p":"Jordan, Palestine"},{"c":"aka_Latn","n":"Akan","g":"w","sb":"aka","stt":1,"nl":"aka_Latn","o":"West Africa","p":"Ghana"},{"c":"als_Latn","n":"Albanian","g":"w","nl":"als_Latn","mm":"sq","o":"Europe","p":"Albania","pm":1,"pc":1},{"c":"am","n":"Amharic","g":"w","sb":"amh","stt":1,"nl":"amh_Ethi","mm":"am","sp":"am-ET","o":"East Africa","p":"Ethiopia","pm":1,"pc":1},{"c":"apc_Arab","n":"North Levantine Arabic","g":"w","nl":"apc_Arab","o":"North Africa & Middle East","p":"Syria, Lebanon"},{"c":"ar","n":"Arabic (Standard)","g":"w","nl":"arb_Arab","mm":"ar","sp":"ar-SA","o":"North Africa & Middle East","p":"Arab world","pm":1,"pc":1},{"c":"ars_Arab","n":"Najdi Arabic","g":"w","nl":"ars_Arab","o":"North Africa & Middle East","p":"Saudi Arabia"},{"c":"ary_Arab","n":"Moroccan Arabic","g":"w","nl":"ary_Arab","o":"North Africa & Middle East","p":"Morocco"},{"c":"arz_Arab","n":"Egyptian Arabic","g":"w","nl":"arz_Arab","o":"North Africa & Middle East","p":"Egypt"},{"c":"asm_Beng","n":"Assamese","g":"w","nl":"asm_Beng","o":"South Asia","p":"India (Assam)","pm":1},{"c":"ast_Latn","n":"Asturian","g":"w","nl":"ast_Latn","o":"Europe","p":"Spain","pc":1},{"c":"awa_Deva","n":"Awadhi","g":"w","nl":"awa_Deva","o":"South Asia","p":"India"},{"c":"ayr_Latn","n":"Aymara","g":"w","nl":"ayr_Latn","o":"Americas","p":"Bolivia, Peru"},{"c":"azb_Arab","n":"South Azerbaijani","g":"w","nl":"azb_Arab","o":"North Africa & Middle East","p":"Iran"},{"c":"azj_Latn","n":"Azerbaijani","g":"w","nl":"azj_Latn","mm":"az","sp":"az-AZ","o":"Caucasus & Central Asia","p":"Azerbaijan","pm":1,"pc":1},{"c":"bak_Cyrl","n":"Bashkir","g":"w","nl":"bak_Cyrl","o":"Europe","p":"Russia (Bashkortostan)","pm":1,"pc":1},{"c":"bam_Latn","n":"Bambara","g":"w","sb":"bam","stt":1,"nl":"bam_Latn","o":"West Africa","p":"Mali"},{"c":"ban_Latn","n":"Balinese","g":"w","nl":"ban_Latn","o":"Southeast Asia","p":"Indonesia (Bali)"},{"c":"bel_Cyrl","n":"Belarusian","g":"w","nl":"bel_Cyrl","mm":"be","o":"Europe","p":"Belarus","pc":1},{"c":"bem_Latn","n":"Bemba","g":"w","sb":"bem","stt":1,"nl":"bem_Latn","o":"Southern Africa","p":"Zambia"},{"c":"bn","n":"Bengali","g":"w","nl":"ben_Beng","mm":"bn","sp":"bn-BD","o":"South Asia","p":"Bangladesh, India","pm":1,"pc":1},{"c":"bho_Deva","n":"Bhojpuri","g":"w","nl":"bho_Deva","o":"South Asia","p":"India, Nepal","pm":1},{"c":"bjn_Arab","n":"Banjar (Arabic script)","g":"w","nl":"bjn_Arab","o":"Southeast Asia","p":"Indonesia (Borneo)"},{"c":"bjn_Latn","n":"Banjar (Latin script)","g":"w","nl":"bjn_Latn","o":"Southeast Asia","p":"Indonesia (Borneo)"},{"c":"bod_Tibt","n":"Tibetan","g":"w","nl":"bod_Tibt","o":"East Asia","p":"Tibet","pm":1},{"c":"bos_Latn","n":"Bosnian","g":"w","nl":"bos_Latn","o":"Europe","p":"Bosnia and Herzegovina","pm":1,"pc":1},{"c":"bug_Latn","n":"Buginese","g":"w","nl":"bug_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"bul_Cyrl","n":"Bulgarian","g":"w","nl":"bul_Cyrl","mm":"bg","sp":"bg-BG","o":"Europe","p":"Bulgaria","pm":1,"pc":1},{"c":"cat_Latn","n":"Catalan","g":"w","nl":"cat_Latn","mm":"ca","sp":"ca-ES","o":"Europe","p":"Spain","pm":1,"pc":1},{"c":"ceb_Latn","n":"Cebuano","g":"w","nl":"ceb_Latn","o":"Southeast Asia","p":"Philippines","pc":1},{"c":"ces_Latn","n":"Czech","g":"w","nl":"ces_Latn","mm":"cs","sp":"cs-CZ","o":"Europe","p":"Czechia","pm":1,"pc":1},{"c":"cjk_Latn","n":"Chokwe","g":"w","nl":"cjk_Latn","o":"Southern Africa","p":"Angola"},{"c":"ckb_Arab","n":"Kurdish (Sorani)","g":"w","nl":"ckb_Arab","o":"North Africa & Middle East","p":"Iraq, Iran","pm":1},{"c":"crh_Latn","n":"Crimean Tatar","g":"w","nl":"crh_Latn","o":"Europe","p":"Crimea"},{"c":"cym_Latn","n":"Welsh","g":"w","nl":"cym_Latn","mm":"cy","o":"Europe","p":"Wales","pm":1,"pc":1},{"c":"dan_Latn","n":"Danish","g":"w","nl":"dan_Latn","mm":"da","sp":"da-DK","o":"Europe","p":"Denmark","pm":1,"pc":1},{"c":"de","n":"German","g":"w","nl":"deu_Latn","mm":"de","sp":"de-DE","o":"Europe","p":"Germany","pm":1,"pc":1},{"c":"dik_Latn","n":"Dinka","g":"w","sb":"din","nl":"dik_Latn","o":"East Africa","p":"South Sudan"},{"c":"dyu_Latn","n":"Dyula","g":"w","nl":"dyu_Latn","o":"West Africa","p":"Burkina Faso, Côte d’Ivoire"},{"c":"dzo_Tibt","n":"Dzongkha","g":"w","nl":"dzo_Tibt","o":"South Asia","p":"Bhutan"},{"c":"ell_Grek","n":"Greek","g":"w","nl":"ell_Grek","mm":"el","sp":"el-GR","o":"Europe","p":"Greece","pm":1,"pc":1},{"c":"epo_Latn","n":"Esperanto","g":"w","nl":"epo_Latn","o":"Europe","p":"Constructed language"},{"c":"est_Latn","n":"Estonian","g":"w","nl":"est_Latn","mm":"et","sp":"et-EE","o":"Europe","p":"Estonia","pm":1,"pc":1},{"c":"eus_Latn","n":"Basque","g":"w","nl":"eus_Latn","mm":"eu","sp":"eu-ES","o":"Europe","p":"Spain, France","pm":1},{"c":"ewe_Latn","n":"Ewe","g":"w","sb":"ewe","stt":1,"tts":1,"nl":"ewe_Latn","o":"West Africa","p":"Ghana, Togo"},{"c":"fao_Latn","n":"Faroese","g":"w","nl":"fao_Latn","o":"Europe","p":"Faroe Islands","pm":1},{"c":"fij_Latn","n":"Fijian","g":"w","nl":"fij_Latn","o":"Pacific","p":"Fiji","pm":1},{"c":"fin_Latn","n":"Finnish","g":"w","nl":"fin_Latn","mm":"fi","sp":"fi-FI","o":"Europe","p":"Finland","pm":1,"pc":1},{"c":"fon_Latn","n":"Fon","g":"w","nl":"fon_Latn","o":"West Africa","p":"Benin"},{"c":"fr","n":"French","g":"w","stt":1,"sc":"fra","nl":"fra_Latn","mm":"fr","sp":"fr-FR","o":"Europe","p":"France","pm":1,"pc":1},{"c":"fur_Latn","n":"Friulian","g":"w","nl":"fur_Latn","o":"Europe","p":"Italy"},{"c":"fuv_Latn","n":"Fulfulde (Nigeria)","g":"w","sb":"ful","stt":1,"tts":1,"nl":"fuv_Latn","o":"West Africa","p":"Nigeria","pc":1},{"c":"gaz_Latn","n":"Oromo","g":"w","sb":"orm","stt":1,"nl":"gaz_Latn","o":"East Africa","p":"Ethiopia, Kenya"},{"c":"gla_Latn","n":"Scottish Gaelic","g":"w","nl":"gla_Latn","o":"Europe","p":"Scotland","pc":1},{"c":"gle_Latn","n":"Irish","g":"w","nl":"gle_Latn","mm":"ga","o":"Europe","p":"Ireland","pm":1,"pc":1},{"c":"glg_Latn","n":"Galician","g":"w","nl":"glg_Latn","mm":"gl","sp":"gl-ES","o":"Europe","p":"Spain","pm":1,"pc":1},{"c":"grn_Latn","n":"Guarani","g":"w","nl":"grn_Latn","o":"Americas","p":"Paraguay"},{"c":"guj_Gujr","n":"Gujarati","g":"w","nl":"guj_Gujr","mm":"gu","sp":"gu-IN","o":"South Asia","p":"India","pm":1,"pc":1},{"c":"hat_Latn","n":"Haitian Creole","g":"w","nl":"hat_Latn","o":"Americas","p":"Haiti","pm":1,"pc":1},{"c":"ha","n":"Hausa","g":"w","sb":"hau","stt":1,"tts":1,"nl":"hau_Latn","mm":"ha","o":"West Africa","p":"Nigeria, Niger","pm":1,"pc":1},{"c":"heb_Hebr","n":"Hebrew","g":"w","nl":"heb_Hebr","mm":"he","sp":"he-IL","o":"North Africa & Middle East","p":"Israel","pm":1,"pc":1},{"c":"hi","n":"Hindi","g":"w","nl":"hin_Deva","mm":"hi","sp":"hi-IN","o":"South Asia","p":"India","pm":1,"pc":1},{"c":"hne_Deva","n":"Chhattisgarhi","g":"w","nl":"hne_Deva","o":"South Asia","p":"India","pm":1},{"c":"hrv_Latn","n":"Croatian","g":"w","nl":"hrv_Latn","mm":"hr","sp":"hr-HR","o":"Europe","p":"Croatia","pm":1,"pc":1},{"c":"hun_Latn","n":"Hungarian","g":"w","nl":"hun_Latn","mm":"hu","sp":"hu-HU","o":"Europe","p":"Hungary","pm":1,"pc":1},{"c":"hye_Armn","n":"Armenian","g":"w","nl":"hye_Armn","mm":"hy","sp":"hy-AM","o":"Caucasus & Central Asia","p":"Armenia","pm":1,"pc":1},{"c":"ig","n":"Igbo","g":"w","sb":"ibo","stt":1,"tts":1,"nl":"ibo_Latn","mm":"ig","o":"West Africa","p":"Nigeria","pm":1,"pc":1},{"c":"ilo_Latn","n":"Iloko","g":"w","nl":"ilo_Latn","o":"Southeast Asia","p":"Philippines","pc":1},{"c":"id","n":"Indonesian","g":"w","nl":"ind_Latn","mm":"id","sp":"id-ID","o":"Southeast Asia","p":"Indonesia","pm":1,"pc":1},{"c":"isl_Latn","n":"Icelandic","g":"w","nl":"isl_Latn","mm":"is","sp":"is-IS","o":"Europe","p":"Iceland","pm":1,"pc":1},{"c":"it","n":"Italian","g":"w","nl":"ita_Latn","mm":"it","sp":"it-IT","o":"Europe","p":"Italy","pm":1,"pc":1},{"c":"jav_Latn","n":"Javanese","g":"w","nl":"jav_Latn","o":"Southeast Asia","p":"Indonesia","pc":1},{"c":"ja","n":"Japanese","g":"w","nl":"jpn_Jpan","mm":"ja","sp":"ja-JP","o":"East Asia","p":"Japan","pm":1,"pc":1},{"c":"kab_Latn","n":"Kabyle","g":"w","sb":"kab","stt":1,"nl":"kab_Latn","o":"North Africa & Middle East","p":"Algeria"},{"c":"kac_Latn","n":"Kachin","g":"w","nl":"kac_Latn","o":"Southeast Asia","p":"Myanmar"},{"c":"kam_Latn","n":"Kamba","g":"w","nl":"kam_Latn","o":"East Africa","p":"Kenya"},{"c":"kan_Knda","n":"Kannada","g":"w","nl":"kan_Knda","mm":"kn","sp":"kn-IN","o":"South Asia","p":"India","pm":1,"pc":1},{"c":"kas_Arab","n":"Kashmiri (Arabic script)","g":"w","nl":"kas_Arab","o":"South Asia","p":"Kashmir","pm":1},{"c":"kas_Deva","n":"Kashmiri (Devanagari)","g":"w","nl":"kas_Deva","o":"South Asia","p":"Kashmir"},{"c":"kat_Geor","n":"Georgian","g":"w","nl":"kat_Geor","mm":"ka","sp":"ka-GE","o":"Caucasus & Central Asia","p":"Georgia","pm":1,"pc":1},{"c":"kaz_Cyrl","n":"Kazakh","g":"w","nl":"kaz_Cyrl","mm":"kk","sp":"kk-KZ","o":"Caucasus & Central Asia","p":"Kazakhstan","pm":1,"pc":1},{"c":"kbp_Latn","n":"Kabiyè","g":"w","nl":"kbp_Latn","o":"West Africa","p":"Togo"},{"c":"kea_Latn","n":"Kabuverdianu","g":"w","nl":"kea_Latn","o":"West Africa","p":"Cape Verde"},{"c":"khk_Cyrl","n":"Mongolian","g":"w","nl":"khk_Cyrl","o":"East Asia","p":"Mongolia","pm":1,"pc":1},{"c":"khm_Khmr","n":"Khmer","g":"w","nl":"khm_Khmr","mm":"km","sp":"km-KH","o":"Southeast Asia","p":"Cambodia","pm":1,"pc":1},{"c":"kik_Latn","n":"Kikuyu","g":"w","sb":"kik","stt":1,"tts":1,"nl":"kik_Latn","o":"East Africa","p":"Kenya"},{"c":"kir_Cyrl","n":"Kyrgyz","g":"w","nl":"kir_Cyrl","o":"Caucasus & Central Asia","p":"Kyrgyzstan","pm":1},{"c":"kmb_Latn","n":"Kimbundu","g":"w","nl":"kmb_Latn","o":"Southern Africa","p":"Angola"},{"c":"kmr_Latn","n":"Kurdish (Kurmanji)","g":"w","nl":"kmr_Latn","o":"North Africa & Middle East","p":"Turkey, Syria","pm":1},{"c":"knc_Arab","n":"Kanuri (Arabic script)","g":"w","nl":"knc_Arab","o":"West Africa","p":"Nigeria, Niger"},{"c":"knc_Latn","n":"Kanuri (Latin script)","g":"w","nl":"knc_Latn","o":"West Africa","p":"Nigeria, Niger"},{"c":"kon_Latn","n":"Kongo","g":"w","nl":"kon_Latn","o":"Central Africa","p":"DR Congo, Angola"},{"c":"ko","n":"Korean","g":"w","nl":"kor_Hang","mm":"ko","sp":"ko-KR","o":"East Asia","p":"Korea","pm":1,"pc":1},{"c":"lao_Laoo","n":"Lao","g":"w","nl":"lao_Laoo","mm":"lo","o":"Southeast Asia","p":"Laos","pm":1,"pc":1},{"c":"lij_Latn","n":"Ligurian","g":"w","nl":"lij_Latn","o":"Europe","p":"Italy"},{"c":"lim_Latn","n":"Limburgish","g":"w","nl":"lim_Latn","o":"Europe","p":"Netherlands, Belgium"},{"c":"lin","n":"Lingala","g":"w","sb":"lin","stt":1,"tts":1,"nl":"lin_Latn","o":"Central Africa","p":"DR Congo, Congo","pm":1,"pc":1},{"c":"lit_Latn","n":"Lithuanian","g":"w","nl":"lit_Latn","mm":"lt","sp":"lt-LT","o":"Europe","p":"Lithuania","pm":1,"pc":1},{"c":"lmo_Latn","n":"Lombard","g":"w","nl":"lmo_Latn","o":"Europe","p":"Italy"},{"c":"ltg_Latn","n":"Latgalian","g":"w","nl":"ltg_Latn","o":"Europe","p":"Latvia"},{"c":"ltz_Latn","n":"Luxembourgish","g":"w","nl":"ltz_Latn","o":"Europe","p":"Luxembourg","pc":1},{"c":"lua_Latn","n":"Luba-Lulua","g":"w","nl":"lua_Latn","o":"Central Africa","p":"DR Congo"},{"c":"luo","n":"Dholuo (Kenya & Tanzania)","g":"w","sb":"luo","stt":1,"tts":1,"nl":"luo_Latn","o":"East Africa","p":"Kenya, Tanzania"},{"c":"lus_Latn","n":"Mizo","g":"w","nl":"lus_Latn","o":"South Asia","p":"India (Mizoram)"},{"c":"lvs_Latn","n":"Latvian","g":"w","nl":"lvs_Latn","mm":"lv","sp":"lv-LV","o":"Europe","p":"Latvia","pm":1,"pc":1},{"c":"mag_Deva","n":"Magahi","g":"w","nl":"mag_Deva","o":"South Asia","p":"India"},{"c":"mai_Deva","n":"Maithili","g":"w","nl":"mai_Deva","o":"South Asia","p":"India, Nepal","pm":1},{"c":"mal_Mlym","n":"Malayalam","g":"w","nl":"mal_Mlym","mm":"ml","sp":"ml-IN","o":"South Asia","p":"India","pm":1,"pc":1},{"c":"mar_Deva","n":"Marathi","g":"w","nl":"mar_Deva","mm":"mr","sp":"mr-IN","o":"South Asia","p":"India","pm":1,"pc":1},{"c":"min_Latn","n":"Minangkabau","g":"w","nl":"min_Latn","o":"Southeast Asia","p":"Indonesia"},{"c":"mkd_Cyrl","n":"Macedonian","g":"w","nl":"mkd_Cyrl","mm":"mk","o":"Europe","p":"North Macedonia","pm":1,"pc":1},{"c":"mlt_Latn","n":"Maltese","g":"w","nl":"mlt_Latn","mm":"mt","o":"Europe","p":"Malta","pm":1},{"c":"mni_Beng","n":"Manipuri","g":"w","nl":"mni_Beng","o":"South Asia","p":"India (Manipur)","pm":1},{"c":"mos_Latn","n":"Mossi","g":"w","nl":"mos_Latn","o":"West Africa","p":"Burkina Faso"},{"c":"mri_Latn","n":"Māori","g":"w","nl":"mri_Latn","o":"Pacific","p":"New Zealand","pm":1},{"c":"mya_Mymr","n":"Burmese","g":"w","nl":"mya_Mymr","mm":"my","o":"Southeast Asia","p":"Myanmar","pm":1,"pc":1},{"c":"nl","n":"Dutch","g":"w","nl":"nld_Latn","mm":"nl","sp":"nl-NL","o":"Europe","p":"Netherlands","pm":1,"pc":1},{"c":"nno_Latn","n":"Norwegian Nynorsk","g":"w","nl":"nno_Latn","o":"Europe","p":"Norway"},{"c":"nob_Latn","n":"Norwegian Bokmål","g":"w","nl":"nob_Latn","mm":"no","sp":"nb-NO","o":"Europe","p":"Norway","pm":1,"pc":1},{"c":"npi_Deva","n":"Nepali","g":"w","nl":"npi_Deva","mm":"ne","sp":"ne-NP","o":"South Asia","p":"Nepal","pm":1,"pc":1},{"c":"nso_Latn","n":"Northern Sotho","g":"w","nl":"nso_Latn","o":"Southern Africa","p":"South Africa","pm":1,"pc":1},{"c":"nus_Latn","n":"Nuer","g":"w","nl":"nus_Latn","o":"East Africa","p":"South Sudan"},{"c":"ny","n":"Chichewa / Nyanja","g":"w","sb":"nya","stt":1,"nl":"nya_Latn","mm":"ny","o":"Southern Africa","p":"Malawi, Zambia","pm":1},{"c":"oci_Latn","n":"Occitan","g":"w","nl":"oci_Latn","o":"Europe","p":"France","pc":1},{"c":"ory_Orya","n":"Odia","g":"w","nl":"ory_Orya","o":"South Asia","p":"India","pm":1,"pc":1},{"c":"pag_Latn","n":"Pangasinan","g":"w","nl":"pag_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"pan_Guru","n":"Punjabi","g":"w","nl":"pan_Guru","mm":"pa","sp":"pa-IN","o":"South Asia","p":"India, Pakistan","pm":1,"pc":1},{"c":"pap_Latn","n":"Papiamento","g":"w","nl":"pap_Latn","o":"Americas","p":"Curaçao, Aruba"},{"c":"pbt_Arab","n":"Pashto","g":"w","nl":"pbt_Arab","o":"Caucasus & Central Asia","p":"Afghanistan, Pakistan","pm":1,"pc":1},{"c":"pes_Arab","n":"Persian (Iran)","g":"w","nl":"pes_Arab","mm":"fa","sp":"fa-IR","o":"North Africa & Middle East","p":"Iran","pm":1,"pc":1},{"c":"plt_Latn","n":"Malagasy","g":"w","sb":"mlg","stt":1,"nl":"plt_Latn","o":"Southern Africa","p":"Madagascar","pm":1,"pc":1},{"c":"pol_Latn","n":"Polish","g":"w","nl":"pol_Latn","mm":"pl","sp":"pl-PL","o":"Europe","p":"Poland","pm":1,"pc":1},{"c":"pt","n":"Portuguese","g":"w","nl":"por_Latn","mm":"pt","sp":"pt-PT","o":"Europe","p":"Portugal","pm":1,"pc":1},{"c":"prs_Arab","n":"Dari","g":"w","nl":"prs_Arab","o":"Caucasus & Central Asia","p":"Afghanistan","pm":1},{"c":"quy_Latn","n":"Quechua","g":"w","nl":"quy_Latn","o":"Americas","p":"Peru, Bolivia"},{"c":"ron_Latn","n":"Romanian","g":"w","nl":"ron_Latn","mm":"ro","sp":"ro-RO","o":"Europe","p":"Romania","pm":1,"pc":1},{"c":"run_Latn","n":"Kirundi","g":"w","sb":"run","nl":"run_Latn","o":"East Africa","p":"Burundi","pm":1},{"c":"ru","n":"Russian","g":"w","nl":"rus_Cyrl","mm":"ru","sp":"ru-RU","o":"Europe","p":"Russia","pm":1,"pc":1},{"c":"sag_Latn","n":"Sango","g":"w","nl":"sag_Latn","o":"Central Africa","p":"Central African Republic"},{"c":"san_Deva","n":"Sanskrit","g":"w","nl":"san_Deva","o":"South Asia","p":"India (classical)"},{"c":"sat_Beng","n":"Santali","g":"w","nl":"sat_Beng","o":"South Asia","p":"India"},{"c":"scn_Latn","n":"Sicilian","g":"w","nl":"scn_Latn","o":"Europe","p":"Italy"},{"c":"shn_Mymr","n":"Shan","g":"w","nl":"shn_Mymr","o":"Southeast Asia","p":"Myanmar"},{"c":"sin_Sinh","n":"Sinhala","g":"w","nl":"sin_Sinh","mm":"si","sp":"si-LK","o":"South Asia","p":"Sri Lanka","pm":1,"pc":1},{"c":"slk_Latn","n":"Slovak","g":"w","nl":"slk_Latn","mm":"sk","sp":"sk-SK","o":"Europe","p":"Slovakia","pm":1,"pc":1},{"c":"slv_Latn","n":"Slovenian","g":"w","nl":"slv_Latn","mm":"sl","o":"Europe","p":"Slovenia","pm":1,"pc":1},{"c":"smo_Latn","n":"Samoan","g":"w","nl":"smo_Latn","o":"Pacific","p":"Samoa","pm":1},{"c":"sn","n":"Shona","g":"w","sb":"sna","stt":1,"nl":"sna_Latn","mm":"sn","o":"Southern Africa","p":"Zimbabwe","pm":1},{"c":"snd_Arab","n":"Sindhi","g":"w","nl":"snd_Arab","o":"South Asia","p":"Pakistan","pm":1,"pc":1},{"c":"so","n":"Somali","g":"w","sb":"som","stt":1,"nl":"som_Latn","mm":"so","o":"East Africa","p":"Somalia","pm":1,"pc":1},{"c":"sot_Latn","n":"Southern Sotho","g":"w","sb":"sot","stt":1,"nl":"sot_Latn","o":"Southern Africa","p":"Lesotho","pm":1},{"c":"es","n":"Spanish","g":"w","nl":"spa_Latn","mm":"es","sp":"es-ES","o":"Europe","p":"Spain","pm":1,"pc":1},{"c":"srd_Latn","n":"Sardinian","g":"w","nl":"srd_Latn","o":"Europe","p":"Italy"},{"c":"srp_Cyrl","n":"Serbian","g":"w","nl":"srp_Cyrl","mm":"sr","o":"Europe","p":"Serbia","pm":1,"pc":1},{"c":"ssw_Latn","n":"Swati","g":"w","nl":"ssw_Latn","o":"Southern Africa","p":"Eswatini","pc":1},{"c":"sun_Latn","n":"Sundanese","g":"w","nl":"sun_Latn","o":"Southeast Asia","p":"Indonesia","pc":1},{"c":"swe_Latn","n":"Swedish","g":"w","nl":"swe_Latn","mm":"sv","sp":"sv-SE","o":"Europe","p":"Sweden","pm":1,"pc":1},{"c":"szl_Latn","n":"Silesian","g":"w","nl":"szl_Latn","o":"Europe","p":"Poland"},{"c":"tam_Taml","n":"Tamil","g":"w","nl":"tam_Taml","mm":"ta","sp":"ta-IN","o":"South Asia","p":"India, Sri Lanka","pm":1,"pc":1},{"c":"taq_Latn","n":"Tamasheq (Latin script)","g":"w","nl":"taq_Latn","o":"West Africa","p":"Mali, Niger"},{"c":"taq_Tfng","n":"Tamasheq (Tifinagh)","g":"w","nl":"taq_Tfng","o":"West Africa","p":"Mali, Niger"},{"c":"tat_Cyrl","n":"Tatar","g":"w","nl":"tat_Cyrl","o":"Europe","p":"Russia (Tatarstan)","pm":1},{"c":"tel_Telu","n":"Telugu","g":"w","nl":"tel_Telu","mm":"te","sp":"te-IN","o":"South Asia","p":"India","pm":1},{"c":"tgk_Cyrl","n":"Tajik","g":"w","nl":"tgk_Cyrl","o":"Caucasus & Central Asia","p":"Tajikistan"},{"c":"tgl_Latn","n":"Filipino (Tagalog)","g":"w","nl":"tgl_Latn","mm":"tl","sp":"fil-PH","o":"Southeast Asia","p":"Philippines","pm":1,"pc":1},{"c":"tha_Thai","n":"Thai","g":"w","nl":"tha_Thai","mm":"th","sp":"th-TH","o":"Southeast Asia","p":"Thailand","pm":1,"pc":1},{"c":"tir_Ethi","n":"Tigrinya","g":"w","nl":"tir_Ethi","o":"East Africa","p":"Ethiopia, Eritrea","pm":1},{"c":"tpi_Latn","n":"Tok Pisin","g":"w","nl":"tpi_Latn","o":"Pacific","p":"Papua New Guinea"},{"c":"tsn_Latn","n":"Tswana","g":"w","sb":"tsn","stt":1,"nl":"tsn_Latn","o":"Southern Africa","p":"Botswana, South Africa","pm":1,"pc":1},{"c":"tso_Latn","n":"Tsonga","g":"w","nl":"tso_Latn","o":"Southern Africa","p":"South Africa, Mozambique"},{"c":"tuk_Latn","n":"Turkmen","g":"w","nl":"tuk_Latn","o":"Caucasus & Central Asia","p":"Turkmenistan","pm":1},{"c":"tum_Latn","n":"Tumbuka","g":"w","nl":"tum_Latn","o":"Southern Africa","p":"Malawi"},{"c":"tr","n":"Turkish","g":"w","nl":"tur_Latn","mm":"tr","sp":"tr-TR","o":"North Africa & Middle East","p":"Turkey","pm":1,"pc":1},{"c":"twi_Latn","n":"Twi","g":"w","nl":"twi_Latn","o":"West Africa","p":"Ghana"},{"c":"tzm_Tfng","n":"Tamazight","g":"w","nl":"tzm_Tfng","o":"North Africa & Middle East","p":"Morocco"},{"c":"uig_Arab","n":"Uyghur","g":"w","nl":"uig_Arab","o":"Caucasus & Central Asia","p":"Xinjiang (China)","pm":1},{"c":"ukr_Cyrl","n":"Ukrainian","g":"w","nl":"ukr_Cyrl","mm":"uk","sp":"uk-UA","o":"Europe","p":"Ukraine","pm":1,"pc":1},{"c":"umb_Latn","n":"Umbundu","g":"w","nl":"umb_Latn","o":"Southern Africa","p":"Angola"},{"c":"ur","n":"Urdu","g":"w","nl":"urd_Arab","mm":"ur","sp":"ur-PK","o":"South Asia","p":"Pakistan, India","pm":1,"pc":1},{"c":"uzn_Latn","n":"Uzbek","g":"w","nl":"uzn_Latn","mm":"uz","sp":"uz-UZ","o":"Caucasus & Central Asia","p":"Uzbekistan","pm":1,"pc":1},{"c":"vec_Latn","n":"Venetian","g":"w","nl":"vec_Latn","o":"Europe","p":"Italy"},{"c":"vie_Latn","n":"Vietnamese","g":"w","nl":"vie_Latn","mm":"vi","sp":"vi-VN","o":"Southeast Asia","p":"Vietnam","pm":1,"pc":1},{"c":"war_Latn","n":"Waray","g":"w","nl":"war_Latn","o":"Southeast Asia","p":"Philippines"},{"c":"wol_Latn","n":"Wolof","g":"w","sb":"wol","stt":1,"nl":"wol_Latn","o":"West Africa","p":"Senegal","pc":1},{"c":"xh","n":"Xhosa","g":"w","sb":"xho","stt":1,"tts":1,"nl":"xho_Latn","mm":"xh","o":"Southern Africa","p":"South Africa","pm":1,"pc":1},{"c":"ydd_Hebr","n":"Yiddish","g":"w","nl":"ydd_Hebr","o":"Europe","p":"Eastern Europe (Jewish communities)","pc":1},{"c":"yo","n":"Yoruba","g":"w","sb":"yor","stt":1,"tts":1,"nl":"yor_Latn","mm":"yo","o":"West Africa","p":"Nigeria, Benin","pm":1,"pc":1},{"c":"yue_Hant","n":"Cantonese","g":"w","nl":"yue_Hant","o":"East Asia","p":"Hong Kong, Guangdong","pm":1},{"c":"zh","n":"Chinese (Simplified)","g":"w","nl":"zho_Hans","mm":"zh-CN","sp":"zh-CN","o":"East Asia","p":"China","pm":1,"pc":1},{"c":"zho_Hant","n":"Chinese (Traditional)","g":"w","nl":"zho_Hant","mm":"zh-TW","sp":"zh-TW","o":"East Asia","p":"Taiwan, Hong Kong","pm":1},{"c":"zsm_Latn","n":"Malay","g":"w","nl":"zsm_Latn","mm":"ms","sp":"ms-MY","o":"Southeast Asia","p":"Malaysia","pm":1,"pc":1},{"c":"zu","n":"Zulu","g":"w","sb":"zul","stt":1,"nl":"zul_Latn","mm":"zu","sp":"zu-ZA","o":"Southern Africa","p":"South Africa","pm":1,"pc":1},{"c":"lg","n":"Luganda","g":"y","sb":"lug","stt":1,"tts":1,"nl":"lug_Latn","mm":"lg","r":"Central","o":"Uganda","p":"Central","pm":1,"pc":1},{"c":"sw","n":"Swahili","g":"y","sb":"swa","stt":1,"tts":1,"nl":"swh_Latn","mm":"sw","sp":"sw-KE","r":"National","o":"East Africa","p":"Kenya, Tanzania, Uganda (national language)","pm":1,"pc":1},{"c":"rw","n":"Kinyarwanda / Rufumbira","g":"u","sb":"kin","stt":1,"tts":1,"nl":"kin_Latn","mm":"rw","r":"South-West","o":"Uganda","p":"South-West","pm":1},{"c":"ach","n":"Acholi","g":"u","sb":"ach","stt":1,"tts":1,"r":"Northern","o":"Uganda","p":"Northern"},{"c":"alz","n":"Alur","g":"u","sb":"alz","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"luc","n":"Aringa","g":"u","sb":"luc","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"teo","n":"Ateso","g":"u","sb":"teo","stt":1,"tts":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"bfa","n":"Bari / Kuku","g":"u","sb":"bfa","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"adh","n":"Dhopadhola (Jopadhola)","g":"u","sb":"adh","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"keo","n":"Kakwa","g":"u","sb":"keo","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"kdj","n":"Ngakarimojong (Karamojong)","g":"u","sb":"kdj","r":"Karamoja","o":"Uganda","p":"Karamoja"},{"c":"kdi","n":"Kumam","g":"u","sb":"kdi","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"kpz","n":"Kupsabiny","g":"u","sb":"kpz","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"rwm","n":"Kwamba (Rwamba)","g":"u","sb":"rwm","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"laj","n":"Lango","g":"u","sb":"laj","r":"Northern","o":"Uganda","p":"Northern"},{"c":"tlj","n":"Lubwisi","g":"u","sb":"tlj","r":"Western","o":"Uganda","p":"Western"},{"c":"lgg","n":"Lugbara","g":"u","sb":"lgg","stt":1,"r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"rub","n":"Lugungu","g":"u","sb":"rub","r":"Western","o":"Uganda","p":"Western"},{"c":"gwr","n":"Lugwere","g":"u","sb":"gwr","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"myx","n":"Lumasaba (Lugisu)","g":"u","sb":"myx","stt":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"nuj","n":"Lunyole","g":"u","sb":"nuj","r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"xog","n":"Lusoga","g":"y","sb":"xog","stt":1,"r":"Eastern","o":"Uganda","p":"Eastern"},{"c":"mhi","n":"Ma'di","g":"u","sb":"mhi","r":"West Nile","o":"Uganda","p":"West Nile"},{"c":"pok","n":"Pokot","g":"u","sb":"pok","r":"Karamoja","o":"Uganda","p":"Karamoja"},{"c":"cgg","n":"Rukiga","g":"u","sb":"cgg","stt":1,"r":"South-West","o":"Uganda","p":"South-West"},{"c":"koo","n":"Lhukonzo (Rukonjo)","g":"u","sb":"koo","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"nyn","n":"Runyankole","g":"u","sb":"nyn","stt":1,"tts":1,"r":"South-West","o":"Uganda","p":"South-West"},{"c":"nyo","n":"Runyoro","g":"u","sb":"nyo","r":"Western","o":"Uganda","p":"Western"},{"c":"ruc","n":"Ruruuli","g":"u","sb":"ruc","stt":1,"r":"Central","o":"Uganda","p":"Central"},{"c":"ttj","n":"Rutooro","g":"u","sb":"ttj","stt":1,"r":"Western","o":"Uganda","p":"Western"},{"c":"lsm","n":"Samia (Lusamia)","g":"u","sb":"lsm","r":"Eastern","o":"Uganda","p":"Eastern"}];
 const L=Object.fromEntries(LANGS.map(l=>[l.c,l]));
 L.sw.n='Kiswahili';
 L.auto={c:'auto',n:'Detect language',g:'y'};     // pseudo entry: keeps every lookup safe
@@ -712,6 +750,7 @@ function enginesFor(S,T,auto){
   const e=[];
   if(sbReady()&&T.sb&&(auto||(S&&S.sb)))e.push('sb');
   if(navigator.onLine&&S&&S.mm&&T.mm)e.push('mm');
+  if(PROXY&&navigator.onLine&&S&&((S.pm&&T.pm)||(S.pc&&T.pc)))e.push('px');
   if(packOn()&&S&&S.nl&&T.nl)e.push('pack');
   return e;
 }
@@ -733,6 +772,15 @@ async function runEngine(e,text,S,T,o){
     const r=chat?await sbChat(text,o.auto?'auto':S.c,T.c,o.ctx,o.det):await sbPlain(text,o.auto?'auto':S.c,T.c);
     return{...r,label:chat?(o.det&&o.det.mixed?'Sunbird AI · mixed-language, in context':'Sunbird AI · in context'):'Sunbird AI'};
   }
+  if(e==='px'){
+    const call=async part=>{const ac=new AbortController(),to=setTimeout(()=>ac.abort(),12000);let r;
+      try{r=await fetch(PROXY+'/translate',{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({text:part,from:S.c,to:T.c}),signal:ac.signal})}finally{clearTimeout(to)}
+      const j=await r.json().catch(()=>({}));
+      if(!r.ok||!j.text){const er=new Error(j.error==='limit'?'The free online translator has reached its limit for now. Try again later, or use the offline pack.':'The free online translator is busy right now.');er.px=j.error||'x';throw er}
+      return j};
+    const parts=await Promise.all(chunks(text,1200).map(call));
+    return{text:parts.map(x=>x.text).join(' '),label:'Free online translator ('+parts[0].engine+')'};
+  }
   if(e==='mm')return{...await myMemory(text,S.c,T.c),label:'Online translation (basic, no context)'};
   if(e==='pack')return{...await packRun(text,S.c,T.c),label:'Offline pack (on-device)',cls:'off'};
 }
@@ -745,7 +793,7 @@ async function translateCore(text,from,to,ctx=''){
   const tm=tmGet(key,to,text,ctx);
   if(tm)return{text:tm.t,label:tm.v?'Your saved correction':'Remembered · instant',cls:'off',det,src};
   if(src){const r=exact(text,src,to);if(r)return{...r,label:'Phrasebook · works offline',cls:'off',det,src}}
-  let authMsg='';
+  let authMsg='',limitMsg='';
   const S0=src?L[src]:null;
   if(auto&&!src&&!sbReady()){const e=new Error(navigator.onLine?'WalTrans couldn’t tell which language this is. Choose it in the “From” box, or connect Sunbird AI (Settings) so it can detect the language for you.':'Without internet WalTrans can only detect a few languages. Choose the language in the “From” box.');e.det=det;throw e}
   const engs=enginesFor(S0,T,auto&&!S0),onl=engs.filter(x=>x!=='pack'),local=engs.filter(x=>x==='pack');
@@ -756,7 +804,7 @@ async function translateCore(text,from,to,ctx=''){
     tmPut(rs||'auto',to,text,r.text,ctx,false);if(rs&&!src)tmPut(src||'auto',to,text,r.text,ctx,false);
     return{...r,det,src:rs,cls:r.cls||''};
   };
-  if(onl.length){try{return(await raceEngines(onl,attempt,mixedOrCtx?9000:4500)).r}catch(errs){for(const err of errs)if(err instanceof AuthErr)authMsg=err.message}}
+  if(onl.length){try{return(await raceEngines(onl,attempt,mixedOrCtx?9000:4500)).r}catch(errs){for(const err of errs){if(err instanceof AuthErr)authMsg=err.message;else if(err&&err.px==='limit')limitMsg=err.message}}}
   for(const e of local){try{return await attempt(e)}catch(err){}}
   if(!src)src='en';          // last resort when nothing could identify the language
   const S=L[src];
@@ -770,10 +818,12 @@ async function translateCore(text,from,to,ctx=''){
   const r=rough(text,src,to);if(r)return{...r,label:'Rough word-by-word guess (offline)',cls:'rough',det,src,warn:1};
   const online=navigator.onLine;let why;
   if(authMsg)why=authMsg;
+  else if(limitMsg)why=limitMsg;
   else if(to==='xog'||src==='xog')why=online?'Lusoga needs the free Sunbird AI connection: open ⚙️ Settings → Sunbird AI account.':'Lusoga offline only knows the phrasebook and translations you saved. Connect once while online to build it up.';
   else if(!online&&packOn()&&S.nl&&T.nl)why='The offline pack couldn’t start on this device (it may need more memory). Close other apps, or reinstall it in Settings → Offline pack.';
   else if(!online)why=(S.nl&&T.nl)?'You are offline. Install the offline pack (Settings → Offline pack) to translate any sentence without internet.':'You are offline and this isn’t in the phrasebook.';
-  else if(!(S.sb||S.mm||S.nl)||!(T.sb||T.mm||T.nl))why='No translator covers this language pair yet. Try another language.';
+  else if(online&&S.nl&&T.nl&&!packOn()&&!onl.length)why='No online translator covers '+(S.nl&&!(S.sb||S.mm||S.pm||S.pc)?S.n:T.n)+' yet. It works with the offline pack: open the menu → Offline pack (a big download, so use Wi-Fi).';
+  else if(!(S.sb||S.mm||S.nl||S.pm||S.pc)||!(T.sb||T.mm||T.nl||T.pm||T.pc))why='No translator covers this language pair yet. Try another language.';
   else why='The translation service didn’t respond. Connect Sunbird AI (Settings) for better results, or try again.';
   const e=new Error(why);e.det=det;throw e;
 }
@@ -801,7 +851,7 @@ async function translate(){
     const used=r.src||(from==='auto'?null:from);
     ST.last={text:r.text,src:txt,from:used||'auto',to,ctx:ctxString()};
     showOut(r,r.label+(/^(Remembered|Your saved)/.test(r.label)?'':' · '+((performance.now()-t0)/1000).toFixed(1)+'s'),r.cls,r.warn);
-    pushHist({src:txt,text:r.text,from:used||'auto',to});
+    pushHist({src:txt,text:r.text,from:used||'auto',to});track('tr');
   }catch(e){renderDet(e&&e.det?{det:e.det}:null,from);showOut(null,(e&&e.message)||'Something went wrong. Please try again.','err')}
   finally{$('go').disabled=false;$('go').textContent='Translate'}
 }
@@ -993,13 +1043,13 @@ function addPhrase(vals){
 let pickCtx=null,pickerOpen=false;
 function badges(l){
   if(l.c==='auto')return'';
-  const on=l.sb||l.mm,off=l.nl;
+  const on=l.sb||l.mm||(PROXY&&(l.pm||l.pc)),off=l.nl;
   return(off?'<span class="pb o">Offline</span>':'')+(on?'<span class="pb">Online</span>':'')+((!on&&!off)?'<span class="pb">Phrases only</span>':'');
 }
 const REGIONS=['East Africa','Central Africa','Southern Africa','West Africa','North Africa & Middle East','Europe','Caucasus & Central Asia','South Asia','East Asia','Southeast Asia','Pacific','Americas'];
 function renderPick(){
-  const q=$('pickQ').value.trim().toLowerCase();
-  const m=l=>!q||l.n.toLowerCase().includes(q)||l.c.toLowerCase().includes(q)||(l.o||'').toLowerCase().includes(q)||(l.p||'').toLowerCase().includes(q);
+  const fold=t=>String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),q=fold($('pickQ').value.trim());
+  const m=l=>!q||fold(l.n).includes(q)||fold(l.c).includes(q)||fold(l.o).includes(q)||fold(l.p).includes(q);
   const row=l=>{const b=el('button',{type:'button',class:'pick','aria-current':String(l.c===pickCtx.current),onclick:()=>{const f=pickCtx.onPick;closePicker();f(l.c)}});
     const left=el('span',{},l.n);if(l.o)left.append(el('small',{},l.o+' · '+l.p+(l.c==='xog'?' · Online only (Sunbird AI)':'')));
     const right=el('span',{});right.innerHTML=badges(l);b.append(left,right);return b};
@@ -1028,7 +1078,7 @@ const TESS_URL='https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.m
 const PDF_URL='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js',PDF_WORKER='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 const OCRMAP={en:'eng',sw:'swa',fr:'fra',es:'spa',pt:'por',de:'deu',it:'ita',nl:'nld',ar:'ara',zh:'chi_sim',ja:'jpn',ko:'kor',hi:'hin',ru:'rus',tr:'tur',id:'ind',ur:'urd',bn:'ben',am:'amh',so:'som',af:'afr',zu:'zul',xh:'xho',pol_Latn:'pol',ukr_Cyrl:'ukr',vie_Latn:'vie',tha_Thai:'tha',heb_Hebr:'heb',ell_Grek:'ell'};
 const OCR_SCRIPTS=[['auto','Automatic (Latin letters: English, Kiswahili, Luganda…)','eng+swa'],['ara','Arabic','ara'],['chi','Chinese','chi_sim'],['jpn','Japanese','jpn'],['kor','Korean','kor'],['hin','Hindi (Devanagari)','hin'],['rus','Russian (Cyrillic)','rus'],['amh','Amharic (Ethiopic)','amh']];
-const scanState={from:'auto',to:null,found:null,res:null,busy:false,stop:false,raw:null,onProg:null};
+const scanState={from:'auto',to:null,found:null,res:null,busy:false,stop:false,raw:null,onProg:null,gen:0,hist:[],tBusy:false};
 const PDF_MAX=100;
 function loadScript(src){return new Promise((res,rej)=>{if(document.querySelector('script[data-src="'+src+'"]'))return res();const s=document.createElement('script');s.src=src;s.dataset.src=src;s.onload=res;s.onerror=()=>{s.remove();rej(new Error('Couldn’t load the text reader. Connect to the internet once, then try again.'))};document.head.append(s)})}
 const median=a=>{if(!a.length)return 0;const b=[...a].sort((x,y)=>x-y);return b[b.length>>1]};
@@ -1198,13 +1248,13 @@ async function scanDetect(text){
 async function scanFiles(files){
   files=[...files].filter(Boolean);if(!files.length)return;
   if(scanState.busy){toast('Still reading the previous file…');return}
-  scanState.busy=true;scanState.stop=false;
+  scanState.busy=true;scanState.stop=false;const g=scanState.gen;$('scanDel').classList.remove('hidden');
   $('scanRes').classList.add('hidden');$('scanStop').classList.remove('hidden');$('scanThumbs').replaceChildren();
   const pages=[],confs=[];let worker=null,total=files.length,done=0,notes=[];
   const prog=(f)=>Math.min(.98,(done+f)/Math.max(1,total));
   try{
     const enhance=$('scanEnh').checked,langs=ocrLangs();
-    for(let fi=0;fi<files.length&&!scanState.stop;fi++){
+    for(let fi=0;fi<files.length&&!scanState.stop&&g===scanState.gen;fi++){
       const f=files[fi],tag=files.length>1?'File '+(fi+1)+' of '+files.length+': ':'';
       if(f.type.startsWith('image/')){
         const im=el('img',{alt:'Page '+(pages.length+1)});im.src=URL.createObjectURL(f);$('scanThumbs').append(im);
@@ -1216,7 +1266,7 @@ async function scanFiles(files){
         scanStatus(tag+'Opening the PDF…',prog(.05));await loadScript(PDF_URL);pdfjsLib.GlobalWorkerOptions.workerSrc=PDF_WORKER;
         const doc=await pdfjsLib.getDocument({data:new Uint8Array(await f.arrayBuffer())}).promise,n=Math.min(doc.numPages,PDF_MAX);
         total+=n-1;if(doc.numPages>PDF_MAX)notes.push('Only the first '+PDF_MAX+' pages were read.');
-        for(let p=1;p<=n&&!scanState.stop;p++){
+        for(let p=1;p<=n&&!scanState.stop&&g===scanState.gen;p++){
           scanStatus(tag+'Reading page '+p+' of '+n+'…',prog(.1));const pg=await doc.getPage(p);
           let t=pdfLayout((await pg.getTextContent()).items);
           if(t.replace(/\s/g,'').length<25){          // scanned page (a picture): read it like a photo
@@ -1235,8 +1285,9 @@ async function scanFiles(files){
         pages.push((await f.text()).replace(/\r\n?/g,'\n').replace(/\s+$/,''));done++;
       }else{notes.push('“'+f.name+'” isn’t supported (use photos, PDF, Word .docx or .txt).');done++}
     }
-  }catch(e){scanStatus((e&&e.message)||'Couldn’t read that file. Please try another.',null);scanState.busy=false;$('scanStop').classList.add('hidden');if(worker)try{await worker.terminate()}catch{};return}
+  }catch(e){if(g!==scanState.gen){if(worker)try{await worker.terminate()}catch{};return}scanStatus((e&&e.message)||'Couldn’t read that file. Please try another.',null);scanState.busy=false;$('scanStop').classList.add('hidden');if(worker)try{await worker.terminate()}catch{};return}
   if(worker)try{await worker.terminate()}catch{}
+  if(g!==scanState.gen)return;
   scanState.busy=false;$('scanStop').classList.add('hidden');
   const text=pages.length>1?pages.map((t,i)=>'──── Page '+(i+1)+' ────\n\n'+t).join('\n\n'):(pages[0]||'');
   if(!text.trim()){scanStatus((notes.join(' ')+' No text found. Try a clearer, closer photo with good light, or choose the alphabet under “Reading options”.').trim(),null);return}
@@ -1267,17 +1318,18 @@ function mergeFix(orig,fixed){
 async function scanAiFix(auto){
   const text=$('scanText').value;if(!text.trim())return;
   if(!sbReady()){toast(navigator.onLine?'Connect Sunbird AI first (Settings → Sunbird AI account).':'AI fixing needs internet.');return}
-  const lines=text.split('\n'),chunks=[];let cur=[],len=0;
+  const g=scanState.gen,lines=text.split('\n'),chunks=[];let cur=[],len=0;
   for(const ln of lines){cur.push(ln);len+=ln.length+1;if((len>800&&!ln.trim())||len>1300){chunks.push(cur);cur=[];len=0}}
   if(cur.length)chunks.push(cur);
   const lang=scanSrc()?nameOf(scanSrc()):'',outs=new Array(chunks.length);let k=0,n=0,changed=0,skipped=0;
   $('aiFixBtn').disabled=true;scanStatus('AI is checking the text…',0.03);
-  const worker=async()=>{while(k<chunks.length){const i=k++,orig=chunks[i].join('\n');
+  const worker=async()=>{while(k<chunks.length&&g===scanState.gen){const i=k++,orig=chunks[i].join('\n');
     if(!/\p{L}{2}/u.test(orig)){outs[i]=orig;n++;continue}
     try{const m=mergeFix(orig,await sbFixOcr(orig,lang));if(m&&m!==orig){outs[i]=m;changed++}else{outs[i]=orig;if(!m)skipped++}}
     catch(e){if(e instanceof AuthErr){outs[i]=orig;k=chunks.length;skipped++;continue}outs[i]=orig;skipped++}
     n++;scanStatus('AI is checking the text… '+n+' of '+chunks.length,n/chunks.length)}};
   await Promise.all([worker(),worker(),worker()]);
+  if(g!==scanState.gen)return;
   scanStatus('',null);$('aiFixBtn').disabled=false;
   if(changed){scanState.raw=text;$('scanText').value=outs.map((o,i)=>o??chunks[i].join('\n')).join('\n');$('scanUndo').classList.remove('hidden')}
   $('scanFix').textContent=($('scanFix').textContent.replace(/\s*AI [^.]*\.$/,'')+' '+(changed?'AI corrected '+changed+' part'+(changed>1?'s':'')+' of the text. Please check it.':'AI found nothing to fix.')+(skipped?' ('+skipped+' part'+(skipped>1?'s':'')+' left as read.)':'')).trim();
@@ -1290,8 +1342,8 @@ function parseLine(l){if(!l.trim()||PAGE_MARK.test(l)||!hasLetters(l))return{kee
 async function scanTranslate(){
   if(scanState.tBusy){scanState.stop=true;return}
   const text=$('scanText').value;if(!text.trim()){toast('There is no text to translate');return}
-  const to=scanTo();let src=scanSrc();
-  if(!src){src=await scanDetect(text);if(src){scanState.found=src;updateScanLangs()}}
+  const g=scanState.gen,to=scanTo();let src=scanSrc();
+  if(!src){src=await scanDetect(text);if(g!==scanState.gen)return;if(src){scanState.found=src;updateScanLangs()}}
   const out=$('scanOut');
   if(src&&src===to){out.textContent='This text is already in '+nameOf(to)+'. Choose another language in the “To” box.';out.classList.add('empty');return}
   const keep=$('scanKeep').checked,lines=text.split('\n'),res=lines.slice(),units=[];
@@ -1320,9 +1372,10 @@ async function scanTranslate(){
     }catch(e){bad++;if(!firstErr)firstErr=(e&&e.message)||'error'}
     finished++;$('scanFix').dataset.prog=finished;
   };
-  const pool=async()=>{while(k<units.length&&!scanState.stop){const u=units[k++];await doUnit(u);render();scanStatus('Translating… '+finished+' of '+units.length,finished/units.length);if(ok===0&&bad>=3&&finished>=3){scanState.stop=true}}};
+  const pool=async()=>{while(k<units.length&&!scanState.stop&&g===scanState.gen){const u=units[k++];await doUnit(u);render();scanStatus('Translating… '+finished+' of '+units.length,finished/units.length);if(ok===0&&bad>=3&&finished>=3){scanState.stop=true}}};
   scanStatus('Translating… 0 of '+units.length,0.02);
   await Promise.all([pool(),pool(),pool(),pool()]);
+  if(g!==scanState.gen)return;
   const joinedOut=res.filter(x=>x!==null).join('\n');
   scanState.tBusy=false;$('scanGo').textContent='Translate';scanStatus('',null);
   if(ok===0){out.textContent=firstErr||'Couldn’t translate this text.';out.classList.add('empty');$('scanMeta').replaceChildren();scanState.res=null;return}
@@ -1330,6 +1383,131 @@ async function scanTranslate(){
   scanState.res={text:joinedOut,src:src||'en',to,orig:text};
   $('scanMeta').replaceChildren(el('span',{class:'badge '+(meta.cls||'')},meta.label||'Translated'),...(bad?[el('span',{class:'badge err'},bad+' line'+(bad>1?'s':'')+' could not be translated and '+(bad>1?'are':'is')+' shown as read')]:[]));
   pushHist({src:text.replace(/\s+/g,' ').slice(0,300),text:joinedOut.replace(/\s+/g,' ').slice(0,600),from:src||'en',to});
+  const h0=store.get('waltrans.history',[])[0];if(h0&&h0.t)scanState.hist.push(h0.t);track('scan');
+}
+
+/* --- audio file: speech to text -> language -> translate (uses the same result card as scans) --- */
+const AUDIO_MAX_SEC=300,AUDIO_PIECE=25,AUDIO_MAX_MB=15;
+const WHISPER_OK=new Set(['en','fr','sw','am','ha','yo','sn','so','af','ln','mg']);   // Sunbird languages that Cloudflare's speech model also understands
+const sttCode=id=>{const g=L[id];return g&&(g.sc||g.sb)};
+const idFromStt=code=>Object.keys(L).find(id=>L[id].stt&&sttCode(id)===code)||null;
+const wavPcm=async blob=>new Int16Array((await blob.arrayBuffer()).slice(44));
+function wavOf(pcm){
+  const buf=new ArrayBuffer(44+pcm.length*2),v=new DataView(buf),w=(o,t)=>{for(let i=0;i<t.length;i++)v.setUint8(o+i,t.charCodeAt(i))};
+  w(0,'RIFF');v.setUint32(4,36+pcm.length*2,true);w(8,'WAVEfmt ');v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,16000,true);v.setUint32(28,32000,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,'data');v.setUint32(40,pcm.length*2,true);
+  new Int16Array(buf,44).set(pcm);return new Blob([buf],{type:'audio/wav'});
+}
+function splitPcm(pcm){   // pieces of about 25 s, cut at the quietest moment near the end so words are not chopped
+  const R=16000,max=AUDIO_PIECE*R,win=1600,out=[];let i=0;
+  while(i<pcm.length){
+    let end=Math.min(pcm.length,i+max);
+    if(end<pcm.length){let best=end,bv=Infinity;for(let st=end-3*R;st<=end-win;st+=win){let e=0;for(let k=st;k<st+win;k+=4)e+=Math.abs(pcm[k]);if(e<bv){bv=e;best=st+(win>>1)}}end=best}
+    out.push(pcm.subarray(i,end));i=end;
+  }
+  return out;
+}
+const hasSound=p=>{let m=0;for(let k=0;k<p.length;k+=8){const a=Math.abs(p[k]);if(a>m)m=a}return m>400};
+async function sbStt(wav,code){const fd=new FormData();fd.append('audio',wav,'speech.wav');fd.append('language',code);const j=await sb('/tasks/audio/transcriptions',{body:fd,timeout:60000});return(j.audio_transcription||'').trim()}
+const b64Of=blob=>new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(',')[1]||'');fr.onerror=rej;fr.readAsDataURL(blob)});
+async function pxStt(wav,lang){
+  const body=JSON.stringify({audio:await b64Of(wav),lang:lang&&/^[a-z]{2}$/.test(lang)?lang:''});
+  for(let t=0;t<2;t++){
+    const r=await fetch(PROXY+'/transcribe',{method:'POST',headers:{'Content-Type':'text/plain'},body});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&typeof j.text==='string')return j;
+    if(j.error==='slow down'&&t===0){await new Promise(x=>setTimeout(x,7000));continue}
+    const e=new Error(j.error==='limit'?'The free online speech service has reached its limit for today. Try again tomorrow.':'The free online speech service is busy right now. Please try again.');e.px=j.error||'x';throw e;
+  }
+}
+function speechLines(t){   // one sentence per line (long ones wrapped), a blank line every 4 lines, so the result card and translation stay tidy
+  const out=[];
+  for(const sen of t.replace(/\s+/g,' ').trim().split(/(?<=[.!?。？！])\s+/)){
+    let s=sen.trim();while(s.length>140){let k=s.lastIndexOf(' ',120);if(k<40)k=120;out.push(s.slice(0,k).trim());s=s.slice(k).trim()}if(s)out.push(s);
+  }
+  const g=[];out.forEach((l,i)=>{if(i&&i%4===0)g.push('');g.push(l)});return g.join('\n');
+}
+async function audioFile(f){
+  if(!f)return;
+  if(scanState.busy||scanState.tBusy){toast('Still working on the previous file…');return}
+  if(f.size>AUDIO_MAX_MB*1048576){toast('This audio file is too big (maximum '+AUDIO_MAX_MB+' MB). Use a shorter or smaller recording.',6000);return}
+  scanState.busy=true;scanState.stop=false;const g=scanState.gen;
+  $('scanDel').classList.remove('hidden');$('scanStop').classList.remove('hidden');$('scanRes').classList.add('hidden');
+  $('scanThumbs').querySelectorAll('img').forEach(i=>{try{URL.revokeObjectURL(i.src)}catch{}});if(scanState.audioUrl){try{URL.revokeObjectURL(scanState.audioUrl)}catch{}}
+  const url=URL.createObjectURL(f);scanState.audioUrl=url;
+  $('scanThumbs').replaceChildren(el('div',{class:'audiochip'},el('b',{},'🎵 '+f.name),el('audio',{controls:'',src:url,preload:'metadata'})));
+  const notes=[],fail=m=>{if(g===scanState.gen){scanState.busy=false;$('scanStop').classList.add('hidden');scanStatus(m,null)}};
+  try{
+    scanStatus('Reading the audio…',.05);
+    let wav;try{wav=await toWav(f)}catch{return fail('This device couldn’t open that audio file. Try an MP3, M4A, WAV or OGG file.')}
+    if(g!==scanState.gen)return;
+    let pcm=await wavPcm(wav);
+    if(pcm.length>AUDIO_MAX_SEC*16000){pcm=pcm.subarray(0,AUDIO_MAX_SEC*16000);notes.push('Only the first '+(AUDIO_MAX_SEC/60)+' minutes were used.')}
+    const pieces=splitPcm(pcm).filter(hasSound);
+    if(!pieces.length)return fail('No speech was found in this audio.');
+    if(!navigator.onLine)return fail('Turning audio into text needs internet.');
+    const first=wavOf(pieces[0]),sbOk=sbReady(),pxOk=!!PROXY;
+    let lang=scanState.from!=='auto'&&L[scanState.from]?scanState.from:null,guess=null,eng=null;
+    if(!lang&&sbOk){scanStatus('Finding the language…',.1);
+      try{const fd=new FormData();fd.append('audio',first,'speech.wav');const j=await sb('/tasks/auto_detect_audio_language',{body:fd,timeout:30000,retry:false});const id=idFromStt(String(j.detected_language||'').toLowerCase());if(id==='en')guess='en';else if(id)lang=id}catch(e){if(e instanceof AuthErr)throw e}
+      if(g!==scanState.gen)return}
+    if(lang&&L[lang].stt&&sbOk)eng='sb';
+    else if(lang&&L[lang].stt&&!WHISPER_OK.has(lang))return fail(nameOf(lang)+' audio needs the free Sunbird AI connection (Settings → Sunbird AI account).');
+    else if(pxOk)eng='px';
+    else if(!lang&&sbOk&&guess){lang=guess;eng='sb'}
+    else if(lang)return fail('Audio in '+nameOf(lang)+' can’t be turned into text on this app right now.');
+    else return fail(sbOk?'WalTrans couldn’t tell which language is spoken. Choose it in the “From” box, then upload the audio again.':'To turn audio into text, connect Sunbird AI in Settings (Luganda, Lusoga and other African languages), or use the app’s free online service.');
+    const texts=new Array(pieces.length).fill(''),state={hint:lang&&/^[a-z]{2}$/.test(lang)?lang:'',det:null};let nxt=0,done=0,failed=0,firstErr='';
+    const one=async i=>{
+      try{const w=i===0?first:wavOf(pieces[i]);
+        if(eng==='sb')texts[i]=await sbStt(w,sttCode(lang));
+        else{const j=await pxStt(w,state.hint);texts[i]=j.text||'';if(!state.det&&j.lang&&L[j.lang]){state.det=j.lang;if(!state.hint&&/^[a-z]{2}$/.test(j.lang))state.hint=j.lang}}
+      }catch(e){if(e instanceof AuthErr)throw e;failed++;if(!firstErr)firstErr=e.message}
+      done++;scanStatus('Turning speech into text… '+done+' of '+pieces.length,.15+.8*done/pieces.length);
+    };
+    nxt=1;await one(0);   // the first piece alone: with the online service its detected language then guides the other pieces
+    const pool=async()=>{while(nxt<pieces.length&&!scanState.stop&&g===scanState.gen)await one(nxt++)};
+    await Promise.all([pool(),pool()]);
+    if(g!==scanState.gen)return;
+    scanState.busy=false;$('scanStop').classList.add('hidden');
+    const all=texts.map(t=>t.trim()).filter(Boolean).join(' ');
+    if(!all)return fail(firstErr||'No words could be recognised in this audio. Try a clearer recording, or choose the language in the “From” box.');
+    if(scanState.stop)notes.push('Stopped early; only part of the audio was used.');
+    const text=speechLines(all);
+    scanStatus('',null);
+    $('scanText').value=text;scanState.raw=null;$('scanUndo').classList.add('hidden');$('scanRes').classList.remove('hidden');
+    $('scanOut').textContent='Translation appears here.';$('scanOut').classList.add('empty');$('scanMeta').replaceChildren();$('scanExpl').classList.add('hidden');scanState.res=null;
+    $('scanFix').textContent=[(failed?failed+' of '+pieces.length+' parts could not be turned into text. ':''),notes.join(' '),'Speech to text can make mistakes. Check the words, correct them if needed, then translate.'].join(' ').trim();
+    scanState.found=lang||state.det||null;updateScanLangs();
+    if(!scanState.found){scanState.found=await scanDetect(text);updateScanLangs()}
+    track('aud');
+    if(text.length<=3000)await scanTranslate();
+    else $('scanOut').textContent='This is a long recording. Choose the language in the “To” box, then tap Translate.';
+  }catch(e){fail((e&&e.message)||'Something went wrong with this audio. Please try again.')}
+}
+/* --- delete the scanned document or audio (text, photos, translation) --- */
+function scanClear(ask){
+  const has=$('scanText').value.trim()||scanState.busy||scanState.tBusy||$('scanThumbs').children.length||!$('scanRes').classList.contains('hidden');
+  if(!has){toast('There is nothing to delete');return}
+  if(ask!==false&&!confirm('Delete this document or audio, its text and its translation from the app?'))return;
+  scanState.gen++;scanState.stop=true;scanState.busy=false;scanState.tBusy=false;
+  if(scanState.audioUrl){try{URL.revokeObjectURL(scanState.audioUrl)}catch{}scanState.audioUrl=null}
+  $('scanThumbs').querySelectorAll('img').forEach(i=>{try{URL.revokeObjectURL(i.src)}catch{}});$('scanThumbs').replaceChildren();
+  $('scanText').value='';$('scanOut').textContent='Translation appears here.';$('scanOut').classList.add('empty');$('scanMeta').replaceChildren();
+  $('scanExpl').textContent='';$('scanExpl').classList.add('hidden');$('scanFix').textContent='';$('scanFix').dataset.prog='';
+  scanStatus('',null);$('scanStop').classList.add('hidden');$('scanDel').classList.add('hidden');$('scanRes').classList.add('hidden');
+  $('scanUndo').classList.add('hidden');$('aiFixBtn').disabled=false;$('scanGo').textContent='Translate';
+  scanState.raw=null;scanState.res=null;scanState.found=null;scanState.from='auto';scanState.onProg=null;
+  try{if(window.speechSynthesis)speechSynthesis.cancel()}catch{}
+  const gone=new Set(scanState.hist);scanState.hist=[];
+  if(gone.size){store.set('waltrans.history',store.get('waltrans.history',[]).filter(x=>!gone.has(x.t)));safe(renderHist)}
+  safe(updateScanLangs);toast('Deleted');scrollTo({top:0})
+}
+
+const isAudio=f=>/^audio\//.test(f.type)||/\.(mp3|m4a|aac|wav|ogg|oga|opus|amr|3gp|flac|webm)$/i.test(f.name);
+function pickFiles(f){   // one button for photos, documents and audio: audio goes to speech-to-text, the rest to the scanner
+  const au=f.filter(isAudio),rest=f.filter(x=>!isAudio(x));
+  if(au.length&&rest.length){toast('Choose either audio or documents at a time.',5000);return}
+  if(au.length){if(au.length>1)toast('One audio file at a time. Using “'+au[0].name+'”.',4500);audioFile(au[0])}else scanFiles(rest);
 }
 function initScan(){
   const c=cfg();$('ocrScript').replaceChildren(...OCR_SCRIPTS.map(x=>el('option',{value:x[0]},x[1])));$('ocrScript').value=c.ocr;
@@ -1421,20 +1599,29 @@ function fbBody(){
   const c=$('fbContact').value.trim();
   return $('fbType').value+':\n'+$('fbMsg').value.trim()+(c?'\n\nContact: '+c:'')+info;
 }
+let fbOpenedAt=Date.now();
+const FB_GAP=60000,FB_DAY=5;
+function fbLog(){const n=Date.now();return store.get('waltrans.fblog',[]).filter(t=>typeof t==='number'&&n-t<86400000)}
 async function sendFeedback(){
   if($('fbMsg').value.trim().length<3){toast('Please write your message first');return}
   const body=fbBody(),subj='WalTrans feedback: '+$('fbType').value;
   const done=()=>{$('fbMsg').value='';$('fbNote').textContent='Thank you! Your feedback helps improve WalTrans.'};
+  if($('fbTrap').value){done();return}                                   // hidden trap field was filled: a bot. Pretend success, send nothing.
+  const now=Date.now(),log=fbLog();
+  if(now-fbOpenedAt<2500){toast('One moment, then tap Send again');return}
+  if(log.length&&now-log[log.length-1]<FB_GAP){$('fbNote').textContent='Please wait a minute before sending another message.';return}
+  if(log.length>=FB_DAY){$('fbNote').textContent='You have sent the most messages allowed for today. Thank you! Please try again tomorrow.';return}
+  const mark=()=>{log.push(Date.now());store.set('waltrans.fblog',log)};
   if(FEEDBACK.formUrl){
-    try{const r=await fetch(FEEDBACK.formUrl,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({type:$('fbType').value,message:$('fbMsg').value.trim(),contact:$('fbContact').value.trim(),info:body})});
-      if(r.ok){done();return}}catch{}
+    try{const r=await fetch(FEEDBACK.formUrl,{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/json'},body:JSON.stringify({type:$('fbType').value,message:$('fbMsg').value.trim(),contact:$('fbContact').value.trim(),info:body,_gotcha:''})});
+      if(r.ok){mark();done();return}}catch{}
     $('fbNote').textContent='Couldn’t send it right now. Try again, or use “Share via another app”.';return;
   }
-  if(FEEDBACK.email){location.href='mailto:'+encodeURIComponent(FEEDBACK.email)+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);done();return}
-  if(FEEDBACK.whatsapp){window.open('https://wa.me/'+FEEDBACK.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent(subj+'\n\n'+body),'_blank','noopener');done();return}
+  if(FEEDBACK.email){location.href='mailto:'+encodeURIComponent(FEEDBACK.email)+'?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body);mark();done();return}
+  if(FEEDBACK.whatsapp){window.open('https://wa.me/'+FEEDBACK.whatsapp.replace(/\D/g,'')+'?text='+encodeURIComponent(subj+'\n\n'+body),'_blank','noopener');mark();done();return}
   if(location.hostname.endsWith('.github.io')){
     const user=location.hostname.split('.')[0],repo=location.pathname.split('/')[1];
-    if(repo){window.open('https://github.com/'+user+'/'+repo+'/issues/new?title='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body),'_blank','noopener');$('fbNote').textContent='GitHub opened with your message ready. Tap “Submit new issue” there to send it.';return}
+    if(repo){mark();window.open('https://github.com/'+user+'/'+repo+'/issues/new?title='+encodeURIComponent(subj)+'&body='+encodeURIComponent(body),'_blank','noopener');$('fbNote').textContent='GitHub opened with your message ready. Tap “Submit new issue” there to send it.';return}
   }
   await shareFeedback();
 }
@@ -1453,11 +1640,11 @@ function show(v,keep){
   if(!VIEWS[v])v='translate';cur=v;const V=VIEWS[v];
   for(const k in VIEWS){const e=$(k==='translate'?'v-translate':'v-'+k);if(e)e.classList.toggle('hidden',k!==v)}
   $('back').classList.toggle('hidden',v==='translate');
-  $('logo').classList.toggle('hidden',v!=='translate');
   const pt=$('ptitle');pt.textContent=V.t;pt.classList.toggle('hidden',!!V.tab);
   closeMenu();
   document.querySelectorAll('#tabs button').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.v===v)));
   if(v==='hist')renderHist();if(v==='book')renderBook();if(v==='chat')renderConvo();
+  if(v==='feedback')fbOpenedAt=Date.now();
   if(v==='account')refreshAccount();if(v==='offline'){setPackUi();verifyPack()}if(v==='prefs')loadPrefs();
   fixPad();if(!keep)window.scrollTo(0,0);
 }
@@ -1525,8 +1712,9 @@ function wire(){
   /* scan */
   $('scanBtn').onclick=()=>go('scan');
   $('camBtn').onclick=()=>$('camIn').click();$('fileBtn').onclick=()=>$('fileIn').click();
-  $('camIn').onchange=e=>{const f=[...e.target.files];e.target.value='';scanFiles(f)};$('fileIn').onchange=e=>{const f=[...e.target.files];e.target.value='';scanFiles(f)};
+  $('camIn').onchange=e=>{const f=[...e.target.files];e.target.value='';scanFiles(f)};$('fileIn').onchange=e=>{const f=[...e.target.files];e.target.value='';pickFiles(f)};
   $('scanStop').onclick=()=>{scanState.stop=true;scanStatus('Stopping…',null)};
+  $('scanDel').onclick=()=>scanClear();$('scanDel2').onclick=()=>scanClear();
   $('aiFixBtn').onclick=()=>scanAiFix(false);
   $('scanUndo').onclick=()=>{if(scanState.raw!=null){$('scanText').value=scanState.raw;scanState.raw=null;$('scanUndo').classList.add('hidden')}};
   $('scanCopySrc').onclick=async()=>{try{await navigator.clipboard.writeText($('scanText').value);toast('Copied')}catch{toast('Copy not allowed here')}};
@@ -1539,6 +1727,8 @@ function wire(){
   /* settings */
   $('voiceMode').onchange=()=>setCfg({voice:$('voiceMode').value});
   $('explainLang').onchange=()=>setCfg({explain:$('explainLang').value});
+  $('statsRow').classList.toggle('hidden',!PROXY||CFG.stats===false);$('statsOpt').checked=cfg().stats!==false;
+  $('statsOpt').onchange=()=>{setCfg({stats:$('statsOpt').checked});if(!$('statsOpt').checked)stat.e={};else startStats()};
   $('ocrScript').onchange=()=>setCfg({ocr:$('ocrScript').value});$('scanEnh').onchange=()=>setCfg({scanEnh:$('scanEnh').checked});$('aiFix').onchange=()=>setCfg({scanAi:$('aiFix').checked});$('scanKeep').onchange=()=>setCfg({scanKeep:$('scanKeep').checked});
   $('sbBase').value=cfg().base;$('sbBase').onchange=()=>setCfg({base:$('sbBase').value.trim()||'https://api.sunbird.ai'});
   $('sbLogin').onclick=async()=>{const e=$('sbEmail').value.trim(),p=$('sbPass').value;if(!e||!p){toast('Enter email and password');return}
@@ -1566,6 +1756,7 @@ function wire(){
   $('fbSend').onclick=sendFeedback;$('fbShare').onclick=shareFeedback;
   let dip;addEventListener('beforeinstallprompt',e=>{e.preventDefault();dip=e;$('install').classList.remove('hidden')});
   $('install').onclick=async()=>{if(!dip)return;dip.prompt();await dip.userChoice;dip=null;$('install').classList.add('hidden')};
+  addEventListener('appinstalled',()=>{track('inst');flushStats(true)});
   addEventListener('online',net);addEventListener('offline',net);addEventListener('resize',fixPad);
   if(window.ResizeObserver)new ResizeObserver(fixPad).observe($('hdr'));
   matchMedia('(prefers-color-scheme: dark)').addEventListener&&matchMedia('(prefers-color-scheme: dark)').addEventListener('change',applyTheme);
@@ -1577,12 +1768,17 @@ function boot(){
   safe(wire);
   safe(()=>{if(!L[cfg().myLang])setCfg({myLang:'en'})});safe(initScan);
   safe(()=>{history.replaceState({v:'translate',n:0},'',location.pathname+location.search);show('translate',true)});
-  safe(()=>{const sp=$('splash');const wait=Math.max(0,1500-performance.now());setTimeout(()=>{sp.classList.add('out');setTimeout(()=>sp.remove(),400)},wait)});
-  safe(()=>{if('serviceWorker' in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('sw.js').catch(()=>{})});
-  safe(fixPad);
+  safe(()=>{const sp=$('splash'),min=Math.max(0,+CFG.splashMinMs||0);let gone=false;
+    const done=()=>{if(gone)return;gone=true;sp.classList.add('out');document.documentElement.classList.remove('loading');safe(applyTheme);setTimeout(()=>sp.remove(),250)};
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{const left=min-performance.now();left>0?setTimeout(done,left):done()}));
+    setTimeout(done,Math.max(2500,min+1000))});
+  safe(()=>{if('serviceWorker' in navigator&&location.protocol!=='file:'){const had=!!navigator.serviceWorker.controller;
+    navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(r=>{r.update().catch(()=>{})}).catch(()=>{});
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{if(had)toast('WalTrans was updated. Close and reopen the app to use the newest version.',7000)})}});
+  safe(fixPad);safe(startStats);
 }
 boot();
-window.__wt={translateCore,detect,guessSource,toWav,listen,L,sb,ST,scanFiles,go,show,shareUrl,layoutLines,pdfLayout};
+window.__wt={audioFile,splitPcm,speechLines,wavOf,translateCore,detect,guessSource,toWav,listen,L,sb,ST,scanFiles,go,show,shareUrl,layoutLines,pdfLayout};
 </script>
 </body>
 </html>
