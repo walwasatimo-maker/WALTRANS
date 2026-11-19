@@ -16,7 +16,7 @@ window.WALTRANS_CONFIG = {
 
   // Welcome screen: it shows only while the app is loading and adds NO waiting time (0). If you ever want it on screen
   // a little longer, put a number of milliseconds here (for example 800). Leave 0 for the fastest start.
-  splashMinMs: 2000,
+  splashMinMs: 3000,
 
   // Anonymous usage counts (how often the app is opened, installed and used; needs proxyUrl above). Set to false to switch off for everyone.
   stats: true
